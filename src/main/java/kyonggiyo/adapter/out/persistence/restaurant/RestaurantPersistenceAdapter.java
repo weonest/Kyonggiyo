@@ -10,12 +10,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class RestaurantPersistenceAdapter implements GetRestaurantPort, SaveRestaurantPort {
 
-    private final RestaurantJpaRepository repository;
+    private final RestaurantRepository repository;
 
     @Override
     public Restaurant get(Long id) {
-        Restaurant restaurant = repository.findById(id)
-                .orElseThrow();
+        Restaurant restaurant = repository.get(id);
         return restaurant;
     }
 
