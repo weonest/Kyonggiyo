@@ -1,13 +1,13 @@
 spring:
   datasource:
-    url: jdbc:h2:~/dev
-    username: sa
+    url: ${DATASOURCE_URL}
+    username: ${DATASOURCE_USERNAME}
     password:
 
   h2:
     console:
       enabled: true
-      path: /h2
+      path: /h2-console
 
   jpa:
     open-in-view: false
@@ -17,3 +17,28 @@ spring:
       hibernate:
         format_sql: true
     show-sql: true
+
+oauth:
+  kakao:
+    response-type: ${KAKAO_RESPONSE_TYPE}
+    client-id: ${KAKAO_CLIENT_ID}
+    url:
+      auth-url: ${KAKAO_AUTH_URL}
+      api-url: ${KAKAO_API_URL}
+      redirect-url: ${KAKAO_REDIRECT_URL}
+
+  naver:
+    response-type: ${NAVER_RESPONSE_TYPE}
+    client-id: ${NAVER_CLIENT_ID}
+    client-secret: ${NAVER_CLIENT_SECRET}
+    state: ${NAVER_STATE}
+    url:
+      auth-url: ${NAVER_AUTH_URL}
+      api-url: ${NAVER_API_URL}
+      redirect-url: ${NAVER_REDIRECT_URL}
+
+jwt:
+  secret-key: ${SECRET_KEY}
+  access-token-expire-time: ${ACCESS_TOKEN_EXPIRE_TIME}
+  refresh-token-expire-time: ${REFRESH_TOKEN_EXPIRE_TIME}
+
