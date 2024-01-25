@@ -27,10 +27,8 @@ public class Account extends BaseEntity {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private Platform platform;
 
-    @Column(nullable = false)
     private String platformId;
 
     @OneToOne
@@ -42,7 +40,7 @@ public class Account extends BaseEntity {
         this.platformId = platformId;
     }
 
-    public void registerUseR(User user) {
+    public void registerUser(User user) {
         if (this.user == null) {
             this.user = user;
             return;
