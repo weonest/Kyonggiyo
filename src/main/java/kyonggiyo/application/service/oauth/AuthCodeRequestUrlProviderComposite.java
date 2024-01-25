@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 
 import java.net.URI;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -27,12 +26,7 @@ public class AuthCodeRequestUrlProviderComposite implements ProvideAuthCodeUrlUs
 
     @Override
     public URI provideUri(Platform platform) {
-        return getProvider(platform).provideUri();
-    }
-
-    private AuthCodeRequestUrlProvider getProvider(Platform platform) {
-        return Optional.ofNullable(providerMap.get(platform))
-                .orElseThrow(() -> new IllegalArgumentException());
+        return providerMap.get(platform).provideUri();
     }
 
 }

@@ -32,7 +32,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handlerException(InvalidValueException exception) {
-        ErrorCode errorCode = exception.getErrorCode();
         log.warn(exception.getLoggingMessage(), exception);
         return ResponseEntity.badRequest()
                 .body(ErrorResponse.of(exception.getErrorCode()));
