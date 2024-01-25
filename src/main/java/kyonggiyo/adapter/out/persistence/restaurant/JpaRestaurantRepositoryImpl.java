@@ -11,7 +11,7 @@ public class JpaRestaurantRepositoryImpl implements RestaurantRepository {
     private final RestaurantJpaRepository jpaRepository;
 
     @Override
-    public Restaurant get(Long id) {
+    public Restaurant getById(Long id) {
         Restaurant restaurant = jpaRepository.findById(id)
                 .orElseThrow();
         return restaurant;
