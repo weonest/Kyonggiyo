@@ -4,7 +4,7 @@ import kyonggiyo.domain.restaurant.Restaurant;
 
 public interface RestaurantRepository {
 
-    Restaurant get(Long id);
+    Restaurant getById(Long id);
 
     void save(Restaurant restaurant);
 

@@ -16,7 +16,7 @@ class RestaurantPersistenceAdapterTest {
     @Test
     @DisplayName("식별자를 통해 DB에서 식당을 조회할 수 있다.")
     void getRestaurantTest() {
-        restaurantPersistenceAdapter.get(1L);
+        restaurantPersistenceAdapter.getById(1L);
     }
 
 }

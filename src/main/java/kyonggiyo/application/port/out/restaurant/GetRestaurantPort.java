@@ -4,6 +4,6 @@ import kyonggiyo.domain.restaurant.Restaurant;
 
 public interface GetRestaurantPort {
 
-    Restaurant get(Long id);
+    Restaurant getById(Long id);
 
 }

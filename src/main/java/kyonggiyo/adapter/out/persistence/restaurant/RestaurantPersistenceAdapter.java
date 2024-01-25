@@ -13,8 +13,8 @@ public class RestaurantPersistenceAdapter implements GetRestaurantPort, SaveRest
     private final RestaurantRepository repository;
 
     @Override
-    public Restaurant get(Long id) {
-        Restaurant restaurant = repository.get(id);
+    public Restaurant getById(Long id) {
+        Restaurant restaurant = repository.getById(id);
         return restaurant;
     }
 

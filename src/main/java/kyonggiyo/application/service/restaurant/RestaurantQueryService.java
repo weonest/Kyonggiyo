@@ -16,7 +16,7 @@ public class RestaurantQueryService implements GetRestaurantQuery {
 
     @Override
     public Restaurant get(Long id) {
-        return getRestaurantPort.get(id);
+        return getRestaurantPort.getById(id);
     }
 
 }
