@@ -38,6 +38,8 @@ oauth:
       redirect-url: ${NAVER_REDIRECT_URL}
 
 jwt:
+  claim-id: ${CLAIM_ID}
+  claim-role: ${CLAIM_ROLE}
   secret-key: ${SECRET_KEY}
   access-token-expire-time: ${ACCESS_TOKEN_EXPIRE_TIME}
   refresh-token-expire-time: ${REFRESH_TOKEN_EXPIRE_TIME}
