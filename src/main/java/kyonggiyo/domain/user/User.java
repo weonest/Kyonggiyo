@@ -1,6 +1,8 @@
 package kyonggiyo.domain.user;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,11 +22,15 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     private String nickname;
 
     private boolean isDeleted;
 
     public User(String nickname) {
+        this.role = Role.USER;
         this.nickname = nickname;
     }
 

@@ -40,12 +40,20 @@ public class Account extends BaseEntity {
         this.platformId = platformId;
     }
 
+    public boolean hasNoUser() {
+        return this.user == null;
+    }
+
     public void registerUser(User user) {
         if (this.user == null) {
             this.user = user;
             return;
         }
         throw new IllegalArgumentException();
+    }
+
+    public Long getUserId() {
+        return user.getId();
     }
 
 }
