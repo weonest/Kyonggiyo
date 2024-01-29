@@ -4,20 +4,19 @@ import kyonggiyo.adapter.in.web.auth.dto.TokenResponse;
 
 public record LogInResponse(
         Long id,
-        boolean isNew,
         TokenResponse token
 ) {
 
-    public LogInResponse(Long id, boolean isNew) {
-        this(id, isNew, null);
+    public LogInResponse(Long id) {
+        this(id, null);
     }
 
-    public static LogInResponse forUserNotExist(Long id) {
-        return new LogInResponse(id, true);
+    public static LogInResponse forDoesntHaveUser(Long id) {
+        return new LogInResponse(id);
     }
 
-    public static LogInResponse forUserExist(Long id, TokenResponse token) {
-        return new LogInResponse(id, false, token);
+    public static LogInResponse forHasUser(Long id, TokenResponse token) {
+        return new LogInResponse(id, token);
     }
 
 }
