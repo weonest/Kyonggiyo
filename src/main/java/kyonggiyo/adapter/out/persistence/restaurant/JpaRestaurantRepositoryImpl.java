@@ -18,8 +18,8 @@ public class JpaRestaurantRepositoryImpl implements RestaurantRepository {
     }
 
     @Override
-    public void save(Restaurant restaurant) {
-        jpaRepository.save(restaurant);
+    public Restaurant save(Restaurant restaurant) {
+        return jpaRepository.save(restaurant);
     }
     
 }

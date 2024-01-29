@@ -6,6 +6,6 @@ public interface RestaurantRepository {
 
     Restaurant getById(Long id);
 
-    void save(Restaurant restaurant);
+    Restaurant save(Restaurant restaurant);
 
 }

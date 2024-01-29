@@ -9,6 +9,6 @@ public interface AccountRepository {
 
     Optional<Account> findByPlatformAndPlatformId(Platform platform, String platformId);
 
-    void save(Account Account);
+    Account save(Account account);
 
 }

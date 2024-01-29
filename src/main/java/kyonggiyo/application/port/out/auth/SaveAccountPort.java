@@ -4,6 +4,6 @@ import kyonggiyo.domain.auth.Account;
 
 public interface SaveAccountPort {
 
-    void save(Account account);
+    Account save(Account account);
 
 }

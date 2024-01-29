@@ -4,7 +4,7 @@ import kyonggiyo.domain.restaurant.Restaurant;
 
 public interface SaveRestaurantPort {
 
-    void save(Restaurant restaurant);
+    Restaurant save(Restaurant restaurant);
 
 }
 

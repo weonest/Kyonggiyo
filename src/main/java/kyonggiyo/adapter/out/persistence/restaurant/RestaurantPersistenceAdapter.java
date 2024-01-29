@@ -19,8 +19,8 @@ public class RestaurantPersistenceAdapter implements GetRestaurantPort, SaveRest
     }
 
     @Override
-    public void save(Restaurant restaurant) {
-        repository.save(restaurant);
+    public Restaurant save(Restaurant restaurant) {
+        return repository.save(restaurant);
     }
 
 }

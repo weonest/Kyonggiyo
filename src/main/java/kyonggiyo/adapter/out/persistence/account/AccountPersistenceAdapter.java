@@ -21,7 +21,8 @@ public class AccountPersistenceAdapter implements FindAccountPort, SaveAccountPo
     }
 
     @Override
-    public void save(Account account) {
-        repository.save(account);
+    public Account save(Account account) {
+        return repository.save(account);
     }
+
 }

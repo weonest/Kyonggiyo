@@ -19,8 +19,8 @@ public class JpaAccountRepositoryImpl implements AccountRepository {
     }
 
     @Override
-    public void save(Account Account) {
-
+    public Account save(Account account) {
+        return jpaRepository.save(account);
     }
 
 }
