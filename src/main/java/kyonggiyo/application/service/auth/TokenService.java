@@ -24,6 +24,4 @@ public class TokenService {
         return new TokenResponse(accessToken, refreshToken.value());
     }
 
-
-
 }

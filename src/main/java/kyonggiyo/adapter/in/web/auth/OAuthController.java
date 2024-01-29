@@ -1,8 +1,8 @@
-package kyonggiyo.adapter.in.web.oauth;
+package kyonggiyo.adapter.in.web.auth;
 
-import kyonggiyo.adapter.in.web.oauth.dto.LogInResponse;
-import kyonggiyo.application.port.in.oauth.OAuthLoginUseCase;
-import kyonggiyo.application.port.in.oauth.ProvideAuthCodeUrlUseCase;
+import kyonggiyo.adapter.in.web.auth.dto.LogInResponse;
+import kyonggiyo.application.port.in.auth.OAuthLoginUseCase;
+import kyonggiyo.application.port.in.auth.ProvideAuthCodeUrlUseCase;
 import kyonggiyo.domain.auth.Platform;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

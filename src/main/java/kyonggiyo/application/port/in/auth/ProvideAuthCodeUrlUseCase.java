@@ -1,4 +1,4 @@
-package kyonggiyo.application.port.in.oauth;
+package kyonggiyo.application.port.in.auth;
 
 import kyonggiyo.domain.auth.Platform;
 

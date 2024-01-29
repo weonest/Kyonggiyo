@@ -1,6 +1,4 @@
-package kyonggiyo.adapter.in.web.oauth.dto;
-
-import kyonggiyo.adapter.in.web.auth.dto.TokenResponse;
+package kyonggiyo.adapter.in.web.auth.dto;
 
 public record LogInResponse(
         Long id,
