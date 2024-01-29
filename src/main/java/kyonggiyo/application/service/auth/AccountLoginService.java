@@ -1,7 +1,8 @@
 package kyonggiyo.application.service.auth;
 
-import kyonggiyo.application.dto.user.UserIdResponse;
 import kyonggiyo.application.port.out.auth.FindAccountPort;
+import kyonggiyo.application.port.out.auth.SaveAccountPort;
+import kyonggiyo.domain.auth.Account;
 import kyonggiyo.domain.auth.Platform;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,12 +12,12 @@ import org.springframework.stereotype.Service;
 public class AccountLoginService {
 
     private final FindAccountPort findAccountPort;
-    private final AccountSignInService accountSignInService;
+    private final SaveAccountPort saveAccountPort;
+    private final AccountSignUpService accountSignUpService;
 
-    public UserIdResponse login(Platform platform, String platformId) {
+    public Account login(Platform platform, String platformId) {
         return findAccountPort.findByPlatformAndPlatformId(platform, platformId)
-                .map(account -> UserIdResponse.from(account.getUser()))
-                .orElseGet(null);
+                .orElseGet(() -> saveAccountPort.save(new Account(platform, platformId)));
     }
 
 }
