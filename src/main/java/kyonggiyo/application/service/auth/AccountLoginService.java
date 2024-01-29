@@ -1,4 +1,4 @@
-package kyonggiyo.application.service.user;
+package kyonggiyo.application.service.auth;
 
 import kyonggiyo.application.dto.user.UserIdResponse;
 import kyonggiyo.application.port.out.auth.FindAccountPort;
