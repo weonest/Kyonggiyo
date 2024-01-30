@@ -1,17 +1,23 @@
 package kyonggiyo.adapter.out.token;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import kyonggiyo.domain.auth.AccessToken;
+import kyonggiyo.domain.auth.RefreshToken;
+import kyonggiyo.domain.auth.exception.ExpiredTokenException;
+import kyonggiyo.domain.auth.exception.InvalidJwtException;
+import kyonggiyo.domain.auth.exception.TokenErrorCode;
 import kyonggiyo.domain.user.Role;
+import kyonggiyo.global.auth.AuthInfo;
 import kyonggiyo.global.property.JwtProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
-import java.time.Duration;
 import java.util.Date;
 import java.util.UUID;
 import java.util.random.RandomGenerator;
@@ -22,28 +28,64 @@ public class JwtTokenManager implements TokenManager {
 
     private final JwtProperties jwtProperties;
 
-    public String generateAccessToken(Long userId, Role role ) {
+    @Override
+    public AccessToken generateAccessToken(Long userId, Role role ) {
         long currentTimeMillis = System.currentTimeMillis();
         int primaryNum = RandomGenerator.getDefault().nextInt();
+        long expiresIn = (currentTimeMillis / 1000) + jwtProperties.accessTokenExpireTime();
 
         Claims claims =  Jwts.claims()
                 .add(jwtProperties.claimId(), userId)
                 .add(jwtProperties.claimRole(), role)
                 .build();
 
-        return Jwts.builder()
+        String accessToken = Jwts.builder()
                 .setClaims(claims)
                 .setIssuer(String.valueOf(primaryNum))
                 .setIssuedAt(new Date(currentTimeMillis))
-                .setExpiration(new Date(currentTimeMillis + jwtProperties.accessTokenExpireTime()))
+                .setExpiration(new Date(expiresIn))
                 .signWith(decodedKey(jwtProperties.secretKey()), SignatureAlgorithm.HS512)
                 .compact();
+
+        return new AccessToken(accessToken, expiresIn);
     }
 
+    @Override
     public RefreshToken generateRefreshToken() {
+        long currentTimeMillis = System.currentTimeMillis();
+        long expiresIn = (currentTimeMillis / 1000) + jwtProperties.refreshTokenExpireTime();
+
         String refreshToken = String.valueOf(UUID.randomUUID());
-        Duration duration = Duration.ofMillis(jwtProperties.refreshTokenExpireTime());
-        return new RefreshToken(refreshToken, duration);
+
+        return new RefreshToken(refreshToken, expiresIn);
+    }
+
+    @Override
+    public void validate(String token) {
+        try {
+            Jwts.parser()
+                    .setSigningKey(decodedKey(jwtProperties.secretKey()))
+                    .build()
+                    .parseClaimsJws(token);
+        } catch (ExpiredJwtException expiredJwtException) {
+            throw new ExpiredTokenException(TokenErrorCode.EXPIRED_JWT_EXCEPTION);
+        } catch (Exception exception) {
+            throw new InvalidJwtException(TokenErrorCode.INVALID_JWT_EXCEPTION);
+        }
+    }
+
+    @Override
+    public AuthInfo extract(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(decodedKey(jwtProperties.secretKey()))
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+
+        Long id = claims.get(jwtProperties.claimId(), Long.class);
+        Role role = claims.get(jwtProperties.claimRole(), Role.class);
+
+        return new AuthInfo(id, role);
     }
 
     private static Key decodedKey(String key) {
