@@ -1,7 +1,8 @@
 package kyonggiyo.global.advice;
 
+import kyonggiyo.domain.auth.exception.ExpiredTokenException;
+import kyonggiyo.domain.auth.exception.InvalidJwtException;
 import kyonggiyo.global.exception.AuthenticationException;
-import kyonggiyo.global.exception.ErrorCode;
 import kyonggiyo.global.exception.ForbiddenException;
 import kyonggiyo.global.exception.GlobalErrorCode;
 import kyonggiyo.global.exception.InvalidValueException;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -28,6 +30,20 @@ public class GlobalExceptionHandler {
         log.warn("예상치 못한 서버 예외가 발생하였습니다.", e);
         return ResponseEntity.status(INTERNAL_SERVER_ERROR)
                 .body(ErrorResponse.of(GlobalErrorCode.INTERNAL_SERVER_ERROR));
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handlerException(ExpiredTokenException exception) {
+        log.warn(exception.getLoggingMessage(), exception);
+        return ResponseEntity.status(BAD_REQUEST)
+                .body(ErrorResponse.of(exception.getErrorCode()));
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handlerException(InvalidJwtException exception) {
+        log.warn(exception.getLoggingMessage(), exception);
+        return ResponseEntity.status(BAD_REQUEST)
+                .body(ErrorResponse.of(exception.getErrorCode()));
     }
 
     @ExceptionHandler
@@ -63,7 +79,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handlerException(MethodArgumentNotValidException exception) {
         log.warn(exception.getMessage(), exception.getBindingResult());
         return ResponseEntity.badRequest()
-                .body(ErrorResponse.of(GlobalErrorCode.INPUT_VALIDATION_ERROR, exception.getBindingResult()));
+                .body(ErrorResponse.of(GlobalErrorCode.INVALID_REQUEST_ERROR, exception.getBindingResult()));
     }
 
     @ExceptionHandler
