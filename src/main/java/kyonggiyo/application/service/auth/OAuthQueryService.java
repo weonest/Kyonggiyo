@@ -1,4 +1,4 @@
-package kyonggiyo.application.service.oauth;
+package kyonggiyo.application.service.auth;
 
 import kyonggiyo.application.port.out.auth.RequestOAuthTokenPort;
 import kyonggiyo.application.port.out.auth.RequestOAuthUserInfoPort;

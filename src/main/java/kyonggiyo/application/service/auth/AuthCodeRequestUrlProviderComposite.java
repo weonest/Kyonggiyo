@@ -1,8 +1,9 @@
-package kyonggiyo.application.service.oauth;
+package kyonggiyo.application.service.auth;
 
 import kyonggiyo.application.port.in.auth.ProvideAuthCodeUrlUseCase;
 import kyonggiyo.domain.auth.Platform;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.net.URI;
 import java.util.Map;
@@ -10,7 +11,7 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@Component
+@Service
 public class AuthCodeRequestUrlProviderComposite implements ProvideAuthCodeUrlUseCase {
 
     private final Map<Platform, AuthCodeRequestUrlProvider> providerMap;

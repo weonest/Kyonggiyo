@@ -1,9 +1,8 @@
-package kyonggiyo.application.service.oauth;
+package kyonggiyo.application.service.auth;
 
 import kyonggiyo.domain.auth.Platform;
 import kyonggiyo.global.property.KakaoOAuthProperties;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 

@@ -1,10 +1,8 @@
-package kyonggiyo.application.service.oauth;
+package kyonggiyo.application.service.auth;
 
 import kyonggiyo.adapter.in.web.auth.dto.TokenResponse;
 import kyonggiyo.adapter.in.web.auth.dto.LogInResponse;
 import kyonggiyo.application.port.in.auth.OAuthLoginUseCase;
-import kyonggiyo.application.service.auth.AccountLoginService;
-import kyonggiyo.application.service.auth.TokenService;
 import kyonggiyo.domain.auth.Account;
 import kyonggiyo.domain.auth.Platform;
 import lombok.RequiredArgsConstructor;
