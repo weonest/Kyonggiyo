@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kyonggiyo.adapter.in.web.auth.dto.LogInResponse;
 import kyonggiyo.adapter.in.web.auth.dto.TokenResponse;
+import kyonggiyo.application.port.in.ReissueTokenUseCase;
 import kyonggiyo.application.port.in.auth.OAuthLoginUseCase;
 import kyonggiyo.application.port.in.auth.OAuthLogoutUseCase;
 import kyonggiyo.application.port.in.auth.ProvideAuthCodeUrlUseCase;
@@ -27,7 +28,7 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/oauth2")
+@RequestMapping("/api/v1/auth")
 public class AuthController {
 
     private static final String REFRESH_TOKEN = "Refresh-Token";
@@ -35,6 +36,7 @@ public class AuthController {
     private final ProvideAuthCodeUrlUseCase provideAuthCodeUrlUseCase;
     private final OAuthLoginUseCase oAuthLoginUseCase;
     private final OAuthLogoutUseCase oAuthLogoutUseCase;
+    private final ReissueTokenUseCase reissueTokenUseCase;
 
     @GetMapping("/{platform}")
     public ResponseEntity<Void> getAuthCodeRequestUrl(@PathVariable Platform platform) {
@@ -63,6 +65,23 @@ public class AuthController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/reissue")
+    public ResponseEntity<TokenResponse> reissue(HttpServletRequest httpServletRequest,
+                                                 HttpServletResponse httpServletResponse) {
+        Cookie cookie = findRefreshTokenCookie(httpServletRequest).get();
+        TokenResponse tokenResponse = reissueTokenUseCase.reissueToken(cookie.getValue());
+
+        setCookie(httpServletResponse, tokenResponse);
+
+        return ResponseEntity.ok(tokenResponse);
+    }
+
+    private Optional<Cookie> findRefreshTokenCookie(HttpServletRequest httpServletRequest) {
+        return Arrays.stream(httpServletRequest.getCookies())
+                .filter(cookie -> cookie.getName().equals(REFRESH_TOKEN))
+                .findFirst();
+    }
+
     private void setCookie(HttpServletResponse httpServletResponse, TokenResponse tokenResponse) {
         ResponseCookie cookie = ResponseCookie.from(REFRESH_TOKEN, tokenResponse.refreshToken())
                 .path("/")
@@ -76,10 +95,7 @@ public class AuthController {
     }
 
     private void removeCookie(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-        Optional<Cookie> refreshTokenCookie = Arrays.stream(httpServletRequest.getCookies())
-                .filter(cookie -> cookie.getName().equals(REFRESH_TOKEN))
-                .findFirst();
-
+        Optional<Cookie> refreshTokenCookie = findRefreshTokenCookie(httpServletRequest);
         if (refreshTokenCookie.isPresent()) {
             Cookie cookie = refreshTokenCookie.get();
             cookie.setMaxAge(0);
