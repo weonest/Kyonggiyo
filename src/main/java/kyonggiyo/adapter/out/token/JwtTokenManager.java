@@ -51,13 +51,18 @@ public class JwtTokenManager implements TokenManager {
     }
 
     @Override
-    public RefreshToken generateRefreshToken() {
+    public RefreshToken generateRefreshToken(Long userId, Role role) {
         long currentTimeMillis = System.currentTimeMillis();
         long expiresIn = (currentTimeMillis / 1000) + jwtProperties.refreshTokenExpireTime();
 
         String refreshToken = String.valueOf(UUID.randomUUID());
 
-        return new RefreshToken(refreshToken, expiresIn);
+        return RefreshToken.builder()
+                .userId(userId)
+                .role(role)
+                .value(refreshToken)
+                .expiresIn(expiresIn)
+                .build();
     }
 
     @Override

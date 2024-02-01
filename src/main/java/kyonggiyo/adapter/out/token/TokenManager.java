@@ -9,7 +9,7 @@ public interface TokenManager {
 
     AccessToken generateAccessToken(Long userId, Role role);
 
-    RefreshToken generateRefreshToken();
+    RefreshToken generateRefreshToken(Long userId, Role role);
 
     void validate(String token);
 
