@@ -1,14 +1,17 @@
 package kyonggiyo.adapter.out.token;
 
-import java.time.Duration;
+import kyonggiyo.domain.auth.RefreshToken;
+
 import java.util.Optional;
 
 public interface RefreshTokenRepository {
 
-    void save(String key, String value, Duration duration);
+    void save(RefreshToken refreshToken);
 
-    Optional<String> findByKey(String key);
+    Optional<RefreshToken> findByUserId(Long userId);
 
-    void deleteByKey(String key);
+    Optional<RefreshToken> findByValue(String token);
+
+    void deleteByUserId(Long userId);
 
 }
