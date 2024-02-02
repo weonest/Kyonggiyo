@@ -2,7 +2,6 @@ package kyonggiyo.global.auth;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import kyonggiyo.application.service.auth.TokenService;
 import kyonggiyo.domain.user.Role;
 import kyonggiyo.global.exception.ForbiddenException;
 import kyonggiyo.global.exception.GlobalErrorCode;
@@ -16,14 +15,11 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import java.util.Arrays;
 import java.util.Objects;
 
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
-
 @Component
 @RequiredArgsConstructor
 public class JwtAuthorizationInterceptor implements HandlerInterceptor {
 
     private final AuthContext authContext;
-    private final TokenService tokenService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -36,18 +32,13 @@ public class JwtAuthorizationInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        String accessToken = getValueFromHeader(request, AUTHORIZATION);
-
-        if (accessToken == null && !isAuthRequired(handlerMethod)) {
+        if (!isAuthRequired(handlerMethod)) {
             return true;
         }
 
-        AuthInfo authInfo = tokenService.getAuthInfo(accessToken);
-        authContext.registerAuthInfo(authInfo);
-
         if (isAdminMethod(handlerMethod)) {
             Role methodRole = handlerMethod.getMethodAnnotation(Admin.class).role();
-            Role userRole = authInfo.role();
+            Role userRole = authContext.getAuthInfo().role();
             if (!Objects.equals(methodRole, userRole)) {
                 throw new ForbiddenException(GlobalErrorCode.INVALID_REQUEST_ERROR);
             }
@@ -76,10 +67,6 @@ public class JwtAuthorizationInterceptor implements HandlerInterceptor {
 
     private boolean isAdminMethod(HandlerMethod handlerMethod) {
         return handlerMethod.getMethodAnnotation(Admin.class) != null;
-    }
-
-    private String getValueFromHeader(HttpServletRequest request, String headerName) {
-        return request.getHeader(headerName);
     }
 
 }
