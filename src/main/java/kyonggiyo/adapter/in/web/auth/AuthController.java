@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -38,18 +39,20 @@ public class AuthController {
     private final OAuthLogoutUseCase oAuthLogoutUseCase;
     private final ReissueTokenUseCase reissueTokenUseCase;
 
-    @GetMapping("/{platform}")
+    @GetMapping("/login/{platform}")
     public ResponseEntity<Void> getAuthCodeRequestUrl(@PathVariable Platform platform) {
         URI uri = provideAuthCodeUrlUseCase.provideUri(platform);
         return ResponseEntity.created(uri).build();
     }
 
-    @GetMapping("/{platform}/callback")
+    @GetMapping("/login/{platform}/callback")
     public ResponseEntity<LogInResponse> login(@PathVariable Platform platform, @RequestParam String code,
                                                HttpServletResponse httpServletResponse) {
         LogInResponse response = oAuthLoginUseCase.login(platform, code);
-        
-        setCookie(httpServletResponse, response.token());
+
+        if (Objects.nonNull(response.token())) {
+            setCookie(httpServletResponse, response.token());
+        }
 
         return ResponseEntity.ok(response);
     }
