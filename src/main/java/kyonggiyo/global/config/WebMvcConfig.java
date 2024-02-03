@@ -1,6 +1,6 @@
 package kyonggiyo.global.config;
 
-import kyonggiyo.util.PlatformConverter;
+import kyonggiyo.domain.auth.util.PlatformConverter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;

@@ -1,4 +1,4 @@
-package kyonggiyo.util;
+package kyonggiyo.domain.auth.util;
 
 import jakarta.validation.constraints.NotBlank;
 import kyonggiyo.domain.auth.Platform;
