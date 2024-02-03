@@ -6,8 +6,8 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kyonggiyo.application.service.auth.TokenService;
-import kyonggiyo.domain.auth.exception.ExpiredTokenException;
-import kyonggiyo.domain.auth.exception.TokenErrorCode;
+import kyonggiyo.global.exception.AuthenticationException;
+import kyonggiyo.global.exception.GlobalErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Optional;
 
-@Order(0)
+@Order(1)
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -32,7 +32,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        return super.shouldNotFilter(request);
+        String[] whiteList = {
+                "/api/v1/auth/login",
+                "/favicon.ico",
+                "/h2-console",
+        };
+        String path = request.getRequestURI();
+        return Arrays.stream(whiteList).anyMatch(path::startsWith);
     }
 
     @Override
@@ -41,11 +47,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (accessToken.isPresent()) {
             AuthInfo authInfo = tokenService.getAuthInfo(accessToken.get());
             authContext.registerAuthInfo(authInfo);
+
             filterChain.doFilter(request, response);
+            return;
         }
 
-        resolveTokenFromCookie(request);
-        request.getRequestDispatcher("/api/v1/auth/reissue").forward(request, response);
+        Optional<Cookie> refreshTokenCookie = resolveTokenFromCookie(request);
+        if (refreshTokenCookie.isPresent()) {
+            request.getRequestDispatcher("/api/v1/auth/reissue").forward(request, response);
+        }
+        throw new AuthenticationException(GlobalErrorCode.NO_AUTHENTICATION_INFO_ERROR);
     }
 
     private Optional<String> resolveTokenFromHeader(HttpServletRequest request) {
@@ -63,15 +74,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         return Optional.empty();
     }
 
-    private String resolveTokenFromCookie(HttpServletRequest request) {
-        Optional<Cookie> refreshTokenCookie = Arrays.stream(request.getCookies())
+    private Optional<Cookie> resolveTokenFromCookie(HttpServletRequest request) {
+        return Arrays.stream(request.getCookies())
                 .filter(cookie -> cookie.getName().equals(REFRESH_TOKEN))
                 .findFirst();
-
-        if (refreshTokenCookie.isPresent()) {
-            return refreshTokenCookie.get().getValue();
-        }
-        throw new ExpiredTokenException(TokenErrorCode.EXPIRED_JWT_EXCEPTION);
     }
 
 }

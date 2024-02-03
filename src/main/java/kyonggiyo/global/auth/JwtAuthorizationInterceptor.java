@@ -32,14 +32,14 @@ public class JwtAuthorizationInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        if (!isAuthRequired(handlerMethod)) {
-            return true;
+        Role userRole = authContext.getAuthInfo().role();
+
+        if (isAuthRequired(handlerMethod)) {
+            return Objects.equals(Role.USER, userRole);
         }
 
         if (isAdminMethod(handlerMethod)) {
-            Role methodRole = handlerMethod.getMethodAnnotation(Admin.class).role();
-            Role userRole = authContext.getAuthInfo().role();
-            if (!Objects.equals(methodRole, userRole)) {
+            if (!Objects.equals(Role.ADMIN, userRole)) {
                 throw new ForbiddenException(GlobalErrorCode.INVALID_REQUEST_ERROR);
             }
             return true;
