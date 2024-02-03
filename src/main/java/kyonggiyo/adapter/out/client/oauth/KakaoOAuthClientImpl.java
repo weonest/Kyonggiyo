@@ -11,25 +11,30 @@ public class KakaoOAuthClientImpl extends OAuthClient {
 
     private static final String GRANT_TYPE = "authorization_code";
 
-    private final KakaoFeignClient kakaoFeignClient;
     private final KakaoOAuthProperties kakaoOAuthProperties;
+    private final KakaoTokenFeignClient kakaoTokenFeignClient;
+    private final KakaoResourceFeignClient kakaoResourceFeignClient;
 
-    public KakaoOAuthClientImpl(KakaoFeignClient kakaoFeignClient, KakaoOAuthProperties kakaoOAuthProperties) {
+    public KakaoOAuthClientImpl(KakaoOAuthProperties kakaoOAuthProperties,
+                                KakaoTokenFeignClient kakaoTokenFeignClient,
+                                KakaoResourceFeignClient kakaoResourceFeignClient) {
+
         super(Platform.KAKAO);
-        this.kakaoFeignClient = kakaoFeignClient;
         this.kakaoOAuthProperties = kakaoOAuthProperties;
+        this.kakaoTokenFeignClient = kakaoTokenFeignClient;
+        this.kakaoResourceFeignClient = kakaoResourceFeignClient;
     }
 
     @Override
     public String requestToken(String authCode) {
-        return kakaoFeignClient.getAccessToken(getParamMap(authCode))
+        return kakaoTokenFeignClient.getAccessToken(getParamMap(authCode))
                 .accessToken();
     }
 
     @Override
     public String requestUserInfo(String accessToken) {
-        return kakaoFeignClient.getUserInfo(convertInToBearer(accessToken))
-                .getPlatformId();
+        return String.valueOf(kakaoResourceFeignClient.getUserInfo(convertInToBearer(accessToken))
+                .getPlatformId());
     }
 
     private Map<String, String> getParamMap(String authCode) {
@@ -44,6 +49,5 @@ public class KakaoOAuthClientImpl extends OAuthClient {
     private String convertInToBearer(String accessToken) {
         return String.format("Bearer %s", accessToken);
     }
-
 
 }
