@@ -1,7 +1,7 @@
 package kyonggiyo.global.advice;
 
 import kyonggiyo.domain.auth.exception.ExpiredTokenException;
-import kyonggiyo.domain.auth.exception.InvalidJwtException;
+import kyonggiyo.domain.auth.exception.InvalidTokenException;
 import kyonggiyo.global.exception.AuthenticationException;
 import kyonggiyo.global.exception.ForbiddenException;
 import kyonggiyo.global.exception.GlobalErrorCode;
@@ -34,13 +34,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handlerException(ExpiredTokenException exception) {
-        log.warn(exception.getLoggingMessage(), exception);
-        return ResponseEntity.status(BAD_REQUEST)
-                .body(ErrorResponse.of(exception.getErrorCode()));
-    }
-
-    @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handlerException(InvalidJwtException exception) {
         log.warn(exception.getLoggingMessage(), exception);
         return ResponseEntity.status(BAD_REQUEST)
                 .body(ErrorResponse.of(exception.getErrorCode()));
