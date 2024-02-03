@@ -8,7 +8,7 @@ import io.jsonwebtoken.security.Keys;
 import kyonggiyo.domain.auth.AccessToken;
 import kyonggiyo.domain.auth.RefreshToken;
 import kyonggiyo.domain.auth.exception.ExpiredTokenException;
-import kyonggiyo.domain.auth.exception.InvalidJwtException;
+import kyonggiyo.domain.auth.exception.InvalidTokenException;
 import kyonggiyo.domain.auth.exception.TokenErrorCode;
 import kyonggiyo.domain.user.Role;
 import kyonggiyo.global.auth.AuthInfo;
@@ -73,9 +73,9 @@ public class JwtTokenManager implements TokenManager {
                     .build()
                     .parseClaimsJws(token);
         } catch (ExpiredJwtException expiredJwtException) {
-            throw new ExpiredTokenException(TokenErrorCode.EXPIRED_JWT_EXCEPTION);
+            throw new ExpiredTokenException(TokenErrorCode.EXPIRED_TOKEN_EXCEPTION);
         } catch (Exception exception) {
-            throw new InvalidJwtException(TokenErrorCode.INVALID_JWT_EXCEPTION);
+            throw new InvalidTokenException(TokenErrorCode.INVALID_TOKEN_EXCEPTION);
         }
     }
 

@@ -53,7 +53,7 @@ public class TokenService implements ReissueTokenUseCase {
     @Override
     public TokenResponse reissueToken(String refreshToken) {
         RefreshToken retrivedRefreshToken = findRefreshTokenByValuePort.findByValue(refreshToken)
-                .orElseThrow(() -> new ExpiredTokenException(TokenErrorCode.EXPIRED_JWT_EXCEPTION));
+                .orElseThrow(() -> new ExpiredTokenException(TokenErrorCode.EXPIRED_TOKEN_EXCEPTION));
 
         Long userId = retrivedRefreshToken.getUserId();
         Role userRole = retrivedRefreshToken.getRole();
