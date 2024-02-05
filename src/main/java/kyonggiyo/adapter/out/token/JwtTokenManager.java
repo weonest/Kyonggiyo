@@ -32,7 +32,7 @@ public class JwtTokenManager implements TokenManager {
     public AccessToken generateAccessToken(Long userId, Role role ) {
         long currentTimeMillis = System.currentTimeMillis();
         int primaryNum = RandomGenerator.getDefault().nextInt();
-        long expiresIn = (currentTimeMillis / 1000) + jwtProperties.accessTokenExpireTime();
+        long expiresIn = currentTimeMillis + jwtProperties.accessTokenExpireTime();
 
         Claims claims =  Jwts.claims()
                 .add(jwtProperties.claimId(), userId)
@@ -47,21 +47,18 @@ public class JwtTokenManager implements TokenManager {
                 .signWith(decodedKey(jwtProperties.secretKey()), SignatureAlgorithm.HS512)
                 .compact();
 
-        return new AccessToken(accessToken, expiresIn);
+        return new AccessToken(accessToken, jwtProperties.accessTokenExpireTime());
     }
 
     @Override
     public RefreshToken generateRefreshToken(Long userId, Role role) {
-        long currentTimeMillis = System.currentTimeMillis();
-        long expiresIn = (currentTimeMillis / 1000) + jwtProperties.refreshTokenExpireTime();
-
         String refreshToken = String.valueOf(UUID.randomUUID());
 
         return RefreshToken.builder()
                 .userId(userId)
                 .role(role)
                 .value(refreshToken)
-                .expiresIn(expiresIn)
+                .expiresIn(jwtProperties.refreshTokenExpireTime())
                 .build();
     }
 
