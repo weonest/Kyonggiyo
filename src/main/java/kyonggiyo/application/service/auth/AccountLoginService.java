@@ -12,12 +12,11 @@ import org.springframework.stereotype.Service;
 public class AccountLoginService {
 
     private final FindAccountPort findAccountPort;
-    private final SaveAccountPort saveAccountPort;
     private final AccountSignUpService accountSignUpService;
 
     public Account login(Platform platform, String platformId) {
         return findAccountPort.findByPlatformAndPlatformId(platform, platformId)
-                .orElseGet(() -> saveAccountPort.save(new Account(platform, platformId)));
+                .orElseGet(() -> accountSignUpService.save(platform, platformId));
     }
 
 }
