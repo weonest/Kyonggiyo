@@ -16,6 +16,11 @@ public class AccountPersistenceAdapter implements FindAccountPort, SaveAccountPo
     private final AccountRepository repository;
 
     @Override
+    public Optional<Account> findById(Long accountId) {
+        return repository.findById(accountId);
+    }
+
+    @Override
     public Optional<Account> findByPlatformAndPlatformId(Platform platform, String platformId) {
         return repository.findByPlatformAndPlatformId(platform, platformId);
     }

@@ -14,6 +14,11 @@ public class JpaAccountRepositoryImpl implements AccountRepository {
     private final AccountJpaRepository jpaRepository;
 
     @Override
+    public Optional<Account> findById(Long accountId) {
+        return jpaRepository.findById(accountId);
+    }
+
+    @Override
     public Optional<Account> findByPlatformAndPlatformId(Platform platform, String platformId) {
         return jpaRepository.findByPlatformAndPlatformId(platform, platformId);
     }
