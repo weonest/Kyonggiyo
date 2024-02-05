@@ -45,8 +45,11 @@ public class TokenService implements ReissueTokenUseCase {
         deleteRefreshTokenPort.deleteByUserId(userInfo.userId());
     }
 
-    public AuthInfo getAuthInfo(String token) {
+    public void validate(String token) {
         tokenManager.validate(token);
+    }
+
+    public AuthInfo getAuthInfo(String token) {
         return tokenManager.extract(token);
     }
 

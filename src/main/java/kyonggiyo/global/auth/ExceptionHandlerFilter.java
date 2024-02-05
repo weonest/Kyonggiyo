@@ -32,8 +32,10 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
         try {
             filterChain.doFilter(request, response);
         } catch (AuthenticationException authenticationException) {
+            log.warn("인증 예외 발생", authenticationException);
             setErrorResponse(response, authenticationException.getErrorCode());
         } catch (Exception exception) {
+            log.warn("요청 에러 발생", exception);
             setErrorResponse(response, GlobalErrorCode.INVALID_REQUEST_EXCEPTION);
         }
     }
@@ -46,7 +48,6 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
         try {
             String json = objectMapper.writeValueAsString(errorResponse);
             response.getWriter().write(json);
-            log.warn("요청 예외 정보 : {}", errorCode.message());
         } catch (Exception e) {
             log.warn(e.getMessage(), e);
         }

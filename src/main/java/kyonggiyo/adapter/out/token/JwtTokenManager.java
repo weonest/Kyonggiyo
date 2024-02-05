@@ -19,7 +19,6 @@ import org.springframework.stereotype.Component;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
-import java.util.UUID;
 import java.util.random.RandomGenerator;
 
 @Component
@@ -32,7 +31,7 @@ public class JwtTokenManager implements TokenManager {
     public AccessToken generateAccessToken(Long userId, Role role ) {
         long currentTimeMillis = System.currentTimeMillis();
         int primaryNum = RandomGenerator.getDefault().nextInt();
-        long expiresIn = currentTimeMillis + jwtProperties.accessTokenExpireTime();
+        long expiresIn = currentTimeMillis + (jwtProperties.accessTokenExpireTime() * 1000L);
 
         Claims claims =  Jwts.claims()
                 .add(jwtProperties.claimId(), userId)
@@ -52,7 +51,16 @@ public class JwtTokenManager implements TokenManager {
 
     @Override
     public RefreshToken generateRefreshToken(Long userId, Role role) {
-        String refreshToken = String.valueOf(UUID.randomUUID());
+        long currentTimeMillis = System.currentTimeMillis();
+        int primaryNum = RandomGenerator.getDefault().nextInt();
+        long expiresIn = currentTimeMillis + (jwtProperties.refreshTokenExpireTime() * 1000L);
+
+        String refreshToken = Jwts.builder()
+                .setIssuer(String.valueOf(primaryNum))
+                .setIssuedAt(new Date(currentTimeMillis))
+                .setExpiration(new Date(expiresIn))
+                .signWith(decodedKey(jwtProperties.secretKey()), SignatureAlgorithm.HS512)
+                .compact();
 
         return RefreshToken.builder()
                 .userId(userId)
