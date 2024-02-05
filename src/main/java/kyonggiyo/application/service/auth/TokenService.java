@@ -2,7 +2,7 @@ package kyonggiyo.application.service.auth;
 
 import kyonggiyo.adapter.in.web.auth.dto.TokenResponse;
 import kyonggiyo.adapter.out.token.TokenManager;
-import kyonggiyo.application.port.in.ReissueTokenUseCase;
+import kyonggiyo.application.port.in.auth.ReissueTokenUseCase;
 import kyonggiyo.application.port.out.auth.DeleteRefreshTokenPort;
 import kyonggiyo.application.port.out.auth.FindRefreshTokenByValuePort;
 import kyonggiyo.application.port.out.auth.SaveRefreshTokenPort;
@@ -60,6 +60,8 @@ public class TokenService implements ReissueTokenUseCase {
 
         AccessToken newAccessToken = tokenManager.generateAccessToken(userId, userRole);
         RefreshToken newRefreshToken = tokenManager.generateRefreshToken(userId, userRole);
+
+        saveRefreshTokenPort.save(newRefreshToken);
 
         return TokenResponse.builder()
                 .accessToken(newAccessToken.value())

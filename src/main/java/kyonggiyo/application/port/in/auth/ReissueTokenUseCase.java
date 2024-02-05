@@ -1,4 +1,4 @@
-package kyonggiyo.application.port.in;
+package kyonggiyo.application.port.in.auth;
 
 import kyonggiyo.adapter.in.web.auth.dto.TokenResponse;
 
