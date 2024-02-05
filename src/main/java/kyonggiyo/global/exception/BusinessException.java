@@ -10,7 +10,7 @@ public abstract class BusinessException extends RuntimeException {
 
     protected BusinessException(ErrorCode errorCode) {
         this.errorCode = errorCode;
-        this.loggingMessage = null;
+        this.loggingMessage = errorCode.message();
     }
 
     protected BusinessException(ErrorCode errorCode, String loggingMessage) {
