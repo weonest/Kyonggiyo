@@ -32,6 +32,7 @@ public class User extends BaseEntity {
     public User(String nickname) {
         this.role = Role.USER;
         this.nickname = nickname;
+        this.isDeleted = false;
     }
 
 }

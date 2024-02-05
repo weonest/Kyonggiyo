@@ -5,7 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kyonggiyo.adapter.in.web.auth.dto.LogInResponse;
 import kyonggiyo.adapter.in.web.auth.dto.TokenResponse;
-import kyonggiyo.application.port.in.ReissueTokenUseCase;
+import kyonggiyo.application.port.in.auth.ReissueTokenUseCase;
 import kyonggiyo.application.port.in.auth.OAuthLoginUseCase;
 import kyonggiyo.application.port.in.auth.OAuthLogoutUseCase;
 import kyonggiyo.application.port.in.auth.ProvideAuthCodeUrlUseCase;
