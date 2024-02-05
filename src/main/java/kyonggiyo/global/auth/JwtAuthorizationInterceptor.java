@@ -25,7 +25,7 @@ public class JwtAuthorizationInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         if (!(handler instanceof HandlerMethod handlerMethod)) {
-            throw new NotFoundException(GlobalErrorCode.INVALID_REQUEST_ERROR);
+            throw new NotFoundException(GlobalErrorCode.INVALID_REQUEST_EXCEPTION);
         }
 
         if (isNotAuthAnnotated(handlerMethod)) {
@@ -40,7 +40,7 @@ public class JwtAuthorizationInterceptor implements HandlerInterceptor {
 
         if (isAdminMethod(handlerMethod)) {
             if (!Objects.equals(Role.ADMIN, userRole)) {
-                throw new ForbiddenException(GlobalErrorCode.INVALID_REQUEST_ERROR);
+                throw new ForbiddenException(GlobalErrorCode.INVALID_REQUEST_EXCEPTION);
             }
             return true;
         }

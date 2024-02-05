@@ -34,6 +34,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String[] whiteList = {
                 "/api/v1/auth/login",
+                "/api/v1/user/signup",
                 "/favicon.ico",
                 "/h2-console",
         };
@@ -56,7 +57,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (refreshTokenCookie.isPresent()) {
             request.getRequestDispatcher("/api/v1/auth/reissue").forward(request, response);
         }
-        throw new AuthenticationException(GlobalErrorCode.NO_AUTHENTICATION_INFO_ERROR);
+        throw new AuthenticationException(GlobalErrorCode.NO_AUTHENTICATION_INFO_EXCEPTION);
     }
 
     private Optional<String> resolveTokenFromHeader(HttpServletRequest request) {

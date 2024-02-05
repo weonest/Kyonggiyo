@@ -45,7 +45,7 @@ public class ErrorResponse {
     public static ErrorResponse of(MethodArgumentTypeMismatchException exception) {
         final String value = exception.getValue() == null ? "" : String.valueOf(exception.getValue());
         final List<ErrorResponse.FieldError> errors = ErrorResponse.FieldError.of(exception.getName(), value, exception.getErrorCode());
-        return new ErrorResponse(GlobalErrorCode.INVALID_REQUEST_ERROR, errors);
+        return new ErrorResponse(GlobalErrorCode.INVALID_REQUEST_EXCEPTION, errors);
     }
 
     @Getter

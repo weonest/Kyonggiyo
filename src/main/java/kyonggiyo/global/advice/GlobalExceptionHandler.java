@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handlerException(Exception e) {
         log.warn("예상치 못한 서버 예외가 발생하였습니다.", e);
         return ResponseEntity.status(INTERNAL_SERVER_ERROR)
-                .body(ErrorResponse.of(GlobalErrorCode.INTERNAL_SERVER_ERROR));
+                .body(ErrorResponse.of(GlobalErrorCode.INTERNAL_SERVER_EXCEPTION));
     }
 
     @ExceptionHandler
@@ -72,7 +72,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handlerException(MethodArgumentNotValidException exception) {
         log.warn(exception.getMessage(), exception.getBindingResult());
         return ResponseEntity.badRequest()
-                .body(ErrorResponse.of(GlobalErrorCode.INVALID_REQUEST_ERROR, exception.getBindingResult()));
+                .body(ErrorResponse.of(GlobalErrorCode.INVALID_REQUEST_EXCEPTION, exception.getBindingResult()));
     }
 
     @ExceptionHandler
