@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kyonggiyo.global.exception.AuthenticationException;
 import kyonggiyo.global.exception.ErrorCode;
+import kyonggiyo.global.exception.GlobalErrorCode;
 import kyonggiyo.global.response.ErrorResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +23,7 @@ import java.io.IOException;
 @Order(0)
 @Component
 @RequiredArgsConstructor
-public class JwtExceptionHandlerFilter extends OncePerRequestFilter {
+public class ExceptionHandlerFilter extends OncePerRequestFilter {
 
     private final ObjectMapper objectMapper;
 
@@ -32,6 +33,8 @@ public class JwtExceptionHandlerFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } catch (AuthenticationException authenticationException) {
             setErrorResponse(response, authenticationException.getErrorCode());
+        } catch (Exception exception) {
+            setErrorResponse(response, GlobalErrorCode.INVALID_REQUEST_EXCEPTION);
         }
     }
 
@@ -43,7 +46,7 @@ public class JwtExceptionHandlerFilter extends OncePerRequestFilter {
         try {
             String json = objectMapper.writeValueAsString(errorResponse);
             response.getWriter().write(json);
-            log.warn("토큰 예외 정보 : {}", errorCode.message());
+            log.warn("요청 예외 정보 : {}", errorCode.message());
         } catch (Exception e) {
             log.warn(e.getMessage(), e);
         }
