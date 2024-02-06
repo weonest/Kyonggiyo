@@ -9,11 +9,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.util.Map;
 
-@FeignClient(name = "naver-auth", url = "${oauth.naver.url.auth-url}")
-public interface NaverFeignClient {
-
-    @PostMapping(value = "/oauth2.0/token", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    OAuthTokenResponse getAccessToken(Map<String, String> params);
+@FeignClient(name = "naver-auth", url = "https://openapi.naver.com")
+public interface NaverResourceFeignClient {
 
     @PostMapping(value = "/v1/nid/me", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     OAuthUserInfoResponse getUserInfo(@RequestHeader("Authorization") String bearerToken);

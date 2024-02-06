@@ -11,24 +11,28 @@ public class NaverOAuthClientImpl extends OAuthClient {
 
     private static final String GRANT_TYPE = "authorization_code";
 
-    private final NaverFeignClient naverFeignClient;
     private final NaverOAuthProperties naverOAuthProperties;
+    private final NaverTokenFeignClient naverTokenFeignClient;
+    private final NaverResourceFeignClient naverResourceFeignClient;
 
-    public NaverOAuthClientImpl(NaverFeignClient naverFeignClient, NaverOAuthProperties naverOAuthProperties) {
+    public NaverOAuthClientImpl(NaverOAuthProperties naverOAuthProperties,
+                                NaverTokenFeignClient naverTokenFeignClient,
+                                NaverResourceFeignClient naverResourceFeignClient) {
         super(Platform.NAVER);
-        this.naverFeignClient = naverFeignClient;
         this.naverOAuthProperties = naverOAuthProperties;
+        this.naverTokenFeignClient = naverTokenFeignClient;
+        this.naverResourceFeignClient = naverResourceFeignClient;
     }
 
     @Override
     public String requestToken(String authCode) {
-        return naverFeignClient.getAccessToken(getParamMap(authCode))
+        return naverTokenFeignClient.getAccessToken(getParamMap(authCode))
                 .accessToken();
     }
 
     @Override
     public String requestUserInfo(String accessToken) {
-        return naverFeignClient.getUserInfo(convertInToBearer(accessToken))
+        return naverResourceFeignClient.getUserInfo(convertInToBearer(accessToken))
                 .getPlatformId();
     }
 
