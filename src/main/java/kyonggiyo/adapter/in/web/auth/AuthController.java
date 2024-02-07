@@ -58,7 +58,7 @@ public class AuthController {
     }
 
     @GetMapping("/logout")
-    public ResponseEntity<Void> logout(@Auth UserInfo userInfo,
+    public ResponseEntity<Void> logout(UserInfo userInfo,
                                        HttpServletRequest httpServletRequest,
                                        HttpServletResponse httpServletResponse) {
         oAuthLogoutUseCase.logout(userInfo);

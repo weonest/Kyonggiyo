@@ -14,8 +14,7 @@ public class AuthorizedArgumentResolver implements HandlerMethodArgumentResolver
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.getParameterAnnotation(Auth.class) != null
-               && parameter.getParameterType().equals(UserInfo.class);
+        return parameter.getParameterType().equals(UserInfo.class);
     }
 
     @Override
