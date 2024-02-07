@@ -14,7 +14,7 @@ public class AccountSignUpService {
     private final SaveAccountPort saveAccountPort;
 
     @Transactional
-    public Account save(Platform platform, String platformId) {
+    public Account signup(Platform platform, String platformId) {
         Account account = new Account(platform, platformId);
         return saveAccountPort.save(account);
     }
