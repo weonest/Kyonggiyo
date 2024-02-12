@@ -1,6 +1,5 @@
 package kyonggiyo.domain.auth;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -13,11 +12,13 @@ import jakarta.persistence.Table;
 import kyonggiyo.domain.BaseEntity;
 import kyonggiyo.domain.user.User;
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
+@EqualsAndHashCode
 @Table(name = "accounts")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Account extends BaseEntity {
