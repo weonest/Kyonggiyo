@@ -16,9 +16,9 @@ public class KakaoOAuthProperties {
     @RequiredArgsConstructor
     public static final class Url {
 
-        private static String KAKAO_AUTHORIZE_URI = "/oauth/authorize";
-        private static String KAKAO_REQUEST_TOKEN_URI = "/oauth/token";
-        private static String KAKAO_REQUEST_INFO_URI = "/v2/user/me";
+        private static final String KAKAO_AUTHORIZE_URI = "/oauth/authorize";
+        private static final String KAKAO_REQUEST_INFO_URI = "/v2/user/me";
+        private static final String KAKAO_REQUEST_TOKEN_URI = "/oauth/token";
 
         private final String authUrl;
         private final String apiUrl;
