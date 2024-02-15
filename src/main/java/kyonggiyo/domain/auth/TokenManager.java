@@ -1,7 +1,5 @@
-package kyonggiyo.adapter.out.token;
+package kyonggiyo.domain.auth;
 
-import kyonggiyo.domain.auth.AccessToken;
-import kyonggiyo.domain.auth.RefreshToken;
 import kyonggiyo.domain.user.Role;
 import kyonggiyo.global.auth.AuthInfo;
 

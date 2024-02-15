@@ -1,7 +1,7 @@
 package kyonggiyo.application.service.auth;
 
 import kyonggiyo.adapter.in.web.auth.dto.TokenResponse;
-import kyonggiyo.adapter.out.token.TokenManager;
+import kyonggiyo.domain.auth.TokenManager;
 import kyonggiyo.application.port.in.auth.ReissueTokenUseCase;
 import kyonggiyo.application.port.out.auth.DeleteRefreshTokenPort;
 import kyonggiyo.application.port.out.auth.FindRefreshTokenByValuePort;

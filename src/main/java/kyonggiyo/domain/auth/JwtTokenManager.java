@@ -1,12 +1,10 @@
-package kyonggiyo.adapter.out.token;
+package kyonggiyo.domain.auth;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import kyonggiyo.domain.auth.AccessToken;
-import kyonggiyo.domain.auth.RefreshToken;
 import kyonggiyo.domain.auth.exception.ExpiredTokenException;
 import kyonggiyo.domain.auth.exception.InvalidTokenException;
 import kyonggiyo.domain.auth.exception.TokenErrorCode;
@@ -28,7 +26,7 @@ public class JwtTokenManager implements TokenManager {
     private final JwtProperties jwtProperties;
 
     @Override
-    public AccessToken generateAccessToken(Long userId, Role role ) {
+    public AccessToken generateAccessToken(Long userId, Role role) {
         long currentTimeMillis = System.currentTimeMillis();
         int primaryNum = RandomGenerator.getDefault().nextInt();
         long expiresIn = currentTimeMillis + (jwtProperties.accessTokenExpireTime() * 1000L);
