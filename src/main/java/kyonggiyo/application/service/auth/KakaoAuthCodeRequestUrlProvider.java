@@ -2,13 +2,11 @@ package kyonggiyo.application.service.auth;
 
 import kyonggiyo.domain.auth.Platform;
 import kyonggiyo.global.property.KakaoOAuthProperties;
-import lombok.Getter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 
-@Getter
 @Component
 public class KakaoAuthCodeRequestUrlProvider extends AuthCodeRequestUrlProvider{
 
