@@ -16,4 +16,10 @@ public class AccountFixtures {
                 .create();
     }
 
+    public static Account generateAccount() {
+        return Instancio.of(Account.class)
+                .set(field(Account::getUser), UserFixture.generateUser())
+                .create();
+    }
+
 }
