@@ -91,9 +91,9 @@ public class JwtTokenManager implements TokenManager {
                 .getBody();
 
         Long id = claims.get(jwtProperties.claimId(), Long.class);
-        Role role = claims.get(jwtProperties.claimRole(), Role.class);
+        String role = claims.get(jwtProperties.claimRole(), String.class);
 
-        return new AuthInfo(id, role);
+        return new AuthInfo(id, Role.valueOf(role));
     }
 
     private static Key decodedKey(String key) {
