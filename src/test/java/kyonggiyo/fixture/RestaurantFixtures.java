@@ -1,9 +1,9 @@
-package kyonggiyo.adapter.out.persistence.restaurant.fixture;
+package kyonggiyo.fixture;
+
 
 public class RestaurantFixtures {
 
     private RestaurantFixtures() {
     }
-
 
 }

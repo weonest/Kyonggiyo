@@ -1,28 +1,38 @@
 package kyonggiyo.adapter.out.persistence.restaurant;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import org.junit.jupiter.api.DisplayName;
+import kyonggiyo.adapter.out.persistence.AdapterTest;
+import kyonggiyo.domain.restaurant.Restaurant;
+import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 
-@DataJpaTest
-@Import({RestaurantPersistenceAdapter.class, JpaRestaurantRepositoryImpl.class})
-class RestaurantPersistenceAdapterTest {
+import static org.assertj.core.api.Assertions.assertThat;
 
-    @PersistenceContext
-    private EntityManager entityManager;
+@Import({RestaurantPersistenceAdapter.class, JpaRestaurantRepositoryImpl.class})
+class RestaurantPersistenceAdapterTest extends AdapterTest {
+
+    @Autowired
+    private RestaurantRepository restaurantRepository;
 
     @Autowired
     private RestaurantPersistenceAdapter restaurantPersistenceAdapter;
 
     @Test
-    @DisplayName("식별자를 통해 DB에서 식당을 조회할 수 있다.")
-    void getRestaurantTest() {
+    void 식별자를_통해_DB에서_Restaurant을_조회할_수_있다() {
+        // given
+        Restaurant restaurant = Instancio.create(Restaurant.class);
+        restaurantRepository.save(restaurant);
 
-        restaurantPersistenceAdapter.getById(1L);
+
+        entityManager.flush();
+        entityManager.clear();
+
+        // when
+        Restaurant result = restaurantPersistenceAdapter.getById(restaurant.getId());
+
+        // then
+        assertThat(result).isEqualTo(result);
     }
 
 }
