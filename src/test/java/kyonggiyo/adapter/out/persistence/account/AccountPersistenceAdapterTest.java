@@ -5,7 +5,6 @@ import kyonggiyo.domain.auth.Account;
 import kyonggiyo.fixture.AccountFixtures;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Import;
 
 import java.util.Optional;
 
@@ -13,7 +12,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-@Import({AccountPersistenceAdapter.class, JpaAccountRepositoryImpl.class})
 class AccountPersistenceAdapterTest extends AdapterTest {
 
     @Autowired
