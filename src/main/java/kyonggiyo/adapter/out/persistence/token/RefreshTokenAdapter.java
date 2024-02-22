@@ -1,4 +1,4 @@
-package kyonggiyo.adapter.out.token;
+package kyonggiyo.adapter.out.persistence.token;
 
 import kyonggiyo.application.port.out.auth.DeleteRefreshTokenPort;
 import kyonggiyo.application.port.out.auth.FindRefreshTokenByValuePort;

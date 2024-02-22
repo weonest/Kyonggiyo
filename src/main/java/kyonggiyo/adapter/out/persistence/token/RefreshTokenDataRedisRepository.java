@@ -1,4 +1,4 @@
-package kyonggiyo.adapter.out.token;
+package kyonggiyo.adapter.out.persistence.token;
 
 import kyonggiyo.domain.auth.RefreshToken;
 import org.springframework.data.repository.CrudRepository;
