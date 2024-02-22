@@ -57,7 +57,7 @@ class OAuthFacadeServiceTest extends ServiceTest {
         String authCode = "authCode";
         String platformId = "platformId";
         Account account = new Account(platform, platformId);
-        User user = UserFixture.generateUser();
+        User user = UserFixture.generateUserEntity();
         account.registerUser(user);
         TokenResponse tokenResponse = Instancio.create(TokenResponse.class);
 

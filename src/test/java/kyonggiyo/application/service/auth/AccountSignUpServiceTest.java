@@ -25,7 +25,7 @@ class AccountSignUpServiceTest extends ServiceTest {
     @Test
     void 플랫폼과_플랫폼_식별자로_새로운_계정을_생성한다() {
         // given
-        Account account = AccountFixtures.generateAccountWithoutUser();
+        Account account = AccountFixtures.generateAccountEntityWithoutUser();
 
         given(saveAccountPort.save(any(Account.class))).willReturn(account);
 

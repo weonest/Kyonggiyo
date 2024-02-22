@@ -29,7 +29,7 @@ class AccountLoginServiceTest extends ServiceTest {
     @Test
     void 계정이_존재하면_계정을_반환한다() {
         // given
-        Account account = AccountFixtures.generateAccountWithoutUser();
+        Account account = AccountFixtures.generateAccountEntityWithoutUser();
 
         given(findAccountPort.findByPlatformAndPlatformId(account.getPlatform(), account.getPlatformId()))
                 .willReturn(Optional.of(account));
@@ -43,7 +43,7 @@ class AccountLoginServiceTest extends ServiceTest {
     @Test
     void 계정이_존재하지_않으면_계정을_새로_만든다() {
         // given
-        Account account = AccountFixtures.generateAccountWithoutUser();
+        Account account = AccountFixtures.generateAccountEntityWithoutUser();
 
         given(findAccountPort.findByPlatformAndPlatformId(account.getPlatform(), account.getPlatformId()))
                 .willReturn(Optional.empty());

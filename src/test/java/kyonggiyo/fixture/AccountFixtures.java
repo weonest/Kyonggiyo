@@ -10,15 +10,15 @@ public class AccountFixtures {
     private AccountFixtures() {
     }
 
-    public static Account generateAccountWithoutUser() {
+    public static Account generateAccountEntity() {
         return Instancio.of(Account.class)
-                .ignore(field(Account::getUser))
+                .set(field(Account::getUser), UserFixture.generateUserEntity())
                 .create();
     }
 
-    public static Account generateAccount() {
+    public static Account generateAccountEntityWithoutUser() {
         return Instancio.of(Account.class)
-                .set(field(Account::getUser), UserFixture.generateUser())
+                .ignore(field(Account::getUser))
                 .create();
     }
 

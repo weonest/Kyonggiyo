@@ -11,7 +11,7 @@ public class UserFixture {
     private UserFixture() {
     }
 
-    public static User generateUser() {
+    public static User generateUserEntity() {
         return Instancio.of(User.class)
                 .set(field(User::isDeleted), false)
                 .set(field(User::getRole), Role.USER)

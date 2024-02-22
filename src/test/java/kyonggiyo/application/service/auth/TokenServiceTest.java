@@ -47,7 +47,7 @@ class TokenServiceTest extends ServiceTest {
     @Test
     void 유저의_정보를_통해_토큰을_생성하고_반환할_수_있다() {
         // given
-        User user = UserFixture.generateUser();
+        User user = UserFixture.generateUserEntity();
         AccessToken accessToken = Instancio.create(AccessToken.class);
         RefreshToken refreshToken = Instancio.create(RefreshToken.class);
         TokenResponse tokenResponse = TokenResponse.builder()

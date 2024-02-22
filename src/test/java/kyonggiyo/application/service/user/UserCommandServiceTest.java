@@ -35,8 +35,8 @@ class UserCommandServiceTest extends ServiceTest {
     @Test
     void 유저_생성_요청을_통해_유저를_생성한다() {
         // given
-        User user = UserFixture.generateUser();
-        Account account = AccountFixtures.generateAccountWithoutUser();
+        User user = UserFixture.generateUserEntity();
+        Account account = AccountFixtures.generateAccountEntityWithoutUser();
         CreateUserRequest createUserRequest = new CreateUserRequest(account.getId(), user.getNickname());
 
         given(findAccountPort.findById(account.getId())).willReturn(Optional.of(account));
