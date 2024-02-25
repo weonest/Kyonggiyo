@@ -26,16 +26,24 @@ public class Restaurant extends BaseEntity {
 
     private String name;
 
-    @Embedded
-    private Address address;
-
     @Enumerated(EnumType.STRING)
     private RestaurantCategory category;
 
+    private String contact;
+
+    @Embedded
+    private Address address;
+
     @Builder
-    public Restaurant(String name, Address address, RestaurantCategory category) {
+    private Restaurant(String name,
+                       RestaurantCategory category,
+                       String contact,
+                       String address,
+                       double lat,
+                       double lng) {
         this.name = name;
-        this.address = address;
+        this.contact = contact;
+        this.address = new Address(address, lat, lng);
         this.category = category;
     }
 

@@ -1,16 +1,24 @@
 package kyonggiyo.adapter.in.web.restaurant.dto;
 
 import kyonggiyo.domain.restaurant.Restaurant;
+import kyonggiyo.domain.restaurant.RestaurantCategory;
 
 public record RestaurantCreateRequest(
         String name,
+        RestaurantCategory category,
+        String contact,
         String address,
-        double x,
-        double y
+        double lat,
+        double lng
 ){
 
     public Restaurant toEntity() {
-        return Restaurant.builder().build();
+        return Restaurant.builder()
+                .name(name)
+                .category(category)
+                .contact(contact)
+                .address(address)
+                .build();
     }
 
 }
