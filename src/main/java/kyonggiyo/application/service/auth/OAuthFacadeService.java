@@ -1,7 +1,7 @@
 package kyonggiyo.application.service.auth;
 
-import kyonggiyo.adapter.in.web.auth.dto.TokenResponse;
 import kyonggiyo.adapter.in.web.auth.dto.LogInResponse;
+import kyonggiyo.adapter.in.web.auth.dto.TokenResponse;
 import kyonggiyo.application.port.in.auth.OAuthLoginUseCase;
 import kyonggiyo.application.port.in.auth.OAuthLogoutUseCase;
 import kyonggiyo.domain.auth.Account;

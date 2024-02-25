@@ -1,7 +1,6 @@
 package kyonggiyo.domain.restaurant;
 
 import jakarta.persistence.Embeddable;
-import kyonggiyo.global.exception.InvalidValueException;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

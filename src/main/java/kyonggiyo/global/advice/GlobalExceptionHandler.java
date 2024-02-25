@@ -1,7 +1,6 @@
 package kyonggiyo.global.advice;
 
 import kyonggiyo.domain.auth.exception.ExpiredTokenException;
-import kyonggiyo.domain.auth.exception.InvalidTokenException;
 import kyonggiyo.global.exception.AuthenticationException;
 import kyonggiyo.global.exception.ForbiddenException;
 import kyonggiyo.global.exception.GlobalErrorCode;

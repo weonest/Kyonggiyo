@@ -2,7 +2,6 @@ package kyonggiyo.application.service.auth;
 
 import kyonggiyo.application.port.in.auth.ProvideAuthCodeUrlUseCase;
 import kyonggiyo.domain.auth.Platform;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;

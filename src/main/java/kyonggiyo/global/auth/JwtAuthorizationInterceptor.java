@@ -7,12 +7,10 @@ import kyonggiyo.global.exception.ForbiddenException;
 import kyonggiyo.global.exception.GlobalErrorCode;
 import kyonggiyo.global.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 @Component
