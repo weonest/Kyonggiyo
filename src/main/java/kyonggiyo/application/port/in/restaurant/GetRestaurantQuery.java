@@ -1,10 +1,15 @@
 package kyonggiyo.application.port.in.restaurant;
 
 
-import kyonggiyo.domain.restaurant.Restaurant;
+import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantMarkerResponse;
+import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantResponse;
+
+import java.util.List;
 
 public interface GetRestaurantQuery {
 
-    Restaurant get(Long id);
+    RestaurantResponse getById(Long id);
+
+    List<RestaurantMarkerResponse> getAllRestaurantsForMarker();
 
 }
