@@ -6,9 +6,9 @@ import org.instancio.Instancio;
 
 import static org.instancio.Select.field;
 
-public class UserFixture {
+public class UserFixtures {
 
-    private UserFixture() {
+    private UserFixtures() {
     }
 
     public static User generateUserEntity() {

@@ -2,7 +2,7 @@ package kyonggiyo.application.service.restaurant;
 
 import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantMarkerResponse;
 import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantResponse;
-import kyonggiyo.application.port.in.restaurant.GetRestaurantQuery;
+import kyonggiyo.application.port.in.restaurant.GetRestaurantUseCase;
 import kyonggiyo.application.port.out.restaurant.GetRestaurantPort;
 import kyonggiyo.domain.restaurant.Restaurant;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class RestaurantQueryService implements GetRestaurantQuery {
+public class RestaurantQueryService implements GetRestaurantUseCase {
 
     private final GetRestaurantPort getRestaurantPort;
 

@@ -12,7 +12,7 @@ public class AccountFixtures {
 
     public static Account generateAccountEntity() {
         return Instancio.of(Account.class)
-                .set(field(Account::getUser), UserFixture.generateUserEntity())
+                .set(field(Account::getUser), UserFixtures.generateUserEntity())
                 .create();
     }
 

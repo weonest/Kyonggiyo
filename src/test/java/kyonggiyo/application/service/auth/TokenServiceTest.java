@@ -9,7 +9,7 @@ import kyonggiyo.application.service.ServiceTest;
 import kyonggiyo.domain.auth.AccessToken;
 import kyonggiyo.domain.auth.RefreshToken;
 import kyonggiyo.domain.user.User;
-import kyonggiyo.fixture.UserFixture;
+import kyonggiyo.fixture.UserFixtures;
 import kyonggiyo.global.auth.AuthInfo;
 import kyonggiyo.global.auth.UserInfo;
 import org.instancio.Instancio;
@@ -47,7 +47,7 @@ class TokenServiceTest extends ServiceTest {
     @Test
     void 유저의_정보를_통해_토큰을_생성하고_반환할_수_있다() {
         // given
-        User user = UserFixture.generateUserEntity();
+        User user = UserFixtures.generateUserEntity();
         AccessToken accessToken = Instancio.create(AccessToken.class);
         RefreshToken refreshToken = Instancio.create(RefreshToken.class);
         TokenResponse tokenResponse = TokenResponse.builder()

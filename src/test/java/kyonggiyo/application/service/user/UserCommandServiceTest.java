@@ -9,7 +9,7 @@ import kyonggiyo.domain.auth.Account;
 import kyonggiyo.domain.auth.Platform;
 import kyonggiyo.domain.user.User;
 import kyonggiyo.fixture.AccountFixtures;
-import kyonggiyo.fixture.UserFixture;
+import kyonggiyo.fixture.UserFixtures;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -35,7 +35,7 @@ class UserCommandServiceTest extends ServiceTest {
     @Test
     void 유저_생성_요청을_통해_유저를_생성한다() {
         // given
-        User user = UserFixture.generateUserEntity();
+        User user = UserFixtures.generateUserEntity();
         Account account = AccountFixtures.generateAccountEntityWithoutUser();
         CreateUserRequest createUserRequest = new CreateUserRequest(account.getId(), user.getNickname());
 

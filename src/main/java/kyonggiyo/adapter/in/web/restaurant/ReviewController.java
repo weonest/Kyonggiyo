@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/restaurants/{restaurantId}/reviews")
 public class ReviewController {
 
-    private CreateReviewUseCase createReviewUseCase;
-    private UpdateReviewUseCase updateReviewUseCase;
+    private final CreateReviewUseCase createReviewUseCase;
+    private final UpdateReviewUseCase updateReviewUseCase;
 
     @PostMapping
     public ResponseEntity<Void> createReview(UserInfo userInfo,

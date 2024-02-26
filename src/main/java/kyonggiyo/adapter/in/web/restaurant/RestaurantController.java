@@ -4,7 +4,7 @@ import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantCreateRequest;
 import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantMarkerResponse;
 import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantResponse;
 import kyonggiyo.application.port.in.restaurant.CreateRestaurantUseCase;
-import kyonggiyo.application.port.in.restaurant.GetRestaurantQuery;
+import kyonggiyo.application.port.in.restaurant.GetRestaurantUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +22,7 @@ import java.util.List;
 public class RestaurantController {
 
     private final CreateRestaurantUseCase createRestaurantUseCase;
-    private final GetRestaurantQuery getRestaurantQuery;
+    private final GetRestaurantUseCase getRestaurantUseCase;
 
     @PostMapping
     public void createRestaurant(@RequestBody RestaurantCreateRequest request) {
@@ -31,13 +31,13 @@ public class RestaurantController {
 
     @GetMapping
     public ResponseEntity<List> getRestaurantMarker() {
-        List<RestaurantMarkerResponse> response = getRestaurantQuery.getAllRestaurantsForMarker();
+        List<RestaurantMarkerResponse> response = getRestaurantUseCase.getAllRestaurantsForMarker();
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{restaurantId}")
     public ResponseEntity<RestaurantResponse> getRestaurant(@PathVariable Long restaurantId) {
-        RestaurantResponse response = getRestaurantQuery.getById(restaurantId);
+        RestaurantResponse response = getRestaurantUseCase.getById(restaurantId);
         return ResponseEntity.ok(response);
     }
 

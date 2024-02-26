@@ -6,7 +6,7 @@ import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantResponse;
 
 import java.util.List;
 
-public interface GetRestaurantQuery {
+public interface GetRestaurantUseCase {
 
     RestaurantResponse getById(Long id);
 

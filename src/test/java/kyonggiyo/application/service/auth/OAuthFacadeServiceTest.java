@@ -7,7 +7,7 @@ import kyonggiyo.application.service.ServiceTest;
 import kyonggiyo.domain.auth.Account;
 import kyonggiyo.domain.auth.Platform;
 import kyonggiyo.domain.user.User;
-import kyonggiyo.fixture.UserFixture;
+import kyonggiyo.fixture.UserFixtures;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +57,7 @@ class OAuthFacadeServiceTest extends ServiceTest {
         String authCode = "authCode";
         String platformId = "platformId";
         Account account = new Account(platform, platformId);
-        User user = UserFixture.generateUserEntity();
+        User user = UserFixtures.generateUserEntity();
         account.registerUser(user);
         TokenResponse tokenResponse = Instancio.create(TokenResponse.class);
 
