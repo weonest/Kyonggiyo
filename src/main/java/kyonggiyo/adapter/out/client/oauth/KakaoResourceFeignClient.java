@@ -6,7 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-@FeignClient(name = "kakao-user", url = "${oauth.kakao.url.api-url}")
+@FeignClient(name = "kakao-resource", url = "${oauth.kakao.url.api-url}")
 public interface KakaoResourceFeignClient {
 
     @PostMapping(value = "/v2/user/me", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)

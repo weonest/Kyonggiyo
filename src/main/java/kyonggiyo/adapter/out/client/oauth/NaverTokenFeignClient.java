@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Map;
 
-@FeignClient(name = "naver-auth", url = "https://nid.naver.com")
+@FeignClient(name = "naver-token", url = "https://nid.naver.com")
 public interface NaverTokenFeignClient {
 
     @PostMapping(value = "/oauth2.0/token", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
