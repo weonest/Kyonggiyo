@@ -7,14 +7,23 @@ import java.util.List;
 public record SliceResponse<T>(
         List<T> content,
         long numberOfElements,
-        boolean hasNext
+        boolean hasNext,
+        boolean likeEnabled
 ) {
 
-    public static <T> SliceResponse<T> from(Slice<T> slice) {
+//    public static <T> SliceResponse<T> from(Slice<T> slice) {
+//        return new SliceResponse<>(
+//                slice.getContent(),
+//                slice.getNumberOfElements(),
+//                slice.hasNext());
+//    }
+
+    public static <T> SliceResponse<T> of(Slice<T> slice, boolean likeEnabled) {
         return new SliceResponse<>(
                 slice.getContent(),
                 slice.getNumberOfElements(),
-                slice.hasNext());
+                slice.hasNext(),
+                likeEnabled);
     }
 
 }

@@ -7,8 +7,8 @@ import kyonggiyo.application.port.in.candidate.FindCandidateUseCase;
 import kyonggiyo.domain.candidate.Status;
 import kyonggiyo.global.auth.UserInfo;
 import kyonggiyo.global.response.SliceResponse;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/candidates/")
 public class CandidateController {
 
+    private static final int DEFAULT_PAGE_SIZE = 10;
+
     private CreateCandidateUseCase createCandidateUseCase;
     private FindCandidateUseCase findCandidateUseCase;
 
@@ -30,9 +32,11 @@ public class CandidateController {
     }
 
     @GetMapping
-    public ResponseEntity<SliceResponse<CandidateResponse>> findAllCandidatesByStatus(@RequestParam Status status,
-                                                                                      @PageableDefault Pageable pageable) {
-        SliceResponse<CandidateResponse> response = findCandidateUseCase.findAllByStatus(status, pageable);
+    public ResponseEntity<SliceResponse<CandidateResponse>> findAllCandidatesByStatus(UserInfo userInfo,
+                                                                                      @RequestParam Status status,
+                                                                                      @RequestParam(required = false, defaultValue = "0", value = "page") int page) {
+        Pageable pageable = PageRequest.of(page, DEFAULT_PAGE_SIZE);
+        SliceResponse<CandidateResponse> response = findCandidateUseCase.findAllByStatus(userInfo, status, pageable);
         return ResponseEntity.ok(response);
     }
 
