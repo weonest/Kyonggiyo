@@ -2,7 +2,7 @@ package kyonggiyo.adapter.out.persistence.restaurant;
 
 import kyonggiyo.adapter.out.persistence.AdapterTest;
 import kyonggiyo.domain.restaurant.Restaurant;
-import org.instancio.Instancio;
+import kyonggiyo.fixture.RestaurantFixtures;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -19,7 +19,7 @@ class RestaurantPersistenceAdapterTest extends AdapterTest {
     @Test
     void 식별자를_통해_DB에서_Restaurant을_조회할_수_있다() {
         // given
-        Restaurant restaurant = Instancio.create(Restaurant.class);
+        Restaurant restaurant = RestaurantFixtures.generateRestaurantEntityWithoutReview();
         restaurantRepository.save(restaurant);
 
 
