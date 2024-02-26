@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class CandidateQueryService implements FindCandidateUseCase {
 
-    private FindCandidatePort findCandidatePort;
+    private final FindCandidatePort findCandidatePort;
 
     @Override
     public SliceResponse<CandidateResponse> findAllByStatus(UserInfo userInfo, Status status, Pageable pageable) {

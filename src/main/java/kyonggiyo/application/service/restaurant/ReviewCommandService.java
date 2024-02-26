@@ -21,10 +21,10 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ReviewCommandService implements CreateReviewUseCase, UpdateReviewUseCase {
 
-    private GetUserPort getUserPort;
-    private GetRestaurantPort getRestaurantPort;
-    private GetReviewPort getReviewPort;
-    private SaveReviewPort saveReviewPort;
+    private final GetUserPort getUserPort;
+    private final GetRestaurantPort getRestaurantPort;
+    private final GetReviewPort getReviewPort;
+    private final SaveReviewPort saveReviewPort;
 
     public void create(UserInfo userInfo, Long restaurantId, ReviewCreateRequest request) {
         User user = getUserPort.getById(userInfo.userId());

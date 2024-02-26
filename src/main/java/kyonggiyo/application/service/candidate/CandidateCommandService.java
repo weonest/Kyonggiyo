@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class CandidateCommandService implements CreateCandidateUseCase {
 
-    private SaveCandidatePort saveCandidatePort;
+    private final SaveCandidatePort saveCandidatePort;
 
     @Override
     public void createCandidate(UserInfo userInfo, CandidateCreateRequest request) {

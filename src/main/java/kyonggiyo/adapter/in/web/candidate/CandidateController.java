@@ -7,6 +7,7 @@ import kyonggiyo.application.port.in.candidate.FindCandidateUseCase;
 import kyonggiyo.domain.candidate.Status;
 import kyonggiyo.global.auth.UserInfo;
 import kyonggiyo.global.response.SliceResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -17,13 +18,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/v1/candidates/")
 public class CandidateController {
 
     private static final int DEFAULT_PAGE_SIZE = 10;
 
-    private CreateCandidateUseCase createCandidateUseCase;
-    private FindCandidateUseCase findCandidateUseCase;
+    private final CreateCandidateUseCase createCandidateUseCase;
+    private final FindCandidateUseCase findCandidateUseCase;
 
     @PostMapping
     public ResponseEntity<Void> createCandidate(UserInfo userInfo, CandidateCreateRequest request) {
