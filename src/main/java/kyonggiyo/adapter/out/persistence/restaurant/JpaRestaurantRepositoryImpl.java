@@ -6,6 +6,8 @@ import kyonggiyo.global.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @RequiredArgsConstructor
 public class JpaRestaurantRepositoryImpl implements RestaurantRepository {
@@ -17,6 +19,11 @@ public class JpaRestaurantRepositoryImpl implements RestaurantRepository {
         Restaurant restaurant = jpaRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(GlobalErrorCode.NOT_FOUND_ENTITY_EXCEPTION));
         return restaurant;
+    }
+
+    @Override
+    public List<Restaurant> getAllRestaurants() {
+        return jpaRepository.findAll();
     }
 
     @Override

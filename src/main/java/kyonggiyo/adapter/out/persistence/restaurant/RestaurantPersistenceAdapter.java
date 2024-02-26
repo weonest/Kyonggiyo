@@ -6,6 +6,8 @@ import kyonggiyo.domain.restaurant.Restaurant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class RestaurantPersistenceAdapter implements GetRestaurantPort, SaveRestaurantPort {
@@ -16,6 +18,11 @@ public class RestaurantPersistenceAdapter implements GetRestaurantPort, SaveRest
     public Restaurant getById(Long id) {
         Restaurant restaurant = repository.getById(id);
         return restaurant;
+    }
+
+    @Override
+    public List<Restaurant> getAllRestaurants() {
+        return repository.getAllRestaurants();
     }
 
     @Override
