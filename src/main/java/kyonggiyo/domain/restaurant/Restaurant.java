@@ -7,12 +7,16 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import kyonggiyo.domain.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.Set;
+import java.util.TreeSet;
 
 @Getter
 @Entity
@@ -34,6 +38,11 @@ public class Restaurant extends BaseEntity {
     @Embedded
     private Address address;
 
+    @OneToMany(mappedBy = "restaurant", orphanRemoval = true)
+    private Set<Review> reviews = new TreeSet<>();
+
+    private float averageRating;
+
     @Builder
     private Restaurant(String name,
                        RestaurantCategory category,
@@ -45,6 +54,14 @@ public class Restaurant extends BaseEntity {
         this.contact = contact;
         this.address = new Address(address, lat, lng);
         this.category = category;
+    }
+
+    public void updateAverageRating() {
+        float total = 0;
+        for (Review review : reviews) {
+            total += review.getRating();
+        }
+        averageRating = total / reviews.size();
     }
 
 }

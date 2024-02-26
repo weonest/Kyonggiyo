@@ -12,14 +12,16 @@ import kyonggiyo.domain.BaseEntity;
 import kyonggiyo.domain.user.User;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
-@Table(name = "reviewes")
+@EqualsAndHashCode
+@Table(name = "reviews")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Review extends BaseEntity {
+public class Review extends BaseEntity implements Comparable<Review>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,12 +50,26 @@ public class Review extends BaseEntity {
         this.reviewer = reviewer;
     }
 
+    @Override
+    public int compareTo(Review o) {
+        if (getCreatedAt().isAfter(o.getCreatedAt())) return -1;
+        if (getCreatedAt() == o.getCreatedAt()) return 0;
+        return -1;
+    }
+
+    public void update(int rating, String content) {
+        this.restaurant.getReviews().remove(this);
+        this.rating = rating;
+        this.content = content;
+        this.restaurant.getReviews().add(this);
+    }
+
     private void setRestaurant(Restaurant restaurant) {
         if (this.restaurant != null) {
             this.restaurant.getReviews().remove(this);
         }
         this.restaurant = restaurant;
-        restaurant.getReviews().add(this);
+        this.restaurant.getReviews().add(this);
     }
 
 }
