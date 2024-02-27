@@ -18,6 +18,8 @@ public record CandidateCreateRequest(
                 .category(category)
                 .contact(contact)
                 .address(address)
+                .lat(lat)
+                .lng(lng)
                 .requesterId(requestId)
                 .build();
     }
