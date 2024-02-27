@@ -15,7 +15,7 @@ import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
-public class JwtAuthorizationInterceptor implements HandlerInterceptor {
+public class AuthorizationInterceptor implements HandlerInterceptor {
 
     private final AuthContext authContext;
 
