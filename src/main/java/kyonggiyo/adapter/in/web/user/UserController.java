@@ -1,6 +1,6 @@
 package kyonggiyo.adapter.in.web.user;
 
-import kyonggiyo.adapter.in.web.auth.dto.CreateUserRequest;
+import kyonggiyo.adapter.in.web.auth.dto.UserCreateRequst;
 import kyonggiyo.application.port.in.auth.ProvideAuthCodeUrlUseCase;
 import kyonggiyo.application.port.in.user.CreateUserProfileUseCase;
 import kyonggiyo.domain.auth.Platform;
@@ -15,14 +15,14 @@ import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/user/")
+@RequestMapping("/api/v1/users/")
 public class UserController {
 
     private final CreateUserProfileUseCase createUserProfileUseCase;
     private final ProvideAuthCodeUrlUseCase provideAuthCodeUrlUseCase;
 
-    @PostMapping("/signup")
-    public ResponseEntity<Void> createProfile(@RequestBody CreateUserRequest request) {
+    @PostMapping("/profile")
+    public ResponseEntity<Void> createProfile(@RequestBody UserCreateRequst request) {
         Platform platform = createUserProfileUseCase.createUser(request);
         URI uri = provideAuthCodeUrlUseCase.provideUri(platform);
         return ResponseEntity.created(uri).build();

@@ -1,6 +1,6 @@
 package kyonggiyo.application.service.user;
 
-import kyonggiyo.adapter.in.web.auth.dto.CreateUserRequest;
+import kyonggiyo.adapter.in.web.auth.dto.UserCreateRequst;
 import kyonggiyo.application.port.in.user.CreateUserProfileUseCase;
 import kyonggiyo.application.port.out.auth.FindAccountPort;
 import kyonggiyo.application.port.out.user.SaveUserPort;
@@ -22,11 +22,11 @@ public class UserCommandService implements CreateUserProfileUseCase {
     private final SaveUserPort saveUserPort;
 
     @Override
-    public Platform createUser(CreateUserRequest createUserRequest) {
-        Account account = findAccountPort.findById(createUserRequest.accountId())
+    public Platform createUser(UserCreateRequst userCreateRequst) {
+        Account account = findAccountPort.findById(userCreateRequst.accountId())
                 .orElseThrow(() -> new NotFoundException(GlobalErrorCode.NOT_FOUND_ENTITY_EXCEPTION));
 
-        User user = createUserRequest.toEntity();
+        User user = userCreateRequst.toEntity();
         account.registerUser(saveUserPort.save(user));
         return account.getPlatform();
     }

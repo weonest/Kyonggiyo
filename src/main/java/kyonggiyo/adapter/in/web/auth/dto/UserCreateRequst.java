@@ -2,7 +2,7 @@ package kyonggiyo.adapter.in.web.auth.dto;
 
 import kyonggiyo.domain.user.User;
 
-public record CreateUserRequest(
+public record UserCreateRequst(
         Long accountId,
         String nickname
 ) {
