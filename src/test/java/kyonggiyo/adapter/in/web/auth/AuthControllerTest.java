@@ -8,11 +8,13 @@ import kyonggiyo.domain.auth.Platform;
 import kyonggiyo.global.auth.UserInfo;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpHeaders;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -69,11 +71,10 @@ class AuthControllerTest extends ControllerTest {
     @Test
     void 유저정보를_통해_로그아웃을_진행한다() throws Exception {
         // given
-        UserInfo userInfo = Instancio.create(UserInfo.class);
-        Cookie cookie = new Cookie("Refresh-Token", "token");
+        Cookie cookie = new Cookie("Refresh-Token", REFRESH_TOKEN);
         cookie.setMaxAge(100);
 
-        willDoNothing().given(oAuthLogoutUseCase).logout(userInfo);
+        willDoNothing().given(oAuthLogoutUseCase).logout(any(UserInfo.class));
 
         // when
         ResultActions resultActions = mockMvc.perform(
@@ -88,7 +89,7 @@ class AuthControllerTest extends ControllerTest {
     @Test
     void 쿠키에_담긴_리프레시_토큰을_통해_토큰_재발급을_진행한다() throws Exception {
         // given
-        Cookie cookie = new Cookie("Refresh-Token", "token");
+        Cookie cookie = new Cookie("Refresh-Token", REFRESH_TOKEN);
         cookie.setMaxAge(100);
         TokenResponse tokenResponse = Instancio.create(TokenResponse.class);
         int tokenMaxAge = (int) tokenResponse.refreshTokenMaxAge();
@@ -98,6 +99,7 @@ class AuthControllerTest extends ControllerTest {
         // when
         ResultActions resultActions = mockMvc.perform(
                 get("/api/v1/auth/reissue")
+                        .header(HttpHeaders.AUTHORIZATION, BEARER_TOKEN)
                         .cookie(cookie));
 
         // then
