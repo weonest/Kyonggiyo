@@ -25,8 +25,9 @@ public class RestaurantController {
     private final GetRestaurantUseCase getRestaurantUseCase;
 
     @PostMapping
-    public void createRestaurant(@RequestBody RestaurantCreateRequest request) {
+    public ResponseEntity<Void> createRestaurant(@RequestBody RestaurantCreateRequest request) {
         createRestaurantUseCase.create(request);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping
