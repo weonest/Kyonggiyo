@@ -2,7 +2,9 @@ name: 경기요 CD
 
 on:
   push:
-    branches: [ "dev", "main" ]
+    branches:
+      - dev
+      - main
 
 jobs:
   CI-CD:
@@ -44,15 +46,15 @@ jobs:
         if: contains(github.ref, 'main')
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build -f Dockerfile-dev -t ${{ secrets.DOCKER_USERNAME }}/kyonggiyo-prod .
-          docker push ${{ secrets.DOCKER_USERNAME }}/kyonggiyo-prod
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_PROD_REOP }} .
+          docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_PROD_REOP }}
 
       - name: Docker build & push to dev
         if: contains(github.ref, 'dev')
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build -f Dockerfile-dev -t ${{ secrets.DOCKER_USERNAME }}/kyonggiyo-dev .
-          docker push ${{ secrets.DOCKER_USERNAME }}/kyonggiyo-dev
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_DEV_REOP }} .
+          docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_DEV_REOP }}
 
       - name: 운영환경 배포
         uses: appleboy/ssh-action@master
@@ -62,11 +64,10 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ubuntu
           key: ${{ secrets.AWS_PRIVATE_ACCESS_KEY }}
-          envs: GITHUB_SHA
           script: |
             sudo docker ps
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/docker-test-prod
-            sudo docker run -d -p 8082:8082 ${{ secrets.DOCKER_USERNAME }}/docker-test-prod
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_PROD_REOP }}
+            sudo docker run -d -p 8081:8081 ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_PROD_REOP }}
             sudo docker image prune -f
 
       ## deploy to develop
@@ -76,12 +77,10 @@ jobs:
         if: contains(github.ref, 'dev')
         with:
           host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }} # ubuntu
-          password: ${{ secrets.PASSWORD }}
-          port: 22
+          username: ubuntu
           key: ${{ secrets.AWS_PRIVATE_ACCESS_KEY }}
           script: |
             sudo docker ps
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/docker-test-dev
-            sudo docker run -d -p 8081:8081 ${{ secrets.DOCKER_USERNAME }}/docker-test-dev
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_DEV_REOP }}
+            sudo docker run -d -p 8082:8082 ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_DEV_REOP }}
             sudo docker image prune -f
