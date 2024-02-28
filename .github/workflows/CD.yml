@@ -15,7 +15,6 @@ jobs:
 
       - name: 환경변수 파일 생성
         run: echo "${{ secrets.ENV_PROPERTIES }}" > .env
-        working-directory: src/main/resources
       
       - name: JDK 17 설치
         uses: actions/setup-java@v3
@@ -61,6 +60,15 @@ jobs:
           docker build -f Dockerfile-dev -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_DEV_REPO }} .
           docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_DEV_REPO }}
 
+      - name: 환경 변수 파일을 서버로 전송
+        uses: appleboy/scp-action@v1.0.0
+        with:
+          username: ubuntu
+          host: ${{ secrets.HOST }}
+          key: ${{ secrets.AWS_PRIVATE_ACCESS_KEY }}
+          source: ".env"
+          target: "/home/ubuntu"
+
       - name: 운영환경 배포
         uses: appleboy/ssh-action@v1.0.0
         id: deploy-prod
@@ -72,7 +80,7 @@ jobs:
           script: |
             sudo docker ps
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_PROD_REPO }}
-            sudo docker run -d -p 8081:8081 ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_PROD_REPO }}
+            sudo docker run -d -p --env-file .env 8081:8081 ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_PROD_REPO }}
             sudo docker image prune -f
 
       - name: 개발환경 배포
@@ -86,5 +94,5 @@ jobs:
           script: |
             sudo docker ps
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_DEV_REPO }}
-            sudo docker run -d -p 8082:8082 ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_DEV_REPO }}
+            sudo docker run -d -p --env-file .env 8082:8082 ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_DEV_REPO }}
             sudo docker image prune -f
