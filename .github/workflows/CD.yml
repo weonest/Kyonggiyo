@@ -80,7 +80,7 @@ jobs:
           script: |
             sudo docker ps
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_PROD_REPO }}
-            sudo docker run -d -p --env-file .env 8081:8081 ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_PROD_REPO }}
+            sudo docker run -d --env-file .env -p 8081:8080 ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_DEV_REPO }}
             sudo docker image prune -f
 
       - name: 개발환경 배포
@@ -94,5 +94,5 @@ jobs:
           script: |
             sudo docker ps
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_DEV_REPO }}
-            sudo docker run -d -p --env-file .env 8082:8082 ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_DEV_REPO }}
+            sudo docker run -d --env-file .env -p 8082:8080 ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_DEV_REPO }}
             sudo docker image prune -f
