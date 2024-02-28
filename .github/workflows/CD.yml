@@ -62,7 +62,7 @@ jobs:
           docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_DEV_REPO }}
 
       - name: 운영환경 배포
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@1.0.0
         id: deploy-prod
         if: contains(github.ref, 'main')
         with:
@@ -76,7 +76,7 @@ jobs:
             sudo docker image prune -f
 
       - name: 개발환경 배포
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v1.0.0
         id: deploy-dev
         if: contains(github.ref, 'dev')
         with:
