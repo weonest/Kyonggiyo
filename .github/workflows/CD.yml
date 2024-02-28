@@ -49,14 +49,16 @@ jobs:
         if: contains(github.ref, 'main')
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_PROD_REPO }} .
+          echo 'Docker Login Succeeded!!'
+          docker build -f Dockerfile-dev -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_PROD_REPO }} .
           docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_PROD_REPO }}
 
       - name: Docker build & push to dev
         if: contains(github.ref, 'dev')
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_DEV_REPO }} .
+          echo 'Docker Login Succeeded!!'
+          docker build -f Dockerfile-dev -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_DEV_REPO }} .
           docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_DEV_REPO }}
 
       - name: 운영환경 배포
