@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 레포지토리 체크아웃
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
 
       - name: 환경변수 파일 생성
         run: echo "${{ secrets.ENV_PROPERTIES }}" > .env
