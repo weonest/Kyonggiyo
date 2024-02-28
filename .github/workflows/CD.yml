@@ -49,15 +49,15 @@ jobs:
         if: contains(github.ref, 'main')
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_PROD_REOP }} .
-          docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_PROD_REOP }}
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_PROD_REPO }} .
+          docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_PROD_REPO }}
 
       - name: Docker build & push to dev
         if: contains(github.ref, 'dev')
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_DEV_REOP }} .
-          docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_DEV_REOP }}
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_DEV_REPO }} .
+          docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_DEV_REPO }}
 
       - name: 운영환경 배포
         uses: appleboy/ssh-action@master
@@ -69,11 +69,11 @@ jobs:
           key: ${{ secrets.AWS_PRIVATE_ACCESS_KEY }}
           script: |
             sudo docker ps
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_PROD_REOP }}
-            sudo docker run -d -p 8081:8081 ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_PROD_REOP }}
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_PROD_REPO }}
+            sudo docker run -d -p 8081:8081 ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_PROD_REPO }}
             sudo docker image prune -f
 
-      - name: Deploy to dev
+      - name: 개발환경 배포
         uses: appleboy/ssh-action@master
         id: deploy-dev
         if: contains(github.ref, 'dev')
@@ -83,6 +83,6 @@ jobs:
           key: ${{ secrets.AWS_PRIVATE_ACCESS_KEY }}
           script: |
             sudo docker ps
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_DEV_REOP }}
-            sudo docker run -d -p 8082:8082 ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_DEV_REOP }}
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_DEV_REPO }}
+            sudo docker run -d -p 8082:8082 ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_DEV_REPO }}
             sudo docker image prune -f
