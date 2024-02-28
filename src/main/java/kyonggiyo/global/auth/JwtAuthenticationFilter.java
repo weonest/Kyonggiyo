@@ -34,6 +34,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String[] whiteList = {
                 "/api/v1/auth/login",
                 "/api/v1/user/signup",
+                "/actuator",
                 "/favicon.ico",
                 "/h2-console",
         };

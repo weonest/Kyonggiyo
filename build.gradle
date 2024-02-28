@@ -21,6 +21,11 @@ repositories {
     mavenCentral()
 }
 
+// Plain jar 생성하지 않도록
+jar{
+    enabled = false
+}
+
 // SpringCloud setting
 ext {
     set('springCloudVersion', "2022.0.3")
@@ -37,6 +42,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator:3.2.2'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
     // Lombok
