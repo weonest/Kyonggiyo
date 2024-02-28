@@ -35,6 +35,7 @@ public class ReviewCommandService implements CreateReviewUseCase, UpdateReviewUs
                 .restaurant(restaurant)
                 .reviewer(user)
                 .build();
+        restaurant.updateAverageRating();
         saveReviewPort.save(review);
     }
 

@@ -61,7 +61,7 @@ public class Restaurant extends BaseEntity {
         for (Review review : reviews) {
             total += review.getRating();
         }
-        averageRating = total / reviews.size();
+        averageRating = Math.round(total / reviews.size() * 10) / 10.0f;
     }
 
 }
