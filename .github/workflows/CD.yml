@@ -38,6 +38,9 @@ jobs:
         run: echo 'gradle cache hit!'
       - if: steps.gradle-cache.outputs.cache-hit != 'true'
         run: echo 'gradle cache missed!'
+
+      - name: Gradle 권한 부여
+        run: chmod +x gradlew
         
       - name: Gradle 테스트 제외 빌드
         run: ./gradlew clean build -x test
