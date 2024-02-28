@@ -2,12 +2,7 @@ spring:
   datasource:
     url: ${DATASOURCE_URL}
     username: ${DATASOURCE_USERNAME}
-    password:
-
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+    password: ${DATASOURCE_PASSWORD}
 
   jpa:
     open-in-view: false
@@ -17,6 +12,12 @@ spring:
       hibernate:
         format_sql: true
     show-sql: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics
 
 oauth:
   kakao:
