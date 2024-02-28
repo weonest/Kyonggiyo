@@ -70,7 +70,6 @@ jobs:
             sudo docker run -d -p 8081:8081 ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_PROD_REOP }}
             sudo docker image prune -f
 
-      ## deploy to develop
       - name: Deploy to dev
         uses: appleboy/ssh-action@master
         id: deploy-dev
