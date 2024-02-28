@@ -61,7 +61,7 @@ jobs:
           docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_DEV_REPO }}
 
       - name: 환경 변수 파일을 서버로 전송
-        uses: appleboy/scp-action@v1.0.0
+        uses: appleboy/scp-action@master
         with:
           username: ubuntu
           host: ${{ secrets.HOST }}
