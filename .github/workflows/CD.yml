@@ -62,7 +62,7 @@ jobs:
           docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_DEV_REPO }}
 
       - name: 운영환경 배포
-        uses: appleboy/ssh-action@1.0.0
+        uses: appleboy/ssh-action@v1.0.0
         id: deploy-prod
         if: contains(github.ref, 'main')
         with:
