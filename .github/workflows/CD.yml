@@ -41,8 +41,8 @@ jobs:
       - name: Gradle 권한 부여
         run: chmod +x gradlew
         
-      - name: Gradle 테스트 제외 빌드
-        run: ./gradlew clean build -x test
+      - name: Gradle 빌드
+        run: ./gradlew clean build
 
       - name: Docker build & push to prod
         if: contains(github.ref, 'main')
@@ -78,8 +78,8 @@ jobs:
           username: ubuntu
           key: ${{ secrets.AWS_PRIVATE_ACCESS_KEY }}
           script: |
-            sudo docker ps
-            sudo docker stop prod
+            docker stop prod
+            docker rm $(docker ps -a -q)
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_PROD_REPO }}
             sudo docker run -d --env-file .env -p 8081:8080 --name prod ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_DEV_REPO }}
             sudo docker image prune -f
@@ -93,8 +93,8 @@ jobs:
           username: ubuntu
           key: ${{ secrets.AWS_PRIVATE_ACCESS_KEY }}
           script: |
-            sudo docker ps
-            sudo docker stop dev
+            docker stop dev
+            docker rm $(docker ps -a -q)
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_DEV_REPO }}
             sudo docker run -d --env-file .env -p 8082:8080 --name dev ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_DEV_REPO }}
             sudo docker image prune -f
