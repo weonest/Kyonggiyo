@@ -9,7 +9,6 @@ public record TokenResponse(
         long accessTokenMaxAge,
         @JsonIgnore
         String refreshToken,
-        Long refreshTokenKey,
         long refreshTokenMaxAge
 ) {
 }

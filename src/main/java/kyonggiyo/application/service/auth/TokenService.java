@@ -38,7 +38,6 @@ public class TokenService implements ReissueTokenUseCase {
                 .accessToken(accessToken.value())
                 .accessTokenMaxAge(accessToken.expiresIn())
                 .refreshToken(refreshToken.getValue())
-                .refreshTokenKey(refreshToken.getUserId())
                 .refreshTokenMaxAge(refreshToken.getExpiresIn())
                 .build();
     }
@@ -74,7 +73,6 @@ public class TokenService implements ReissueTokenUseCase {
                 .accessToken(newAccessToken.value())
                 .accessTokenMaxAge(newAccessToken.expiresIn())
                 .refreshToken(newRefreshToken.getValue())
-                .refreshTokenKey(newRefreshToken.getUserId())
                 .refreshTokenMaxAge(newRefreshToken.getExpiresIn())
                 .build();
     }
