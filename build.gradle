@@ -76,7 +76,10 @@ dependencies {
 }
 
 openapi3 {
-    server = 'http://localhost:8080'
+    servers = [
+            { url = "http://localhost:8080" },
+            { url = "https://dev.kyonggiyo.site" }
+    ]
     title = 'Kyonggiyo API Document'
     description = '경기요 API 문서'
     version = "${project.version}"
