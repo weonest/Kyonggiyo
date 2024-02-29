@@ -54,7 +54,6 @@ class TokenServiceTest extends ServiceTest {
                 .accessToken(accessToken.value())
                 .accessTokenMaxAge(accessToken.expiresIn())
                 .refreshToken(refreshToken.getValue())
-                .refreshTokenKey(refreshToken.getUserId())
                 .refreshTokenMaxAge(refreshToken.getExpiresIn())
                 .build();
 
@@ -121,7 +120,6 @@ class TokenServiceTest extends ServiceTest {
                 .accessToken(accessToken.value())
                 .accessTokenMaxAge(accessToken.expiresIn())
                 .refreshToken(refreshToken.getValue())
-                .refreshTokenKey(refreshToken.getUserId())
                 .refreshTokenMaxAge(refreshToken.getExpiresIn())
                 .build();
 
