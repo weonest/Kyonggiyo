@@ -20,20 +20,23 @@ import kyonggiyo.application.service.auth.TokenService;
 import kyonggiyo.domain.auth.util.PlatformConverter;
 import kyonggiyo.domain.candidate.util.StatusConverter;
 import kyonggiyo.global.auth.AuthContext;
-import kyonggiyo.global.auth.AuthorizedArgumentResolver;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureWebMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.core.convert.support.GenericConversionService;
+import org.springframework.restdocs.RestDocumentationContextProvider;
+import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @WebMvcTest({
@@ -45,6 +48,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
         UserController.class,
 })
 @AutoConfigureWebMvc
+@ExtendWith(RestDocumentationExtension.class)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public abstract class ControllerTest {
 
@@ -81,10 +85,11 @@ public abstract class ControllerTest {
     protected CreateUserProfileUseCase createUserProfileUseCase;
 
     @BeforeEach
-    void setUp(WebApplicationContext context) {
+    void setUp(WebApplicationContext context, RestDocumentationContextProvider restDocumentationContextProvider) {
         genericConversionService.addConverter(new StatusConverter());
         genericConversionService.addConverter(new PlatformConverter());
         mockMvc = MockMvcBuilders.webAppContextSetup(context)
+                .apply(documentationConfiguration(restDocumentationContextProvider))
                 .addFilters(new CharacterEncodingFilter("UTF-8", true))
                 .alwaysDo(print())
                 .build();
