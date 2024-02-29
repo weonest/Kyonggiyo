@@ -35,8 +35,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 "/api/v1/auth/login",
                 "/api/v1/user/signup",
                 "/actuator",
-                "/favicon.ico",
                 "/h2-console",
+                "/swagger",
+                "/v3/api-docs",
+                "/api.json",
         };
         String path = request.getRequestURI();
         return Arrays.stream(whiteList).anyMatch(path::startsWith);
