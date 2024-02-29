@@ -7,11 +7,18 @@ spring:
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     properties:
       hibernate:
         format_sql: true
     show-sql: true
+
+springdoc:
+  swagger-ui:
+    urls:
+      - name: "Kyonggiyo API"
+        url: api.json
+    path: swagger
 
 management:
   endpoints:
