@@ -9,15 +9,28 @@ import kyonggiyo.global.auth.UserInfo;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
+import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 
+import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
+import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.resourceDetails;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.restdocs.cookies.CookieDocumentation.cookieWithName;
+import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.queryParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.cookie;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
@@ -41,11 +54,20 @@ class AuthControllerTest extends ControllerTest {
 
         // when
         ResultActions resultActions = mockMvc.perform(
-                get("/api/v1/auth/login/{platform}", platform.name().toLowerCase()));
+                        get("/api/v1/auth/login/{platform}", platform.name().toLowerCase()))
+                .andDo(document("get-authCodeRequestUrl",
+                                resourceDetails().tag("인증인가").description("플랫폼 인가코드 요청 URL 불러오기"),
+                                pathParameters(
+                                        parameterWithName("platform").description("소셜 로그인 플랫폼")
+                                ),
+                                responseHeaders(
+                                        headerWithName("Location").description("인가코드 요청 URL")
+                                )));
 
         // then
         resultActions.andExpect(status().isCreated())
                 .andExpect(redirectedUrl(expectUri.toString()));
+
     }
 
     @Test
@@ -60,7 +82,22 @@ class AuthControllerTest extends ControllerTest {
         // when
         ResultActions resultActions = mockMvc.perform(
                 get("/api/v1/auth/login/{platform}/callback", platform.name().toLowerCase())
-                        .queryParam("code", code));
+                        .queryParam("code", code))
+                .andDo(document("auth-login",
+                        resourceDetails().tag("인증인가").description("소셜 로그인"),
+                        pathParameters(
+                                parameterWithName("platform").description("소셜 로그인 플랫폼")
+                        ),
+                        queryParameters(
+                                parameterWithName("code").description("플랫폼 인가 코드")
+                        ),
+                        responseFields(
+                                fieldWithPath("accountId").type(JsonFieldType.NUMBER).description("계정 식별자"),
+                                fieldWithPath("token.accessToken").type(JsonFieldType.STRING).description("액세스 토큰"),
+                                fieldWithPath("token.accessTokenMaxAge").type(JsonFieldType.NUMBER).description("액세스 토큰 MaxAge"),
+                                fieldWithPath("token.refreshToken").type(JsonFieldType.STRING).description("리프레시 토큰").optional(),
+                                fieldWithPath("token.refreshTokenMaxAge").type(JsonFieldType.NUMBER).description("리프레시 토큰 MaxAge")
+                        )));
 
         // then
         resultActions.andExpect(status().isOk())
@@ -79,7 +116,16 @@ class AuthControllerTest extends ControllerTest {
         // when
         ResultActions resultActions = mockMvc.perform(
                 get("/api/v1/auth/logout")
-                        .cookie(cookie));
+                        .header(HttpHeaders.AUTHORIZATION, BEARER_TOKEN)
+                        .cookie(cookie))
+                .andDo(document("auth-logout",
+                        resourceDetails().tag("인증인가").description("소셜 로그아웃"),
+                        requestHeaders(
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("액세스 토큰")
+                        ),
+                        requestCookies(
+                                cookieWithName("Refresh-Token").description("리프레시 토큰 쿠키")
+                        )));
 
         // then
         resultActions.andExpect(status().isNoContent())

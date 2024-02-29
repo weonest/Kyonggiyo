@@ -1,6 +1,7 @@
 package kyonggiyo.global.config;
 
 import kyonggiyo.domain.auth.util.PlatformConverter;
+import kyonggiyo.domain.candidate.util.StatusConverter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -11,6 +12,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(new PlatformConverter());
+        registry.addConverter(new StatusConverter());
     }
 
 }
