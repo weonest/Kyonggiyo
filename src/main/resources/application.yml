@@ -13,6 +13,11 @@ spring:
         format_sql: true
     show-sql: true
 
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: 6379
+
 springdoc:
   swagger-ui:
     urls:
