@@ -57,3 +57,8 @@ jwt:
   access-token-expire-time: ${ACCESS_TOKEN_EXPIRE_TIME}
   refresh-token-expire-time: ${REFRESH_TOKEN_EXPIRE_TIME}
 
+cloud:
+  aws:
+    credentials:
+       accessKey: ${AWS_ACCESS_KEY}
+       secretKey: ${AWS_SECRET_KEY}
