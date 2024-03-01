@@ -19,6 +19,5 @@ public class AccountLoginService {
         return findAccountPort.findByPlatformAndPlatformId(platform, platformId)
                 .orElseGet(() -> accountSignUpService.signup(platform, platformId));
     }
-    // TODO: 2024-02-26 H2 에서는 readOnly 설정이 무시됨으로 MySQL 사용시 오류 발생할 수도 있음
 
 }

@@ -5,6 +5,7 @@ import kyonggiyo.domain.auth.Account;
 import kyonggiyo.domain.auth.Platform;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -13,7 +14,7 @@ public class AccountSignUpService {
 
     private final SaveAccountPort saveAccountPort;
 
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Account signup(Platform platform, String platformId) {
         Account account = new Account(platform, platformId);
         return saveAccountPort.save(account);
