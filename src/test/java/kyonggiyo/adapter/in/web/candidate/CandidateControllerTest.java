@@ -78,7 +78,7 @@ class CandidateControllerTest extends ControllerTest {
         Status status = Instancio.create(Status.class);
         Pageable pageable = PageRequest.of(0, 10);
         List<CandidateResponse> candidateResponse = Instancio.ofList(CandidateResponse.class).create();
-        SliceResponse<CandidateResponse> response = SliceResponse.of(new SliceImpl<>(candidateResponse), true);
+        SliceResponse<CandidateResponse> response = SliceResponse.of(new SliceImpl<>(candidateResponse));
 
 
         given(findCandidateUseCase.findAllByStatus(any(UserInfo.class), eq(status), eq(pageable))).willReturn(response);
@@ -108,9 +108,9 @@ class CandidateControllerTest extends ControllerTest {
                                 fieldWithPath("content[].lat").type(JsonFieldType.NUMBER).description("위도"),
                                 fieldWithPath("content[].lng").type(JsonFieldType.NUMBER).description("경도"),
                                 fieldWithPath("content[].createdAt").type(JsonFieldType.STRING).description("생성일"),
+                                fieldWithPath("content[].requesterId").type(JsonFieldType.NUMBER).description("요청자 식별자"),
                                 fieldWithPath("numberOfElements").type(JsonFieldType.NUMBER).description("조회된 데이터 수"),
-                                fieldWithPath("hasNext").type(JsonFieldType.BOOLEAN).description("다음 페이지 여부"),
-                                fieldWithPath("likeEnabled").type(JsonFieldType.BOOLEAN).description("좋아요 표시 여부")
+                                fieldWithPath("hasNext").type(JsonFieldType.BOOLEAN).description("다음 페이지 여부")
                         )));
 
         // then
