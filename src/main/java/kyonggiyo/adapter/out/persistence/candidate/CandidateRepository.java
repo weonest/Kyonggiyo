@@ -7,8 +7,12 @@ import org.springframework.data.domain.Slice;
 
 public interface CandidateRepository {
 
+    Candidate getById(Long id);
+
     Slice<Candidate> findAllByStatus(Status status, Pageable pageable);
 
     Candidate save(Candidate candidate);
+
+    void deleteById(Long id);
 
 }

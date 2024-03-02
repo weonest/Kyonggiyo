@@ -1,5 +1,6 @@
 package kyonggiyo.adapter.out.persistence.candidate;
 
+import kyonggiyo.application.port.out.candidate.DeleteCandidatePort;
 import kyonggiyo.application.port.out.candidate.FindCandidatePort;
 import kyonggiyo.application.port.out.candidate.SaveCandidatePort;
 import kyonggiyo.domain.candidate.Candidate;
@@ -11,9 +12,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class CandidatePersistenceAdapter implements FindCandidatePort, SaveCandidatePort {
+public class CandidatePersistenceAdapter implements FindCandidatePort, SaveCandidatePort, DeleteCandidatePort {
 
     private final CandidateRepository repository;
+
+    @Override
+    public Candidate getById(Long id) {
+        return repository.getById(id);
+    }
 
     @Override
     public Slice<Candidate> findAllByStatus(Status status, Pageable pageable) {
@@ -23,6 +29,11 @@ public class CandidatePersistenceAdapter implements FindCandidatePort, SaveCandi
     @Override
     public Candidate save(Candidate candidate) {
         return repository.save(candidate);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        repository.deleteById(id);
     }
 
 }
