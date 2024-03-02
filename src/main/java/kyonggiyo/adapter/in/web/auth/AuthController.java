@@ -10,6 +10,8 @@ import kyonggiyo.application.port.in.auth.OAuthLogoutUseCase;
 import kyonggiyo.application.port.in.auth.ProvideAuthCodeUrlUseCase;
 import kyonggiyo.application.port.in.auth.ReissueTokenUseCase;
 import kyonggiyo.domain.auth.Platform;
+import kyonggiyo.domain.auth.exception.ExpiredTokenException;
+import kyonggiyo.domain.auth.exception.TokenErrorCode;
 import kyonggiyo.global.auth.UserInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -39,7 +41,7 @@ public class AuthController {
     private final ReissueTokenUseCase reissueTokenUseCase;
 
     @GetMapping("/login/{platform}")
-    public ResponseEntity<Void> getAuthCodeRequestUrl(@PathVariable Platform platform) {
+    public ResponseEntity<Void> authCodeRequestUrlProvide(@PathVariable Platform platform) {
         URI uri = provideAuthCodeUrlUseCase.provideUri(platform);
         return ResponseEntity.created(uri).build();
     }
@@ -68,14 +70,18 @@ public class AuthController {
     }
 
     @GetMapping("/reissue")
-    public ResponseEntity<TokenResponse> reissue(HttpServletRequest httpServletRequest,
+    public ResponseEntity<TokenResponse> tokenReissue(HttpServletRequest httpServletRequest,
                                                  HttpServletResponse httpServletResponse) {
-        Cookie cookie = findRefreshTokenCookie(httpServletRequest).get();
-        TokenResponse tokenResponse = reissueTokenUseCase.reissueToken(cookie.getValue());
+        Optional<Cookie> refreshTokenCookie = findRefreshTokenCookie(httpServletRequest);
+        if (refreshTokenCookie.isPresent()) {
+            Cookie cookie = refreshTokenCookie.get();
+            TokenResponse tokenResponse = reissueTokenUseCase.reissueToken(cookie.getValue());
 
-        setCookie(httpServletResponse, tokenResponse);
+            setCookie(httpServletResponse, tokenResponse);
 
-        return ResponseEntity.ok(tokenResponse);
+            return ResponseEntity.ok(tokenResponse);
+        }
+        throw new ExpiredTokenException(TokenErrorCode.EXPIRED_TOKEN_EXCEPTION, "리프레시 토큰 재발급 요청에서 만료");
     }
 
     private Optional<Cookie> findRefreshTokenCookie(HttpServletRequest httpServletRequest) {
@@ -89,7 +95,7 @@ public class AuthController {
                 .path("/")
                 .sameSite("None")
                 .httpOnly(true)
-                .secure(false)
+                .secure(true)
                 .maxAge(tokenResponse.refreshTokenMaxAge())
                 .build();
 
