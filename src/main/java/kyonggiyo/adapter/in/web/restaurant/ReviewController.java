@@ -2,11 +2,13 @@ package kyonggiyo.adapter.in.web.restaurant;
 
 import kyonggiyo.adapter.in.web.restaurant.dto.ReviewCreateRequest;
 import kyonggiyo.adapter.in.web.restaurant.dto.ReviewUpdateRequest;
-import kyonggiyo.application.port.in.restaurant.CreateReviewUseCase;
-import kyonggiyo.application.port.in.restaurant.UpdateReviewUseCase;
+import kyonggiyo.application.port.in.restaurant.review.CreateReviewUseCase;
+import kyonggiyo.application.port.in.restaurant.review.DeleteReviewUseCase;
+import kyonggiyo.application.port.in.restaurant.review.UpdateReviewUseCase;
 import kyonggiyo.global.auth.UserInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,19 +23,27 @@ public class ReviewController {
 
     private final CreateReviewUseCase createReviewUseCase;
     private final UpdateReviewUseCase updateReviewUseCase;
+    private final DeleteReviewUseCase deleteReviewUseCase;
 
     @PostMapping
-    public ResponseEntity<Void> createReview(UserInfo userInfo,
-                                       @PathVariable Long restaurantId,
-                                       @RequestBody ReviewCreateRequest request) {
-        createReviewUseCase.create(userInfo, restaurantId, request);
+    public ResponseEntity<Void> reviewCreate(UserInfo userInfo,
+                                             @PathVariable Long restaurantId,
+                                             @RequestBody ReviewCreateRequest request) {
+        createReviewUseCase.createReview(userInfo, restaurantId, request);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/{reviewId}")
-    public ResponseEntity<Void> updateReview(@PathVariable Long reviewId,
+    public ResponseEntity<Void> reviewUpdate(UserInfo userInfo,
+                                             @PathVariable Long reviewId,
                                              @RequestBody ReviewUpdateRequest request) {
-        updateReviewUseCase.update(reviewId, request);
+        updateReviewUseCase.updateReview(userInfo, reviewId, request);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{reviewId}")
+    public ResponseEntity<Void> reviewDelete(UserInfo userInfo, @PathVariable Long reviewId) {
+        deleteReviewUseCase.deleteReview(userInfo, reviewId);
         return ResponseEntity.ok().build();
     }
 
