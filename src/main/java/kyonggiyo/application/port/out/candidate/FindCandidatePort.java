@@ -8,6 +8,8 @@ import org.springframework.data.domain.Slice;
 
 public interface FindCandidatePort {
 
+    Candidate getById(Long id);
+
     Slice<Candidate> findAllByStatus(Status status, Pageable pageable);
 
 }
