@@ -8,4 +8,6 @@ public interface ReviewRepository {
 
     Review save(Review review);
 
+    void deleteById(Long id);
+
 }

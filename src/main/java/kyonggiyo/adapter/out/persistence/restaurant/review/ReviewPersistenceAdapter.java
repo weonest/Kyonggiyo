@@ -1,16 +1,17 @@
 package kyonggiyo.adapter.out.persistence.restaurant.review;
 
-import kyonggiyo.application.port.out.restaurant.GetReviewPort;
-import kyonggiyo.application.port.out.restaurant.SaveReviewPort;
+import kyonggiyo.application.port.out.restaurant.review.DeleteReviewPort;
+import kyonggiyo.application.port.out.restaurant.review.GetReviewPort;
+import kyonggiyo.application.port.out.restaurant.review.SaveReviewPort;
 import kyonggiyo.domain.restaurant.Review;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class ReviewPersistenceAdapter implements SaveReviewPort, GetReviewPort {
+public class ReviewPersistenceAdapter implements SaveReviewPort, GetReviewPort, DeleteReviewPort {
 
-    private ReviewRepository reviewRepository;
+    private final ReviewRepository reviewRepository;
 
     @Override
     public Review getById(Long id) {
@@ -20,6 +21,11 @@ public class ReviewPersistenceAdapter implements SaveReviewPort, GetReviewPort {
     @Override
     public Review save(Review review) {
         return reviewRepository.save(review);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        reviewRepository.deleteById(id);
     }
 
 }

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class JpaReviewRepositoryImpl implements ReviewRepository {
 
-    private ReviewJpaRepository repository;
+    private final ReviewJpaRepository repository;
 
     @Override
     public Review getById(Long id) {
@@ -21,6 +21,11 @@ public class JpaReviewRepositoryImpl implements ReviewRepository {
     @Override
     public Review save(Review review) {
         return repository.save(review);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        repository.deleteById(id);
     }
 
 }
