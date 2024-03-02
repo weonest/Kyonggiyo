@@ -2,7 +2,7 @@ package kyonggiyo.adapter.in.web.user;
 
 import kyonggiyo.adapter.in.web.auth.dto.UserCreateRequst;
 import kyonggiyo.application.port.in.auth.ProvideAuthCodeUrlUseCase;
-import kyonggiyo.application.port.in.user.CreateUserProfileUseCase;
+import kyonggiyo.application.port.in.user.CreateUserUseCase;
 import kyonggiyo.domain.auth.Platform;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +18,12 @@ import java.net.URI;
 @RequestMapping("/api/v1/users/")
 public class UserController {
 
-    private final CreateUserProfileUseCase createUserProfileUseCase;
+    private final CreateUserUseCase createUserUseCase;
     private final ProvideAuthCodeUrlUseCase provideAuthCodeUrlUseCase;
 
     @PostMapping("/profile")
-    public ResponseEntity<Void> createProfile(@RequestBody UserCreateRequst request) {
-        Platform platform = createUserProfileUseCase.createUser(request);
+    public ResponseEntity<Void> userCreate(@RequestBody UserCreateRequst request) {
+        Platform platform = createUserUseCase.createUser(request);
         URI uri = provideAuthCodeUrlUseCase.provideUri(platform);
         return ResponseEntity.created(uri).build();
     }

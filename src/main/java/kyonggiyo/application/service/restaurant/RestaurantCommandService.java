@@ -16,7 +16,7 @@ public class RestaurantCommandService implements CreateRestaurantUseCase {
     private final SaveRestaurantPort saveRestaurantPort;
 
     @Override
-    public void create(RestaurantCreateRequest request) {
+    public void createRestaurant(RestaurantCreateRequest request) {
         Restaurant restaurant = request.toEntity();
         saveRestaurantPort.save(restaurant);
     }

@@ -25,19 +25,19 @@ public class RestaurantController {
     private final GetRestaurantUseCase getRestaurantUseCase;
 
     @PostMapping
-    public ResponseEntity<Void> createRestaurant(@RequestBody RestaurantCreateRequest request) {
-        createRestaurantUseCase.create(request);
+    public ResponseEntity<Void> restaurantCreate(@RequestBody RestaurantCreateRequest request) {
+        createRestaurantUseCase.createRestaurant(request);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/markers")
-    public ResponseEntity<List> getRestaurantMarker() {
+    public ResponseEntity<List<RestaurantMarkerResponse>> restaurantMarkers() {
         List<RestaurantMarkerResponse> response = getRestaurantUseCase.getAllRestaurantsForMarker();
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/markers/{restaurantId}")
-    public ResponseEntity<RestaurantResponse> getRestaurant(@PathVariable Long restaurantId) {
+    public ResponseEntity<RestaurantResponse> restaurantDetail(@PathVariable Long restaurantId) {
         RestaurantResponse response = getRestaurantUseCase.getById(restaurantId);
         return ResponseEntity.ok(response);
     }

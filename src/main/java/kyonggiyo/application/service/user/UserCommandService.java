@@ -1,7 +1,7 @@
 package kyonggiyo.application.service.user;
 
 import kyonggiyo.adapter.in.web.auth.dto.UserCreateRequst;
-import kyonggiyo.application.port.in.user.CreateUserProfileUseCase;
+import kyonggiyo.application.port.in.user.CreateUserUseCase;
 import kyonggiyo.application.port.out.auth.FindAccountPort;
 import kyonggiyo.application.port.out.user.SaveUserPort;
 import kyonggiyo.domain.auth.Account;
@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class UserCommandService implements CreateUserProfileUseCase {
+public class UserCommandService implements CreateUserUseCase {
 
     private final FindAccountPort findAccountPort;
     private final SaveUserPort saveUserPort;
