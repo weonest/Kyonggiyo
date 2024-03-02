@@ -1,5 +1,6 @@
 package kyonggiyo.adapter.in.web.auth;
 
+import com.epages.restdocs.apispec.Schema;
 import jakarta.servlet.http.Cookie;
 import kyonggiyo.adapter.in.web.ControllerTest;
 import kyonggiyo.adapter.in.web.auth.dto.LogInResponse;
@@ -84,7 +85,8 @@ class AuthControllerTest extends ControllerTest {
                 get("/api/v1/auth/login/{platform}/callback", platform.name().toLowerCase())
                         .queryParam("code", code))
                 .andDo(document("auth-login",
-                        resourceDetails().tag("인증인가").description("소셜 로그인"),
+                        resourceDetails().tag("인증인가").description("소셜 로그인")
+                                .responseSchema(Schema.schema("LogInResponse")),
                         pathParameters(
                                 parameterWithName("platform").description("소셜 로그인 플랫폼")
                         ),
@@ -146,7 +148,21 @@ class AuthControllerTest extends ControllerTest {
         ResultActions resultActions = mockMvc.perform(
                 get("/api/v1/auth/reissue")
                         .header(HttpHeaders.AUTHORIZATION, BEARER_TOKEN)
-                        .cookie(cookie));
+                        .cookie(cookie))
+                .andDo(document("auth-reissue",
+                        resourceDetails().tag("인증인가").description("토큰 재발급")
+                                .responseSchema(Schema.schema("TokenResponse")),
+                        requestHeaders(
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("액세스 토큰")
+                        ),
+                        requestCookies(cookieWithName("Refresh-Token").description("리프레시 토큰 쿠키")
+                        ),
+                        responseFields(
+                                fieldWithPath("accessToken").type(JsonFieldType.STRING).description("액세스 토큰"),
+                                fieldWithPath("accessTokenMaxAge").type(JsonFieldType.NUMBER).description("액세스 토큰 MaxAge"),
+                                fieldWithPath("refreshToken").type(JsonFieldType.STRING).description("리프레시 토큰").optional(),
+                                fieldWithPath("refreshTokenMaxAge").type(JsonFieldType.NUMBER).description("리프레시 토큰 MaxAge")
+                        )));
 
         // then
         resultActions.andExpect(status().isOk())
