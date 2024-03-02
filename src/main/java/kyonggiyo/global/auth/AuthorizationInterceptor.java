@@ -23,14 +23,14 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         if (!(handler instanceof HandlerMethod handlerMethod)) {
-            throw new NotFoundException(GlobalErrorCode.INVALID_REQUEST_EXCEPTION);
+            throw new NotFoundException(GlobalErrorCode.INVALID_REQUEST_EXCEPTION, "존재하지 않는 핸들러입니다.");
         }
 
         Role userRole = authContext.getAuthInfo().role();
 
         if (isAdminMethod(handlerMethod)) {
             if (!Objects.equals(Role.ADMIN, userRole)) {
-                throw new ForbiddenException(GlobalErrorCode.INVALID_REQUEST_EXCEPTION);
+                throw new ForbiddenException(GlobalErrorCode.INVALID_REQUEST_EXCEPTION, "관리자에게 문의하세요.");
             }
             return true;
         }
