@@ -1,7 +1,7 @@
 package kyonggiyo.application.service.user;
 
 import kyonggiyo.adapter.in.web.auth.dto.UserCreateRequst;
-import kyonggiyo.application.port.in.user.CreateUserProfileUseCase;
+import kyonggiyo.application.port.in.user.CreateUserUseCase;
 import kyonggiyo.application.port.out.auth.FindAccountPort;
 import kyonggiyo.application.port.out.user.SaveUserPort;
 import kyonggiyo.application.service.ServiceTest;
@@ -24,7 +24,7 @@ import static org.mockito.BDDMockito.given;
 class UserCommandServiceTest extends ServiceTest {
 
     @Autowired
-    private CreateUserProfileUseCase createUserProfileUseCase;
+    private CreateUserUseCase createUserUseCase;
 
     @MockBean
     private FindAccountPort findAccountPort;
@@ -43,7 +43,7 @@ class UserCommandServiceTest extends ServiceTest {
         given(saveUserPort.save(user)).willReturn(user);
 
         // when
-        Platform platform = createUserProfileUseCase.createUser(userCreateRequst);
+        Platform platform = createUserUseCase.createUser(userCreateRequst);
 
         // then
         assertThat(platform).isEqualTo(account.getPlatform());

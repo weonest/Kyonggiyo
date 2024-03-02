@@ -39,7 +39,7 @@ class UserControllerTest extends ControllerTest {
                 .queryParam("response_type", "code")
                 .build().toUri();
 
-        given(createUserProfileUseCase.createUser(request)).willReturn(platform);
+        given(createUserUseCase.createUser(request)).willReturn(platform);
         given(provideAuthCodeUrlUseCase.provideUri(platform)).willReturn(expectUri);
 
         // when
