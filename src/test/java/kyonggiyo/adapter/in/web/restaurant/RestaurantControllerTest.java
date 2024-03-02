@@ -35,7 +35,7 @@ class RestaurantControllerTest extends ControllerTest {
         // given
         RestaurantCreateRequest request = Instancio.create(RestaurantCreateRequest.class);
 
-        willDoNothing().given(createRestaurantUseCase).create(request);
+        willDoNothing().given(createRestaurantUseCase).createRestaurant(request);
 
         // when
         ResultActions resultActions = mockMvc.perform(
@@ -71,14 +71,10 @@ class RestaurantControllerTest extends ControllerTest {
 
         // when
         ResultActions resultActions = mockMvc.perform(
-                get("/api/v1/restaurants")
-                        .header(HttpHeaders.AUTHORIZATION, BEARER_TOKEN))
+                get("/api/v1/restaurants/markers"))
                 .andDo(document("get-restaurant-marker",
-                        resourceDetails().tag("식당").description("식당 마커 조회")
+                        resourceDetails().tag("식당").description("전체 식당 마커 조회")
                                 .responseSchema(Schema.schema("RestaurantMarkerResponse")),
-                        requestHeaders(
-                                headerWithName(HttpHeaders.AUTHORIZATION).description("액세스 토큰")
-                        ),
                         responseFields(
                                 fieldWithPath("[].id").type(JsonFieldType.NUMBER).description("식별자"),
                                 fieldWithPath("[].name").type(JsonFieldType.STRING).description("식당 이름"),
@@ -102,14 +98,10 @@ class RestaurantControllerTest extends ControllerTest {
 
         // when
         ResultActions resultActions = mockMvc.perform(
-                get("/api/v1/restaurants/{restaurantId}", restaurantId)
-                        .header(HttpHeaders.AUTHORIZATION, BEARER_TOKEN))
+                get("/api/v1/restaurants/markers/{restaurantId}", restaurantId))
                 .andDo(document("get-restaurant-detail",
                         resourceDetails().tag("식당").description("식당 상세 조회")
                                 .responseSchema(Schema.schema("RestaurantResponse")),
-                        requestHeaders(
-                                headerWithName(HttpHeaders.AUTHORIZATION).description("액세스 토큰")
-                        ),
                         responseFields(
                                 fieldWithPath("id").type(JsonFieldType.NUMBER).description("식당 식별자"),
                                 fieldWithPath("name").type(JsonFieldType.STRING).description("식당 이름"),
@@ -122,6 +114,7 @@ class RestaurantControllerTest extends ControllerTest {
                                 fieldWithPath("reviews[].id").type(JsonFieldType.NUMBER).description("리뷰 식별자"),
                                 fieldWithPath("reviews[].rating").type(JsonFieldType.NUMBER).description("리뷰 점수"),
                                 fieldWithPath("reviews[].content").type(JsonFieldType.STRING).description("리뷰 내용"),
+                                fieldWithPath("reviews[].createdAt").type(JsonFieldType.STRING).description("리뷰 생성일"),
                                 fieldWithPath("reviews[].reviewer.id").type(JsonFieldType.NUMBER).description("리뷰어(유저) 식별자"),
                                 fieldWithPath("reviews[].reviewer.nickname").type(JsonFieldType.STRING).description("리뷰어 닉네임")
                         )));
