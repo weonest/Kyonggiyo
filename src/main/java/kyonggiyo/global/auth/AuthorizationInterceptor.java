@@ -34,13 +34,6 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
             }
             return true;
         }
-// TODO: 2024-02-07  비회원 구분을 없애자는 의견으로 인해 주석 처리
-//        if (isNotAuthAnnotated(handlerMethod)) {
-//            return true;
-//        }
-//        if (isAuthRequired(handlerMethod)) {
-//            return Objects.equals(Role.USER, userRole);
-//        }
 
         return true;
     }
@@ -48,24 +41,5 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
     private boolean isAdminMethod(HandlerMethod handlerMethod) {
         return handlerMethod.getMethodAnnotation(Admin.class) != null;
     }
-
-// TODO: 2024-02-07  비회원 구분을 없애자는 의견으로 인해 주석 처리
-//    private boolean isNotAuthAnnotated(HandlerMethod handlerMethod) {
-//        MethodParameter[] methodParameters = handlerMethod.getMethodParameters();
-//        return Arrays.stream(methodParameters)
-//                .noneMatch(parameter -> parameter.getParameterType().isAssignableFrom(UserInfo.class)
-//                                        && parameter.hasParameterAnnotation(Auth.class));
-//    }
-//    private boolean isAuthRequired(HandlerMethod handlerMethod) {
-//        MethodParameter[] methodParameters = handlerMethod.getMethodParameters();
-//        return Arrays.stream(methodParameters)
-//                .map(parameter -> parameter.getParameterAnnotation(Auth.class))
-//                .filter(Objects::nonNull)
-//                .findFirst()
-//                .filter(Auth::required)
-//                .isPresent();
-//    }
-
-
 
 }

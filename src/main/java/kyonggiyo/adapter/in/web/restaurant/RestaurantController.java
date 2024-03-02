@@ -30,13 +30,13 @@ public class RestaurantController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping
+    @GetMapping("/markers")
     public ResponseEntity<List> getRestaurantMarker() {
         List<RestaurantMarkerResponse> response = getRestaurantUseCase.getAllRestaurantsForMarker();
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/{restaurantId}")
+    @GetMapping("/markers/{restaurantId}")
     public ResponseEntity<RestaurantResponse> getRestaurant(@PathVariable Long restaurantId) {
         RestaurantResponse response = getRestaurantUseCase.getById(restaurantId);
         return ResponseEntity.ok(response);
