@@ -10,12 +10,14 @@ import kyonggiyo.application.port.in.auth.OAuthLoginUseCase;
 import kyonggiyo.application.port.in.auth.OAuthLogoutUseCase;
 import kyonggiyo.application.port.in.auth.ProvideAuthCodeUrlUseCase;
 import kyonggiyo.application.port.in.candidate.CreateCandidateUseCase;
+import kyonggiyo.application.port.in.candidate.DeleteCandidateUseCase;
 import kyonggiyo.application.port.in.candidate.FindCandidateUseCase;
 import kyonggiyo.application.port.in.restaurant.CreateRestaurantUseCase;
-import kyonggiyo.application.port.in.restaurant.CreateReviewUseCase;
+import kyonggiyo.application.port.in.restaurant.review.CreateReviewUseCase;
 import kyonggiyo.application.port.in.restaurant.GetRestaurantUseCase;
-import kyonggiyo.application.port.in.restaurant.UpdateReviewUseCase;
-import kyonggiyo.application.port.in.user.CreateUserProfileUseCase;
+import kyonggiyo.application.port.in.restaurant.review.DeleteReviewUseCase;
+import kyonggiyo.application.port.in.restaurant.review.UpdateReviewUseCase;
+import kyonggiyo.application.port.in.user.CreateUserUseCase;
 import kyonggiyo.application.service.auth.TokenService;
 import kyonggiyo.domain.auth.util.PlatformConverter;
 import kyonggiyo.domain.candidate.util.StatusConverter;
@@ -74,6 +76,8 @@ public abstract class ControllerTest {
     @MockBean
     protected FindCandidateUseCase findCandidateUseCase;
     @MockBean
+    protected DeleteCandidateUseCase deleteCandidateUseCase;
+    @MockBean
     protected CreateRestaurantUseCase createRestaurantUseCase;
     @MockBean
     protected GetRestaurantUseCase getRestaurantUseCase;
@@ -82,7 +86,9 @@ public abstract class ControllerTest {
     @MockBean
     protected UpdateReviewUseCase updateReviewUseCase;
     @MockBean
-    protected CreateUserProfileUseCase createUserProfileUseCase;
+    protected DeleteReviewUseCase deleteReviewUseCase;
+    @MockBean
+    protected CreateUserUseCase createUserUseCase;
 
     @BeforeEach
     void setUp(WebApplicationContext context, RestDocumentationContextProvider restDocumentationContextProvider) {
