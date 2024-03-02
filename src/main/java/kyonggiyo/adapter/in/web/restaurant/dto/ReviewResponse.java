@@ -1,13 +1,13 @@
 package kyonggiyo.adapter.in.web.restaurant.dto;
 
+import kyonggiyo.adapter.in.web.user.dto.UserResponse;
 import kyonggiyo.domain.restaurant.Review;
-import kyonggiyo.domain.user.User;
 
 public record ReviewResponse(
         Long id,
         int rating,
         String content,
-        User reviewer
+        UserResponse reviewer
 ) {
 
     public static ReviewResponse from(Review review) {
@@ -15,7 +15,8 @@ public record ReviewResponse(
                 review.getId(),
                 review.getRating(),
                 review.getContent(),
-                review.getReviewer()
+                new UserResponse(review.getReviewer().getId(),
+                        review.getReviewer().getNickname())
         );
     }
 
