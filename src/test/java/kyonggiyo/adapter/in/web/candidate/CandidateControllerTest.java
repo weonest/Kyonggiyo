@@ -27,6 +27,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
@@ -115,6 +116,28 @@ class CandidateControllerTest extends ControllerTest {
         // then
         resultActions.andExpect(status().isOk())
                 .andExpect(content().string(objectMapper.writeValueAsString(response)));
+    }
+
+    @Test
+    void 후보를_삭제한다() throws Exception {
+        // given
+        Long candidateId = 1L;
+
+        willDoNothing().given(deleteCandidateUseCase).deleteCandidate(any(UserInfo.class), eq(candidateId));
+
+        // when
+        ResultActions resultActions = mockMvc.perform(
+                        delete("/api/v1/candidates/{candidateId}", candidateId)
+                                .header(HttpHeaders.AUTHORIZATION, BEARER_TOKEN))
+                .andDo(document("delete-candidate",
+                        resourceDetails().tag("후보").description("후보 삭제")
+                                .requestSchema(Schema.schema("CandidateCreateRequest")),
+                        requestHeaders(
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("액세스 토큰")
+                        )));
+
+        // then
+        resultActions.andExpect(status().isOk());
     }
 
 }
