@@ -79,6 +79,7 @@ class RestaurantControllerTest extends ControllerTest {
                                 fieldWithPath("[].id").type(JsonFieldType.NUMBER).description("식별자"),
                                 fieldWithPath("[].name").type(JsonFieldType.STRING).description("식당 이름"),
                                 fieldWithPath("[].averageRating").type(JsonFieldType.NUMBER).description("식당 평점"),
+                                fieldWithPath("[].category").type(JsonFieldType.STRING).description("식당 카테고리"),
                                 fieldWithPath("[].lat").type(JsonFieldType.NUMBER).description("위도"),
                                 fieldWithPath("[].lng").type(JsonFieldType.NUMBER).description("경도")
                         )));
