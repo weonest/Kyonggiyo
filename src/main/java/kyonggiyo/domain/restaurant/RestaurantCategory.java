@@ -2,7 +2,15 @@ package kyonggiyo.domain.restaurant;
 
 public enum RestaurantCategory {
     KOREAN,
-    WESTERN,
+    JAPANESE,
     CHINESE,
-    DESSERT
+    ASIAN,
+    INDIAN,
+    WESTERN,
+    FAST,
+    FLOUR,
+    CAFE,
+    BAKERY,
+    ALCOHOL,
+    ETC,
 }
