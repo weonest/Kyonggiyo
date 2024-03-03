@@ -5,6 +5,7 @@ import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantMarkerResponse;
 import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantResponse;
 import kyonggiyo.application.port.in.restaurant.CreateRestaurantUseCase;
 import kyonggiyo.application.port.in.restaurant.GetRestaurantUseCase;
+import kyonggiyo.application.port.in.restaurant.SearchRestaurantUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,7 @@ public class RestaurantController {
 
     private final CreateRestaurantUseCase createRestaurantUseCase;
     private final GetRestaurantUseCase getRestaurantUseCase;
+    private final SearchRestaurantUseCase searchRestaurantUseCase;
 
     @PostMapping
     public ResponseEntity<Void> restaurantCreate(@RequestBody RestaurantCreateRequest request) {
@@ -34,6 +36,11 @@ public class RestaurantController {
     public ResponseEntity<List<RestaurantMarkerResponse>> restaurantMarkers() {
         List<RestaurantMarkerResponse> response = getRestaurantUseCase.getAllRestaurantsForMarker();
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/search")
+    public void restaurantSearch() {
+        searchRestaurantUseCase.searchByKeyword();
     }
 
     @GetMapping("/markers/{restaurantId}")

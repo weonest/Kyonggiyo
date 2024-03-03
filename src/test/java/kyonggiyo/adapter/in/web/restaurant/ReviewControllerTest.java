@@ -2,8 +2,8 @@ package kyonggiyo.adapter.in.web.restaurant;
 
 import com.epages.restdocs.apispec.Schema;
 import kyonggiyo.adapter.in.web.ControllerTest;
-import kyonggiyo.adapter.in.web.restaurant.dto.ReviewCreateRequest;
-import kyonggiyo.adapter.in.web.restaurant.dto.ReviewUpdateRequest;
+import kyonggiyo.adapter.in.web.restaurant.dto.review.ReviewCreateRequest;
+import kyonggiyo.adapter.in.web.restaurant.dto.review.ReviewUpdateRequest;
 import kyonggiyo.global.auth.UserInfo;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;

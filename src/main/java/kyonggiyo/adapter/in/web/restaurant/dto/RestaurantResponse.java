@@ -1,5 +1,6 @@
 package kyonggiyo.adapter.in.web.restaurant.dto;
 
+import kyonggiyo.adapter.in.web.restaurant.dto.review.ReviewResponse;
 import kyonggiyo.domain.restaurant.Restaurant;
 import kyonggiyo.domain.restaurant.RestaurantCategory;
 

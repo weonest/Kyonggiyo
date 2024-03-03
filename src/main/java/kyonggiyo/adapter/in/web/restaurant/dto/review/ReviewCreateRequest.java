@@ -1,4 +1,4 @@
-package kyonggiyo.adapter.in.web.restaurant.dto;
+package kyonggiyo.adapter.in.web.restaurant.dto.review;
 
 public record ReviewCreateRequest(
         int rating,

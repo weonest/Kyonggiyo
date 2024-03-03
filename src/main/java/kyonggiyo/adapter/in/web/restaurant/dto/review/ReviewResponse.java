@@ -1,4 +1,4 @@
-package kyonggiyo.adapter.in.web.restaurant.dto;
+package kyonggiyo.adapter.in.web.restaurant.dto.review;
 
 import kyonggiyo.adapter.in.web.user.dto.UserResponse;
 import kyonggiyo.domain.restaurant.Review;
