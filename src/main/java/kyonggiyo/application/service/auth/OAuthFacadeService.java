@@ -9,6 +9,7 @@ import kyonggiyo.domain.auth.Platform;
 import kyonggiyo.global.auth.UserInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +20,7 @@ public class OAuthFacadeService implements OAuthLoginUseCase, OAuthLogoutUseCase
     private final AccountLoginService accountLoginService;
 
     @Override
+    @Transactional(readOnly = true)
     public LogInResponse login(Platform platform, String code) {
         String platformId = oAuthQueryService.getProviderId(platform, code);
         Account account = accountLoginService.login(platform, platformId);
@@ -33,6 +35,7 @@ public class OAuthFacadeService implements OAuthLoginUseCase, OAuthLogoutUseCase
     }
 
     @Override
+    @Transactional
     public void logout(UserInfo userInfo) {
         tokenService.deleteRefreshToken(userInfo);
     }

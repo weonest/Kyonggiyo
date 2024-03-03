@@ -16,6 +16,7 @@ import kyonggiyo.global.auth.AuthInfo;
 import kyonggiyo.global.auth.UserInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -27,7 +28,7 @@ public class TokenService implements ReissueTokenUseCase {
     private final DeleteRefreshTokenPort deleteRefreshTokenPort;
     private final FindRefreshTokenByValuePort findRefreshTokenByValuePort;
 
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public TokenResponse generateToken(User user) {
         AccessToken accessToken = tokenManager.generateAccessToken(user.getId(), user.getRole());
         RefreshToken refreshToken = tokenManager.generateRefreshToken(user.getId(), user.getRole());
