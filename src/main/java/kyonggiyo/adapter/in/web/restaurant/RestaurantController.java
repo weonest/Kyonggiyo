@@ -41,13 +41,13 @@ public class RestaurantController {
         return ResponseEntity.ok(RestaurantResponses.from(response));
     }
 
-    @GetMapping("/search")
+    @GetMapping("/markers/search")
     public ResponseEntity<RestaurantResponses<RestaurantMarkerResponse>> restaurantSearch(RestaurantByKeywordRequest request) {
         List<RestaurantMarkerResponse> response = getRestaurantUseCase.searchByKeyword(request);
         return ResponseEntity.ok(RestaurantResponses.from(response));
     }
 
-    @GetMapping("/filter")
+    @GetMapping("/markers/filter")
     public ResponseEntity<RestaurantResponses<RestaurantMarkerResponse>> restaurantSearch(@Valid RestaurantFilterRequest request) {
         RestaurantCategoryParam param = RestaurantCategoryParam.from(request.categories());
         List<RestaurantMarkerResponse> response = getRestaurantUseCase.filterRestaurants(param);
