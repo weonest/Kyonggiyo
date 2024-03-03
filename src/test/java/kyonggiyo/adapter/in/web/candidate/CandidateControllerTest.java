@@ -100,15 +100,15 @@ class CandidateControllerTest extends ControllerTest {
                                 parameterWithName("page").description("페이지")
                         ),
                         responseFields(
-                                fieldWithPath("content[].id").type(JsonFieldType.NUMBER).description("식별자"),
-                                fieldWithPath("content[].name").type(JsonFieldType.STRING).description("식당 이름"),
-                                fieldWithPath("content[].category").type(JsonFieldType.STRING).description("카테고리"),
-                                fieldWithPath("content[].contact").type(JsonFieldType.STRING).description("연락처").optional(),
-                                fieldWithPath("content[].address").type(JsonFieldType.STRING).description("주소"),
-                                fieldWithPath("content[].lat").type(JsonFieldType.NUMBER).description("위도"),
-                                fieldWithPath("content[].lng").type(JsonFieldType.NUMBER).description("경도"),
-                                fieldWithPath("content[].createdAt").type(JsonFieldType.STRING).description("생성일"),
-                                fieldWithPath("content[].requesterId").type(JsonFieldType.NUMBER).description("요청자 식별자"),
+                                fieldWithPath("data[].id").type(JsonFieldType.NUMBER).description("식별자"),
+                                fieldWithPath("data[].name").type(JsonFieldType.STRING).description("식당 이름"),
+                                fieldWithPath("data[].category").type(JsonFieldType.STRING).description("카테고리"),
+                                fieldWithPath("data[].contact").type(JsonFieldType.STRING).description("연락처").optional(),
+                                fieldWithPath("data[].address").type(JsonFieldType.STRING).description("주소"),
+                                fieldWithPath("data[].lat").type(JsonFieldType.NUMBER).description("위도"),
+                                fieldWithPath("data[].lng").type(JsonFieldType.NUMBER).description("경도"),
+                                fieldWithPath("data[].createdAt").type(JsonFieldType.STRING).description("생성일"),
+                                fieldWithPath("data[].requesterId").type(JsonFieldType.NUMBER).description("요청자 식별자"),
                                 fieldWithPath("numberOfElements").type(JsonFieldType.NUMBER).description("조회된 데이터 수"),
                                 fieldWithPath("hasNext").type(JsonFieldType.BOOLEAN).description("다음 페이지 여부")
                         )));

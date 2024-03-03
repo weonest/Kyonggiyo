@@ -49,7 +49,7 @@ class CandidateQueryServiceTest extends ServiceTest {
         SliceResponse<CandidateResponse> result = findCandidateUseCase.findAllByStatus(userInfo, status, pageable);
 
         // then
-        assertThat(result.content()).hasSameSizeAs(candidates);
+        assertThat(result.data()).hasSameSizeAs(candidates);
     }
 
     private List<Candidate> getCandidateListFixture(Status status) {
