@@ -1,6 +1,7 @@
 package kyonggiyo.adapter.out.persistence.restaurant;
 
 import kyonggiyo.domain.restaurant.Restaurant;
+import kyonggiyo.domain.restaurant.RestaurantCategory;
 import kyonggiyo.global.exception.GlobalErrorCode;
 import kyonggiyo.global.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +23,18 @@ public class JpaRestaurantRepositoryImpl implements RestaurantRepository {
     }
 
     @Override
-    public List<Restaurant> getAllRestaurants() {
+    public List<Restaurant> findAll() {
         return jpaRepository.findAll();
+    }
+
+    @Override
+    public List<Restaurant> findByNameOrReviewContent(String keyword) {
+        return jpaRepository.findByNameOrReviewContent(keyword);
+    }
+
+    @Override
+    public List<Restaurant> filterByCategory(List<RestaurantCategory> categories) {
+        return jpaRepository.filterByCategory(categories);
     }
 
     @Override
