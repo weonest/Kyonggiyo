@@ -2,9 +2,13 @@ package kyonggiyo.adapter.in.web.restaurant;
 
 import com.epages.restdocs.apispec.Schema;
 import kyonggiyo.adapter.in.web.ControllerTest;
+import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantByKeywordRequest;
 import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantCreateRequest;
 import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantMarkerResponse;
 import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantResponse;
+import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantResponses;
+import kyonggiyo.application.service.restaurant.dto.RestaurantCategoryParam;
+import kyonggiyo.domain.restaurant.RestaurantCategory;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
@@ -25,6 +29,8 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.queryParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -65,23 +71,94 @@ class RestaurantControllerTest extends ControllerTest {
     @Test
     void 전체_식당_마커를_조회한다() throws Exception{
         // given
-        List<RestaurantMarkerResponse> response = Instancio.ofList(RestaurantMarkerResponse.class).create();
+        List<RestaurantMarkerResponse> restaurants = Instancio.ofList(RestaurantMarkerResponse.class).create();
+        RestaurantResponses<RestaurantMarkerResponse> response = RestaurantResponses.from(restaurants);
 
-        given(getRestaurantUseCase.getAllRestaurantsForMarker()).willReturn(response);
+        given(getRestaurantUseCase.getAllRestaurantsForMarker()).willReturn(restaurants);
 
         // when
         ResultActions resultActions = mockMvc.perform(
                 get("/api/v1/restaurants/markers"))
                 .andDo(document("get-restaurant-marker",
                         resourceDetails().tag("식당").description("전체 식당 마커 조회")
-                                .responseSchema(Schema.schema("RestaurantMarkerResponse")),
+                                .responseSchema(Schema.schema("RestaurantMarkerResponses")),
                         responseFields(
-                                fieldWithPath("[].id").type(JsonFieldType.NUMBER).description("식별자"),
-                                fieldWithPath("[].name").type(JsonFieldType.STRING).description("식당 이름"),
-                                fieldWithPath("[].averageRating").type(JsonFieldType.NUMBER).description("식당 평점"),
-                                fieldWithPath("[].category").type(JsonFieldType.STRING).description("식당 카테고리"),
-                                fieldWithPath("[].lat").type(JsonFieldType.NUMBER).description("위도"),
-                                fieldWithPath("[].lng").type(JsonFieldType.NUMBER).description("경도")
+                                fieldWithPath("data[].id").type(JsonFieldType.NUMBER).description("식별자"),
+                                fieldWithPath("data[].name").type(JsonFieldType.STRING).description("식당 이름"),
+                                fieldWithPath("data[].averageRating").type(JsonFieldType.NUMBER).description("식당 평점"),
+                                fieldWithPath("data[].category").type(JsonFieldType.STRING).description("식당 카테고리"),
+                                fieldWithPath("data[].lat").type(JsonFieldType.NUMBER).description("위도"),
+                                fieldWithPath("data[].lng").type(JsonFieldType.NUMBER).description("경도"),
+                                fieldWithPath("size").type(JsonFieldType.NUMBER).description("데이터 수")
+                        )));
+
+        // then
+        resultActions.andExpect(status().isOk())
+                .andExpect(content().string(objectMapper.writeValueAsString(response)));
+    }
+
+    @Test
+    void 검색_키워드를_통해_식당_마커를_조회한다() throws Exception{
+        // given
+        String keyword = "짜장면";
+        List<RestaurantMarkerResponse> restaurants = Instancio.ofList(RestaurantMarkerResponse.class).create();
+        RestaurantResponses<RestaurantMarkerResponse> response = RestaurantResponses.from(restaurants);
+
+        given(getRestaurantUseCase.searchByKeyword(new RestaurantByKeywordRequest(keyword))).willReturn(restaurants);
+
+        // when
+        ResultActions resultActions = mockMvc.perform(
+                        get("/api/v1/restaurants/markers/search")
+                                .queryParam("keyword", keyword))
+                .andDo(document("get-restaurant-marker-search",
+                        resourceDetails().tag("식당").description("식당 키워드 검색 (이름 or 리뷰 내용)")
+                                .responseSchema(Schema.schema("RestaurantMarkerResponses")),
+                        queryParameters(
+                                parameterWithName("keyword").description("검색 키워드")
+                        ),
+                        responseFields(
+                                fieldWithPath("data[].id").type(JsonFieldType.NUMBER).description("식별자"),
+                                fieldWithPath("data[].name").type(JsonFieldType.STRING).description("식당 이름"),
+                                fieldWithPath("data[].averageRating").type(JsonFieldType.NUMBER).description("식당 평점"),
+                                fieldWithPath("data[].category").type(JsonFieldType.STRING).description("식당 카테고리"),
+                                fieldWithPath("data[].lat").type(JsonFieldType.NUMBER).description("위도"),
+                                fieldWithPath("data[].lng").type(JsonFieldType.NUMBER).description("경도"),
+                                fieldWithPath("size").type(JsonFieldType.NUMBER).description("데이터 수")
+                        )));
+
+        // then
+        resultActions.andExpect(status().isOk())
+                .andExpect(content().string(objectMapper.writeValueAsString(response)));
+    }
+
+    @Test
+    void 카테고리_필터링을_통해_식당_마커를_조회한다() throws Exception{
+        // given
+        String categories = "korean,cafe";
+        List<RestaurantCategory> categoryList = List.of(RestaurantCategory.KOREAN, RestaurantCategory.CAFE);
+        List<RestaurantMarkerResponse> restaurants = Instancio.ofList(RestaurantMarkerResponse.class).create();
+        RestaurantResponses<RestaurantMarkerResponse> response = RestaurantResponses.from(restaurants);
+
+        given(getRestaurantUseCase.filterRestaurants(new RestaurantCategoryParam(categoryList))).willReturn(restaurants);
+
+        // when
+        ResultActions resultActions = mockMvc.perform(
+                        get("/api/v1/restaurants/markers/filter")
+                                .queryParam("categories", categories))
+                .andDo(document("get-restaurant-marker-filter",
+                        resourceDetails().tag("식당").description("식당 카테고리 필터링")
+                                .responseSchema(Schema.schema("RestaurantMarkerResponses")),
+                        queryParameters(
+                                parameterWithName("categories").description("카테고리 항목")
+                        ),
+                        responseFields(
+                                fieldWithPath("data[].id").type(JsonFieldType.NUMBER).description("식별자"),
+                                fieldWithPath("data[].name").type(JsonFieldType.STRING).description("식당 이름"),
+                                fieldWithPath("data[].averageRating").type(JsonFieldType.NUMBER).description("식당 평점"),
+                                fieldWithPath("data[].category").type(JsonFieldType.STRING).description("식당 카테고리"),
+                                fieldWithPath("data[].lat").type(JsonFieldType.NUMBER).description("위도"),
+                                fieldWithPath("data[].lng").type(JsonFieldType.NUMBER).description("경도"),
+                                fieldWithPath("size").type(JsonFieldType.NUMBER).description("데이터 수")
                         )));
 
         // then
