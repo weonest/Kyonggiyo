@@ -33,7 +33,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String[] whiteList = {
                 "/api/v1/auth/login",
-                "/api/v1/user/signup",
+                "/api/v1/users/profile",
                 "/api/v1/restaurants/markers",
                 "/actuator",
                 "/h2-console",
