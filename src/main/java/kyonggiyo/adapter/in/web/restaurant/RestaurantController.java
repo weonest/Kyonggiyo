@@ -1,11 +1,15 @@
 package kyonggiyo.adapter.in.web.restaurant;
 
+import jakarta.validation.Valid;
+import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantByKeywordRequest;
 import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantCreateRequest;
+import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantFilterRequest;
 import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantMarkerResponse;
 import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantResponse;
+import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantResponses;
 import kyonggiyo.application.port.in.restaurant.CreateRestaurantUseCase;
 import kyonggiyo.application.port.in.restaurant.GetRestaurantUseCase;
-import kyonggiyo.application.port.in.restaurant.SearchRestaurantUseCase;
+import kyonggiyo.application.service.restaurant.dto.RestaurantCategoryParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +28,6 @@ public class RestaurantController {
 
     private final CreateRestaurantUseCase createRestaurantUseCase;
     private final GetRestaurantUseCase getRestaurantUseCase;
-    private final SearchRestaurantUseCase searchRestaurantUseCase;
 
     @PostMapping
     public ResponseEntity<Void> restaurantCreate(@RequestBody RestaurantCreateRequest request) {
@@ -33,14 +36,22 @@ public class RestaurantController {
     }
 
     @GetMapping("/markers")
-    public ResponseEntity<List<RestaurantMarkerResponse>> restaurantMarkers() {
+    public ResponseEntity<RestaurantResponses<RestaurantMarkerResponse>> restaurantMarkers() {
         List<RestaurantMarkerResponse> response = getRestaurantUseCase.getAllRestaurantsForMarker();
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(RestaurantResponses.from(response));
     }
 
     @GetMapping("/search")
-    public void restaurantSearch() {
-        searchRestaurantUseCase.searchByKeyword();
+    public ResponseEntity<RestaurantResponses<RestaurantMarkerResponse>> restaurantSearch(RestaurantByKeywordRequest request) {
+        List<RestaurantMarkerResponse> response = getRestaurantUseCase.searchByKeyword(request);
+        return ResponseEntity.ok(RestaurantResponses.from(response));
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<RestaurantResponses<RestaurantMarkerResponse>> restaurantSearch(@Valid RestaurantFilterRequest request) {
+        RestaurantCategoryParam param = RestaurantCategoryParam.from(request.categories());
+        List<RestaurantMarkerResponse> response = getRestaurantUseCase.filterRestaurants(param);
+        return ResponseEntity.ok(RestaurantResponses.from(response));
     }
 
     @GetMapping("/markers/{restaurantId}")

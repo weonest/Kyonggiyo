@@ -5,7 +5,7 @@ import org.springframework.data.domain.Slice;
 import java.util.List;
 
 public record SliceResponse<T>(
-        List<T> content,
+        List<T> data,
         long numberOfElements,
         boolean hasNext
 ) {
