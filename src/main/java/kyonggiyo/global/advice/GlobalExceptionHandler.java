@@ -4,6 +4,7 @@ import kyonggiyo.domain.auth.exception.ExpiredTokenException;
 import kyonggiyo.global.exception.AuthenticationException;
 import kyonggiyo.global.exception.ForbiddenException;
 import kyonggiyo.global.exception.GlobalErrorCode;
+import kyonggiyo.global.exception.InvalidStateException;
 import kyonggiyo.global.exception.InvalidValueException;
 import kyonggiyo.global.exception.NotFoundException;
 import kyonggiyo.global.response.ErrorResponse;
@@ -40,6 +41,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handlerException(InvalidValueException exception) {
+        log.warn(exception.getLoggingMessage(), exception);
+        return ResponseEntity.badRequest()
+                .body(ErrorResponse.of(exception.getErrorCode()));
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handlerException(InvalidStateException exception) {
         log.warn(exception.getLoggingMessage(), exception);
         return ResponseEntity.badRequest()
                 .body(ErrorResponse.of(exception.getErrorCode()));

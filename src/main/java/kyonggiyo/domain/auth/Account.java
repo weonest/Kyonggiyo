@@ -3,6 +3,7 @@ package kyonggiyo.domain.auth;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -10,7 +11,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import kyonggiyo.domain.BaseEntity;
+import kyonggiyo.domain.auth.exception.AccountErrorCode;
 import kyonggiyo.domain.user.User;
+import kyonggiyo.global.exception.InvalidStateException;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -32,7 +35,7 @@ public class Account extends BaseEntity {
 
     private String platformId;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -50,7 +53,7 @@ public class Account extends BaseEntity {
             this.user = user;
             return;
         }
-        throw new IllegalArgumentException();
+        throw new InvalidStateException(AccountErrorCode.ALREADY_HAS_USER);
     }
 
     public Long getUserId() {
