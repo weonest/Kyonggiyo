@@ -8,7 +8,9 @@ import kyonggiyo.adapter.out.persistence.account.JpaAccountRepositoryImpl;
 import kyonggiyo.adapter.out.persistence.restaurant.JpaRestaurantRepositoryImpl;
 import kyonggiyo.adapter.out.persistence.restaurant.RestaurantJpaRepository;
 import kyonggiyo.adapter.out.persistence.restaurant.RestaurantPersistenceAdapter;
-import kyonggiyo.global.config.JpaAuditingConfig;
+import kyonggiyo.adapter.out.persistence.restaurant.review.JpaReviewRepositoryImpl;
+import kyonggiyo.adapter.out.persistence.restaurant.review.ReviewJpaRepository;
+import kyonggiyo.adapter.out.persistence.restaurant.review.ReviewPersistenceAdapter;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -17,7 +19,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 
 @DataJpaTest
-@Import({AdapterTest.AdapterTestConfig.class, JpaAuditingConfig.class})
+@Import(AdapterTest.AdapterTestConfig.class)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public abstract class AdapterTest {
 
@@ -45,6 +47,16 @@ public abstract class AdapterTest {
         @Bean
         public RestaurantPersistenceAdapter restaurantPersistenceAdapter(JpaRestaurantRepositoryImpl jpaRestaurantRepository) {
             return new RestaurantPersistenceAdapter(jpaRestaurantRepository);
+        }
+
+        @Bean
+        public JpaReviewRepositoryImpl jpaReviewRepositoryImpl(ReviewJpaRepository reviewJpaRepository) {
+            return new JpaReviewRepositoryImpl(reviewJpaRepository);
+        }
+
+        @Bean
+        public ReviewPersistenceAdapter reviewPersistenceAdapter(JpaReviewRepositoryImpl jpaReviewRepository) {
+            return new ReviewPersistenceAdapter(jpaReviewRepository);
         }
 
     }
