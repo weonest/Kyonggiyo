@@ -39,7 +39,8 @@ public class ReviewCommandService implements CreateReviewUseCase, UpdateReviewUs
                 .rating(request.rating())
                 .content(request.content())
                 .restaurant(restaurant)
-                .reviewer(user)
+                .reviewerId(user.getId())
+                .reviewerNickname(user.getNickname())
                 .build();
         restaurant.updateAverageRating();
         saveReviewPort.save(review);
@@ -48,8 +49,7 @@ public class ReviewCommandService implements CreateReviewUseCase, UpdateReviewUs
     @Override
     public void updateReview(UserInfo userInfo, Long id, ReviewUpdateRequest request) {
         Review review = getReviewPort.getById(id);
-        User reviewer = review.getReviewer();
-        if (reviewer.getId().equals(userInfo.userId())) {
+        if (review.getReviewerId().equals(userInfo.userId())) {
             review.update(request.rating(), request.content());
             review.getRestaurant().updateAverageRating();
             return;
@@ -61,8 +61,7 @@ public class ReviewCommandService implements CreateReviewUseCase, UpdateReviewUs
     @Override
     public void deleteReview(UserInfo userInfo, Long id) {
         Review review = getReviewPort.getById(id);
-        User reviewer = review.getReviewer();
-        if (reviewer.getId().equals(userInfo.userId())) {
+        if (review.getReviewerId().equals(userInfo.userId())) {
             deleteReviewPort.deleteById(id);
             return;
         }

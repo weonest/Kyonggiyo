@@ -19,8 +19,8 @@ public record ReviewResponse(
                 review.getRating(),
                 review.getContent(),
                 review.getCreatedAt(),
-                new UserResponse(review.getReviewer().getId(),
-                        review.getReviewer().getNickname())
+                new UserResponse(review.getReviewerId(),
+                        review.getReviewerNickname())
         );
     }
 
