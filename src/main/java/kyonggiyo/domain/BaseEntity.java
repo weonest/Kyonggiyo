@@ -1,26 +1,36 @@
 package kyonggiyo.domain;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PreUpdate;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
 @Getter
 @MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity {
 
-    @Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP(6)")
+    public BaseEntity() {
+        var now = LocalDateTime.now();
+        createdAt = createdAt != null ? createdAt : now;
+        updatedAt = updatedAt != null ? updatedAt : now;
+    }
+
     @CreatedDate
-    LocalDateTime createdAt;
+    @Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP(6)")
+    private LocalDateTime createdAt;
 
     @Column(name = "updated_at", nullable = false, columnDefinition = "TIMESTAMP(6)")
     @LastModifiedDate
-    LocalDateTime updatedAt;
+    private LocalDateTime updatedAt;
+
+    @PreUpdate
+    void preUpdate() {
+        updatedAt = updatedAt != null ? updatedAt : LocalDateTime.now();
+    }
+
 
 }
