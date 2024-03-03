@@ -1,7 +1,6 @@
 package kyonggiyo.domain.restaurant;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -9,16 +8,15 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import kyonggiyo.domain.BaseEntity;
-import kyonggiyo.domain.user.User;
 import lombok.AccessLevel;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+
 @Getter
 @Entity
-@EqualsAndHashCode
 @Table(name = "reviews")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Review extends BaseEntity implements Comparable<Review>{
@@ -35,19 +33,21 @@ public class Review extends BaseEntity implements Comparable<Review>{
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
-    @JoinColumn(name = "user_id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User reviewer;
+    private Long reviewerId;
+
+    private String reviewerNickname;
 
     @Builder
     private Review(int rating,
                    String content,
                    Restaurant restaurant,
-                   User reviewer) {
+                   Long reviewerId,
+                   String reviewerNickname) {
         this.rating = rating;
         this.content = content;
         setRestaurant(restaurant);
-        this.reviewer = reviewer;
+        this.reviewerId = reviewerId;
+        this.reviewerNickname = reviewerNickname;
     }
 
     @Override
@@ -55,6 +55,18 @@ public class Review extends BaseEntity implements Comparable<Review>{
         if (getCreatedAt().isAfter(o.getCreatedAt())) return -1;
         if (getCreatedAt() == o.getCreatedAt()) return 0;
         return -1;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Review review)) return false;
+        return Objects.equals(getId(), review.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 
     public void update(int rating, String content) {
