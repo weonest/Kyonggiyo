@@ -40,3 +40,4 @@ jwt:
   access-token-expire-time: 10
   refresh-token-expire-time: 30
 
+test: true
