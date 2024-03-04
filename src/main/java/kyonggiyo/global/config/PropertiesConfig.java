@@ -1,5 +1,6 @@
 package kyonggiyo.global.config;
 
+import kyonggiyo.global.property.AwsProperties;
 import kyonggiyo.global.property.JwtProperties;
 import kyonggiyo.global.property.KakaoOAuthProperties;
 import kyonggiyo.global.property.NaverOAuthProperties;
@@ -10,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties(value = {
         KakaoOAuthProperties.class,
         NaverOAuthProperties.class,
+        AwsProperties.class,
         JwtProperties.class})
 public class PropertiesConfig {
 }
