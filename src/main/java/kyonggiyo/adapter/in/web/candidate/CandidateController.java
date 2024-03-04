@@ -6,7 +6,6 @@ import kyonggiyo.application.port.in.candidate.CreateCandidateUseCase;
 import kyonggiyo.application.port.in.candidate.DeleteCandidateUseCase;
 import kyonggiyo.application.port.in.candidate.FindCandidateUseCase;
 import kyonggiyo.domain.candidate.Status;
-import kyonggiyo.global.auth.Admin;
 import kyonggiyo.global.auth.UserInfo;
 import kyonggiyo.global.response.SliceResponse;
 import lombok.RequiredArgsConstructor;
@@ -48,7 +47,6 @@ public class CandidateController {
         return ResponseEntity.ok(response);
     }
 
-    @Admin
     @DeleteMapping("/{candidateId}")
     public ResponseEntity<Void> candidateDelete(UserInfo userInfo, @PathVariable Long candidateId) {
         deleteCandidateUseCase.deleteCandidate(userInfo, candidateId);
