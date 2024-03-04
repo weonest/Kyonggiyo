@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration packagingData="true">
-    <springProperty name="AWS_ACCESS_KEY" source="cloud.aws.credentials.accessKey"/>
-    <springProperty name="AWS_SECRET_KEY" source="cloud.aws.credentials.secretKey"/>
+    <springProperty name="AWS_ACCESS_KEY" source="cloud.aws.credentials.access-key"/>
+    <springProperty name="AWS_SECRET_KEY" source="cloud.aws.credentials.secret-key"/>
 
 
     <timestamp key="timestamp" datePattern="yyyy-MM-dd-HH-mm-ssSSS"/>

@@ -1,10 +1,8 @@
 package kyonggiyo.global.config;
 
 import kyonggiyo.global.logging.MDCRequestHandlerCommentInterceptor;
-import kyonggiyo.global.logging.MdcLoggingFilter;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.cfg.AvailableSettings;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @RequiredArgsConstructor
-@ConditionalOnProperty(value = "test", havingValue = "false")
+@ConditionalOnProperty(value = "web-application", havingValue = "true")
 public class HibernateConfig {
 
     private final MDCRequestHandlerCommentInterceptor mdcRequestHandlerCommentInterceptor;
