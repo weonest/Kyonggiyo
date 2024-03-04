@@ -12,6 +12,7 @@ import kyonggiyo.global.exception.GlobalErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -43,7 +44,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 "/api.json",
         };
         String path = request.getRequestURI();
-        return Arrays.stream(whiteList).anyMatch(path::startsWith);
+        return Arrays.stream(whiteList).anyMatch(path::startsWith) || request.getMethod().equals(HttpMethod.OPTIONS.name());
     }
 
     @Override
