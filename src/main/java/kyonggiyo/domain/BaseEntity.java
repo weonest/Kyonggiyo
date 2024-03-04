@@ -29,8 +29,7 @@ public abstract class BaseEntity {
 
     @PreUpdate
     void preUpdate() {
-        updatedAt = updatedAt != null ? updatedAt : LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
     }
-
 
 }
