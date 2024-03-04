@@ -6,6 +6,7 @@ import kyonggiyo.application.port.in.candidate.CreateCandidateUseCase;
 import kyonggiyo.application.port.in.candidate.DeleteCandidateUseCase;
 import kyonggiyo.application.port.in.candidate.FindCandidateUseCase;
 import kyonggiyo.domain.candidate.Status;
+import kyonggiyo.global.auth.Auth;
 import kyonggiyo.global.auth.UserInfo;
 import kyonggiyo.global.response.SliceResponse;
 import lombok.RequiredArgsConstructor;
@@ -33,13 +34,13 @@ public class CandidateController {
     private final DeleteCandidateUseCase deleteCandidateUseCase;
 
     @PostMapping
-    public ResponseEntity<Void> candidateCreate(UserInfo userInfo, @RequestBody CandidateCreateRequest request) {
+    public ResponseEntity<Void> candidateCreate(@Auth UserInfo userInfo, @RequestBody CandidateCreateRequest request) {
         createCandidateUseCase.createCandidate(userInfo, request);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping
-    public ResponseEntity<SliceResponse<CandidateResponse>> candidateListByStatus(UserInfo userInfo,
+    public ResponseEntity<SliceResponse<CandidateResponse>> candidateListByStatus(@Auth UserInfo userInfo,
                                                                    @RequestParam Status status,
                                                                    @RequestParam(required = false, defaultValue = "0", value = "page") int page) {
         Pageable pageable = PageRequest.of(page, DEFAULT_PAGE_SIZE);
@@ -48,7 +49,7 @@ public class CandidateController {
     }
 
     @DeleteMapping("/{candidateId}")
-    public ResponseEntity<Void> candidateDelete(UserInfo userInfo, @PathVariable Long candidateId) {
+    public ResponseEntity<Void> candidateDelete(@Auth UserInfo userInfo, @PathVariable Long candidateId) {
         deleteCandidateUseCase.deleteCandidate(userInfo, candidateId);
         return ResponseEntity.ok().build();
     }

@@ -10,6 +10,7 @@ import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantResponses;
 import kyonggiyo.application.port.in.restaurant.CreateRestaurantUseCase;
 import kyonggiyo.application.port.in.restaurant.GetRestaurantUseCase;
 import kyonggiyo.application.service.restaurant.dto.RestaurantCategoryParam;
+import kyonggiyo.global.auth.Admin;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,7 @@ public class RestaurantController {
     private final CreateRestaurantUseCase createRestaurantUseCase;
     private final GetRestaurantUseCase getRestaurantUseCase;
 
+    @Admin
     @PostMapping
     public ResponseEntity<Void> restaurantCreate(@RequestBody RestaurantCreateRequest request) {
         createRestaurantUseCase.createRestaurant(request);

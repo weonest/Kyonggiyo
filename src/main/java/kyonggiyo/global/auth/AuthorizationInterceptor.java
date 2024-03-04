@@ -5,12 +5,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import kyonggiyo.domain.user.Role;
 import kyonggiyo.global.exception.ForbiddenException;
 import kyonggiyo.global.exception.GlobalErrorCode;
-import kyonggiyo.global.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 @Component
@@ -23,7 +24,11 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         if (!(handler instanceof HandlerMethod handlerMethod)) {
-            throw new NotFoundException(GlobalErrorCode.INVALID_REQUEST_EXCEPTION, "존재하지 않는 핸들러입니다.");
+            return true;
+        }
+
+        if (isNotAuthAnnotated(handlerMethod)) {
+            return true;
         }
 
         Role userRole = authContext.getAuthInfo().role();
@@ -36,6 +41,13 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
         }
 
         return true;
+    }
+
+    private boolean isNotAuthAnnotated(HandlerMethod method) {
+        MethodParameter[] methodParameters = method.getMethodParameters();
+        return Arrays.stream(methodParameters)
+                .noneMatch(parameter -> parameter.getParameterType().isAssignableFrom(UserInfo.class)
+                                        && parameter.hasParameterAnnotation(Auth.class));
     }
 
     private boolean isAdminMethod(HandlerMethod handlerMethod) {

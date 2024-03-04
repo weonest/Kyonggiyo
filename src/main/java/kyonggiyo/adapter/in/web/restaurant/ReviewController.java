@@ -5,6 +5,7 @@ import kyonggiyo.adapter.in.web.restaurant.dto.review.ReviewUpdateRequest;
 import kyonggiyo.application.port.in.restaurant.review.CreateReviewUseCase;
 import kyonggiyo.application.port.in.restaurant.review.DeleteReviewUseCase;
 import kyonggiyo.application.port.in.restaurant.review.UpdateReviewUseCase;
+import kyonggiyo.global.auth.Auth;
 import kyonggiyo.global.auth.UserInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class ReviewController {
     private final DeleteReviewUseCase deleteReviewUseCase;
 
     @PostMapping
-    public ResponseEntity<Void> reviewCreate(UserInfo userInfo,
+    public ResponseEntity<Void> reviewCreate(@Auth UserInfo userInfo,
                                              @PathVariable Long restaurantId,
                                              @RequestBody ReviewCreateRequest request) {
         createReviewUseCase.createReview(userInfo, restaurantId, request);
@@ -34,7 +35,7 @@ public class ReviewController {
     }
 
     @PatchMapping("/{reviewId}")
-    public ResponseEntity<Void> reviewUpdate(UserInfo userInfo,
+    public ResponseEntity<Void> reviewUpdate(@Auth UserInfo userInfo,
                                              @PathVariable Long reviewId,
                                              @RequestBody ReviewUpdateRequest request) {
         updateReviewUseCase.updateReview(userInfo, reviewId, request);
@@ -42,7 +43,7 @@ public class ReviewController {
     }
 
     @DeleteMapping("/{reviewId}")
-    public ResponseEntity<Void> reviewDelete(UserInfo userInfo, @PathVariable Long reviewId) {
+    public ResponseEntity<Void> reviewDelete(@Auth UserInfo userInfo, @PathVariable Long reviewId) {
         deleteReviewUseCase.deleteReview(userInfo, reviewId);
         return ResponseEntity.ok().build();
     }
