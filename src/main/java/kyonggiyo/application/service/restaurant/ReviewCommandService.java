@@ -10,6 +10,8 @@ import kyonggiyo.application.port.out.restaurant.review.DeleteReviewPort;
 import kyonggiyo.application.port.out.restaurant.review.GetReviewPort;
 import kyonggiyo.application.port.out.restaurant.review.SaveReviewPort;
 import kyonggiyo.application.port.out.user.GetUserPort;
+import kyonggiyo.application.service.image.ImageService;
+import kyonggiyo.domain.image.ImageType;
 import kyonggiyo.domain.restaurant.Restaurant;
 import kyonggiyo.domain.restaurant.Review;
 import kyonggiyo.domain.user.User;
@@ -19,6 +21,9 @@ import kyonggiyo.global.exception.GlobalErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -30,9 +35,13 @@ public class ReviewCommandService implements CreateReviewUseCase, UpdateReviewUs
     private final GetReviewPort getReviewPort;
     private final SaveReviewPort saveReviewPort;
     private final DeleteReviewPort deleteReviewPort;
+    private final ImageService imageService;
 
     @Override
-    public void createReview(UserInfo userInfo, Long restaurantId, ReviewCreateRequest request) {
+    public void createReview(UserInfo userInfo,
+                             Long restaurantId,
+                             ReviewCreateRequest request,
+                             List<MultipartFile> multipartFiles) {
         User user = getUserPort.getById(userInfo.userId());
         Restaurant restaurant = getRestaurantPort.getById(restaurantId);
         Review review = Review.builder()
@@ -43,16 +52,28 @@ public class ReviewCommandService implements CreateReviewUseCase, UpdateReviewUs
                 .reviewerNickname(user.getNickname())
                 .build();
         restaurant.updateAverageRating();
-        saveReviewPort.save(review);
+        Review savedReview = saveReviewPort.save(review);
+
+        if (multipartFiles.isEmpty()) return;
+
+        imageService.createImage(multipartFiles, ImageType.REVIEW, savedReview.getId());
+
     }
 
     @Override
-    public void updateReview(UserInfo userInfo, Long id, ReviewUpdateRequest request) {
+    public void updateReview(UserInfo userInfo,
+                             Long id,
+                             ReviewUpdateRequest request,
+                             List<MultipartFile> multipartFiles) {
         Review review = getReviewPort.getById(id);
         if (review.getReviewerId().equals(userInfo.userId())) {
             review.update(request.rating(), request.content());
             review.getRestaurant().updateAverageRating();
-            return;
+
+            if (multipartFiles.isEmpty()) return;
+
+            imageService.deleteImage(ImageType.REVIEW, review.getId());
+            imageService.createImage(multipartFiles, ImageType.REVIEW, review.getId());
         }
         throw new ForbiddenException(GlobalErrorCode.INVALID_REQUEST_EXCEPTION,
                 String.format("유저 식별자 불일치 -> %d", userInfo.userId()));
@@ -63,6 +84,7 @@ public class ReviewCommandService implements CreateReviewUseCase, UpdateReviewUs
         Review review = getReviewPort.getById(id);
         if (review.getReviewerId().equals(userInfo.userId())) {
             deleteReviewPort.deleteById(id);
+            imageService.deleteImage(ImageType.REVIEW, review.getId());
             return;
         }
         throw new ForbiddenException(GlobalErrorCode.INVALID_REQUEST_EXCEPTION,
