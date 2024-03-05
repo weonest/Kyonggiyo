@@ -57,6 +57,14 @@ public class Restaurant extends BaseEntity {
         this.category = category;
     }
 
+    public void updateAverageRating() {
+        float total = 0;
+        for (Review review : reviews) {
+            total += review.getRating();
+        }
+        averageRating = Math.round(total / reviews.size() * 10) / 10.0f;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -67,14 +75,6 @@ public class Restaurant extends BaseEntity {
     @Override
     public int hashCode() {
         return Objects.hash(getId());
-    }
-
-    public void updateAverageRating() {
-        float total = 0;
-        for (Review review : reviews) {
-            total += review.getRating();
-        }
-        averageRating = Math.round(total / reviews.size() * 10) / 10.0f;
     }
 
 }

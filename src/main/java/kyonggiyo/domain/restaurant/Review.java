@@ -50,6 +50,21 @@ public class Review extends BaseEntity implements Comparable<Review>{
         this.reviewerNickname = reviewerNickname;
     }
 
+    public void update(int rating, String content) {
+        this.restaurant.getReviews().remove(this);
+        this.rating = rating;
+        this.content = content;
+        this.restaurant.getReviews().add(this);
+    }
+
+    private void setRestaurant(Restaurant restaurant) {
+        if (this.restaurant != null) {
+            this.restaurant.getReviews().remove(this);
+        }
+        this.restaurant = restaurant;
+        this.restaurant.getReviews().add(this);
+    }
+
     @Override
     public int compareTo(Review o) {
         if (getCreatedAt().isAfter(o.getCreatedAt())) return -1;
@@ -67,21 +82,6 @@ public class Review extends BaseEntity implements Comparable<Review>{
     @Override
     public int hashCode() {
         return Objects.hash(getId());
-    }
-
-    public void update(int rating, String content) {
-        this.restaurant.getReviews().remove(this);
-        this.rating = rating;
-        this.content = content;
-        this.restaurant.getReviews().add(this);
-    }
-
-    private void setRestaurant(Restaurant restaurant) {
-        if (this.restaurant != null) {
-            this.restaurant.getReviews().remove(this);
-        }
-        this.restaurant = restaurant;
-        this.restaurant.getReviews().add(this);
     }
 
 }
