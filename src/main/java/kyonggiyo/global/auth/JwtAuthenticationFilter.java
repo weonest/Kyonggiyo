@@ -80,9 +80,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return Arrays.stream(request.getCookies())
                     .filter(cookie -> cookie.getName().equals(REFRESH_TOKEN))
                     .findFirst()
-                    .orElseThrow(() -> new AuthenticationException(GlobalErrorCode.NO_AUTHENTICATION_INFO_EXCEPTION));
+                    .orElseThrow(() -> new AuthenticationException(GlobalErrorCode.NO_AUTHENTICATION_INFO_EXCEPTION, "Refresh Cookie가 존재하지 않습니다."));
         }
-        throw new AuthenticationException(GlobalErrorCode.NO_AUTHENTICATION_INFO_EXCEPTION);
+        throw new AuthenticationException(GlobalErrorCode.NO_AUTHENTICATION_INFO_EXCEPTION, "Cookie가 존재하지 않습니다.");
     }
 
 }
