@@ -15,7 +15,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,16 +33,18 @@ public class ReviewController {
     @PostMapping
     public ResponseEntity<Void> reviewCreate(@Auth UserInfo userInfo,
                                              @PathVariable Long restaurantId,
-                                             @RequestBody ReviewCreateRequest request) {
-        createReviewUseCase.createReview(userInfo, restaurantId, request);
+                                             @RequestBody ReviewCreateRequest request,
+                                             @RequestPart List<MultipartFile> multipartFiles) {
+        createReviewUseCase.createReview(userInfo, restaurantId, request, multipartFiles);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/{reviewId}")
     public ResponseEntity<Void> reviewUpdate(@Auth UserInfo userInfo,
                                              @PathVariable Long reviewId,
-                                             @RequestBody ReviewUpdateRequest request) {
-        updateReviewUseCase.updateReview(userInfo, reviewId, request);
+                                             @RequestBody ReviewUpdateRequest request,
+                                             @RequestPart List<MultipartFile> multipartFiles) {
+        updateReviewUseCase.updateReview(userInfo, reviewId, request, multipartFiles);
         return ResponseEntity.ok().build();
     }
 
