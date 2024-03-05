@@ -1,10 +1,12 @@
 package kyonggiyo.adapter.in.web.restaurant.dto;
 
 import kyonggiyo.adapter.in.web.restaurant.dto.review.ReviewResponse;
+import kyonggiyo.domain.image.Image;
 import kyonggiyo.domain.restaurant.Restaurant;
 import kyonggiyo.domain.restaurant.RestaurantCategory;
 
 import java.util.List;
+import java.util.Queue;
 
 public record RestaurantResponse(
         Long id,
@@ -18,7 +20,7 @@ public record RestaurantResponse(
         List<ReviewResponse> reviews
 ) {
 
-    public static RestaurantResponse from(Restaurant restaurant) {
+    public static RestaurantResponse of(Restaurant restaurant, Queue<List<Image>> imagesList) {
         return new RestaurantResponse(
                 restaurant.getId(),
                 restaurant.getName(),
@@ -29,7 +31,7 @@ public record RestaurantResponse(
                 restaurant.getAddress().getLng(),
                 restaurant.getAverageRating(),
                 restaurant.getReviews().stream()
-                        .map(ReviewResponse::from)
+                        .map(v -> ReviewResponse.of(v, imagesList.poll()))
                         .toList()
         );
     }

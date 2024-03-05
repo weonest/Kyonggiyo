@@ -1,18 +1,23 @@
 package kyonggiyo.application.service.restaurant;
 
 import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantByKeywordRequest;
-import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantFilterRequest;
 import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantMarkerResponse;
 import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantResponse;
 import kyonggiyo.application.port.in.restaurant.GetRestaurantUseCase;
+import kyonggiyo.application.port.out.image.GetImagePort;
 import kyonggiyo.application.port.out.restaurant.GetRestaurantPort;
 import kyonggiyo.application.service.restaurant.dto.RestaurantCategoryParam;
+import kyonggiyo.domain.image.Image;
+import kyonggiyo.domain.image.ImageType;
 import kyonggiyo.domain.restaurant.Restaurant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -20,10 +25,17 @@ import java.util.List;
 public class RestaurantQueryService implements GetRestaurantUseCase {
 
     private final GetRestaurantPort getRestaurantPort;
+    private final GetImagePort getImagePort;
 
     @Override
     public RestaurantResponse getById(Long id) {
-        return RestaurantResponse.from(getRestaurantPort.getById(id));
+        Restaurant restaurant = getRestaurantPort.getById(id);
+
+        Queue<List<Image>> imagesList = restaurant.getReviews().stream()
+                .map(v -> getImagePort.findAllByImageTypeAndReferenceId(ImageType.REVIEW, v.getId()))
+                .collect(Collectors.toCollection(LinkedList::new));
+
+        return RestaurantResponse.of(restaurant, imagesList);
     }
 
     @Override
