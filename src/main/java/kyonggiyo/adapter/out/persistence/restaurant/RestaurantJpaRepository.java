@@ -11,7 +11,8 @@ import java.util.List;
 public interface RestaurantJpaRepository extends JpaRepository<Restaurant, Long> {
 
     @Query(value = "SELECT r FROM Restaurant r " +
-                   "JOIN r.reviews rv " +
+                   "JOIN Review rv " +
+                   "ON r.id = rv.restaurant.id " +
                    "WHERE r.name LIKE %:keyword% OR rv.content LIKE %:keyword%")
     List<Restaurant> findByNameOrReviewContent(@Param(value = "keyword") String keyword);
 
