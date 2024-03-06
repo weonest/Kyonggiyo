@@ -18,6 +18,14 @@ public class RestaurantFixtures {
         return Instancio.of(Restaurant.class)
                 .ignore(field(Restaurant::getId))
                 .ignore(field(Restaurant::getReviews))
+                .ignore(field(Restaurant::getAverageRating))
+                .create();
+    }
+
+    public static Restaurant generateRestaurantEntityWithoutReview() {
+        return Instancio.of(Restaurant.class)
+                .ignore(field(Restaurant::getReviews))
+                .ignore(field(Restaurant::getAverageRating))
                 .create();
     }
 

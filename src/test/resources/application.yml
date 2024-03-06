@@ -40,4 +40,13 @@ jwt:
   access-token-expire-time: 10
   refresh-token-expire-time: 30
 
+cloud:
+  aws:
+    region: ap-northeast-2
+    credentials:
+      access-key: accessKey
+      secret-key: secretKey
+    s3:
+      bucket-name: kyonggiyo-bucket
+
 web-application: false
