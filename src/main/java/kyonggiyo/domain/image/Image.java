@@ -1,5 +1,6 @@
 package kyonggiyo.domain.image;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -23,6 +24,7 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "upload_key")
     private String key;
 
     @Enumerated(EnumType.STRING)

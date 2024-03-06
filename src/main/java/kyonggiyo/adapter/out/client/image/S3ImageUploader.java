@@ -74,7 +74,8 @@ public class S3ImageUploader implements ImageUploader{
     }
 
     private String getUploadPath(String originalFilename) {
-        return MessageFormat.format(UPLOAD_PATH_FORMAT, UUID.randomUUID().toString().substring(10), originalFilename);
+        String delimiter = UUID.randomUUID().toString().substring(9);
+        return MessageFormat.format(UPLOAD_PATH_FORMAT, delimiter, originalFilename);
     }
 
     private ObjectMetadata getObjectMetaData(MultipartFile multipartFile) {
