@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,8 +32,8 @@ public class ReviewController {
     @PostMapping
     public ResponseEntity<Void> reviewCreate(@Auth UserInfo userInfo,
                                              @PathVariable Long restaurantId,
-                                             @RequestBody ReviewCreateRequest request,
-                                             @RequestPart List<MultipartFile> multipartFiles) {
+                                             @RequestPart ReviewCreateRequest request,
+                                             @RequestPart(value = "image", required = false) List<MultipartFile> multipartFiles) {
         createReviewUseCase.createReview(userInfo, restaurantId, request, multipartFiles);
         return ResponseEntity.ok().build();
     }
@@ -42,8 +41,8 @@ public class ReviewController {
     @PatchMapping("/{reviewId}")
     public ResponseEntity<Void> reviewUpdate(@Auth UserInfo userInfo,
                                              @PathVariable Long reviewId,
-                                             @RequestBody ReviewUpdateRequest request,
-                                             @RequestPart List<MultipartFile> multipartFiles) {
+                                             @RequestPart ReviewUpdateRequest request,
+                                             @RequestPart(value = "image", required = false) List<MultipartFile> multipartFiles) {
         updateReviewUseCase.updateReview(userInfo, reviewId, request, multipartFiles);
         return ResponseEntity.ok().build();
     }
