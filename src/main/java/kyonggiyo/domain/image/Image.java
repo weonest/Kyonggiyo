@@ -17,21 +17,27 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Image {
 
+    private static final String URL_PATH = "https://kyonggiyo-bucket.s3.ap-northeast-2.amazonaws.com/";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String imageUrl;
+    private String key;
 
     @Enumerated(EnumType.STRING)
     private ImageType imageType;
 
     private Long referenceId;
 
-    public Image(String imageUrl, ImageType imageType, Long referenceId) {
-        this.imageUrl = imageUrl;
+    public Image(String key, ImageType imageType, Long referenceId) {
+        this.key = key;
         this.imageType = imageType;
         this.referenceId = referenceId;
+    }
+
+    public String getImageUrl() {
+        return URL_PATH + key;
     }
 
 }

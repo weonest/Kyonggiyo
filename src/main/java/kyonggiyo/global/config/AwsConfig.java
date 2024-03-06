@@ -2,6 +2,7 @@ package kyonggiyo.global.config;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import kyonggiyo.global.property.AwsProperties;
@@ -16,12 +17,12 @@ public class AwsConfig {
     private final AwsProperties awsProperties;
 
     @Bean
-    public AmazonS3Client amazonS3Client() {
+    public AmazonS3 s3Client() {
         BasicAWSCredentials awsCredentials = new BasicAWSCredentials(
                 awsProperties.getAccessKey(),
                 awsProperties.getSecretKey());
 
-        return (AmazonS3Client) AmazonS3ClientBuilder.standard()
+        return AmazonS3ClientBuilder.standard()
                 .withRegion(awsProperties.getRegion())
                 .withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
                 .build();

@@ -1,6 +1,6 @@
-package kyonggiyo.adapter.out.image;
+package kyonggiyo.adapter.out.client.image;
 
-import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import kyonggiyo.domain.image.exception.ImageErrorCode;
@@ -24,35 +24,34 @@ import java.util.UUID;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class ImageUploader {
+public class S3ImageUploader implements ImageUploader{
 
     public static final String UPLOAD_PATH_FORMAT = "public/{0}_{1}";
 
-    private final AmazonS3Client s3Client;
+    private final AmazonS3 s3Client;
     private final AwsProperties awsProperties;
 
+    @Override
     public List<String> uploadImage(List<MultipartFile> multipartFiles) {
-        List<String> urls = new ArrayList<>();
+        List<String> keys = new ArrayList<>();
 
         for (MultipartFile multipartFile : multipartFiles) {
             validateFileExtension(multipartFile);
             try{
                 PutObjectRequest putObjectRequest = getPutObjectRequest(multipartFile);
                 s3Client.putObject(putObjectRequest);
-                urls.add(
-                        s3Client.getUrl(
-                                awsProperties.getBucketName(), putObjectRequest.getKey())
-                                .toString());
+                keys.add(putObjectRequest.getKey());
             } catch (Exception e) {
                 log.warn(" S3Client 예외 발생 " ,e);
                 throw new ImageException(ImageErrorCode.UPLOAD_EXCEPTION);
             }
         }
-        return urls;
+        return keys;
     }
 
-    public void deleteImage(String imageUrl) {
-        s3Client.deleteObject(awsProperties.getBucketName(), imageUrl);
+    @Override
+    public void deleteImage(String key) {
+        s3Client.deleteObject(awsProperties.getBucketName(), key);
     }
 
     private void validateFileExtension(MultipartFile multipartFile) {
@@ -62,20 +61,20 @@ public class ImageUploader {
 
     private PutObjectRequest getPutObjectRequest(MultipartFile multipartFile) throws IOException {
         String originalFilename = multipartFile.getOriginalFilename();
-        String imageUrl = getUploadPath(originalFilename);
+        String key = getUploadPath(originalFilename);
         InputStream inputStream = multipartFile.getInputStream();
         ObjectMetadata objectMetaData = getObjectMetaData(multipartFile);
 
         return new PutObjectRequest(
                 awsProperties.getBucketName(),
-                imageUrl,
+                key,
                 inputStream,
                 objectMetaData
         );
     }
 
     private String getUploadPath(String originalFilename) {
-        return MessageFormat.format(UPLOAD_PATH_FORMAT, UUID.randomUUID(), originalFilename);
+        return MessageFormat.format(UPLOAD_PATH_FORMAT, UUID.randomUUID().toString().substring(10), originalFilename);
     }
 
     private ObjectMetadata getObjectMetaData(MultipartFile multipartFile) {
@@ -102,7 +101,7 @@ public class ImageUploader {
 
         public static String findExtension(String fileExtension) {
             ImageFileExtension imageFileExtension = Arrays.stream(ImageFileExtension.values())
-                    .filter(v -> v.getExtension().equals(fileExtension.toUpperCase()))
+                    .filter(v -> v.getExtension().equals(fileExtension.toLowerCase()))
                     .findAny()
                     .orElseThrow(() -> new ImageException(ImageErrorCode.INVALID_FILE_EXTENSION));
             return imageFileExtension.getExtension();
