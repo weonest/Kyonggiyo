@@ -18,6 +18,8 @@ public record RestaurantCreateRequest(
                 .category(category)
                 .contact(contact)
                 .address(address)
+                .lat(lat)
+                .lng(lng)
                 .build();
     }
 
