@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import kyonggiyo.domain.BaseEntity;
 import lombok.AccessLevel;
@@ -15,9 +16,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import java.util.TreeSet;
 
 @Getter
 @Entity
@@ -39,8 +40,9 @@ public class Restaurant extends BaseEntity {
     @Embedded
     private Address address;
 
+    @OrderBy("createdAt desc")
     @OneToMany(mappedBy = "restaurant", orphanRemoval = true)
-    private Set<Review> reviews = new TreeSet<>();
+    private Set<Review> reviews = new HashSet<>();
 
     private float averageRating;
 

@@ -1,6 +1,7 @@
 package kyonggiyo.domain.restaurant;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,7 +20,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "reviews")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Review extends BaseEntity implements Comparable<Review>{
+public class Review extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +30,7 @@ public class Review extends BaseEntity implements Comparable<Review>{
 
     private String content;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
@@ -51,10 +52,8 @@ public class Review extends BaseEntity implements Comparable<Review>{
     }
 
     public void update(int rating, String content) {
-        this.restaurant.getReviews().remove(this);
         this.rating = rating;
         this.content = content;
-        this.restaurant.getReviews().add(this);
     }
 
     private void setRestaurant(Restaurant restaurant) {
@@ -63,13 +62,6 @@ public class Review extends BaseEntity implements Comparable<Review>{
         }
         this.restaurant = restaurant;
         this.restaurant.getReviews().add(this);
-    }
-
-    @Override
-    public int compareTo(Review o) {
-        if (getCreatedAt().isAfter(o.getCreatedAt())) return -1;
-        if (getCreatedAt() == o.getCreatedAt()) return 0;
-        return -1;
     }
 
     @Override
