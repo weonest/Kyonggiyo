@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -54,10 +55,9 @@ public class ReviewCommandService implements CreateReviewUseCase, UpdateReviewUs
         restaurant.updateAverageRating();
         Review savedReview = saveReviewPort.save(review);
 
-        if (multipartFiles.isEmpty()) return;
+        if (Objects.isNull(multipartFiles) || multipartFiles.isEmpty()) return;
 
         imageService.createImage(multipartFiles, ImageType.REVIEW, savedReview.getId());
-
     }
 
     @Override
@@ -66,29 +66,32 @@ public class ReviewCommandService implements CreateReviewUseCase, UpdateReviewUs
                              ReviewUpdateRequest request,
                              List<MultipartFile> multipartFiles) {
         Review review = getReviewPort.getById(id);
-        if (review.getReviewerId().equals(userInfo.userId())) {
-            review.update(request.rating(), request.content());
-            review.getRestaurant().updateAverageRating();
 
-            if (multipartFiles.isEmpty()) return;
+        validateUser(userInfo.userId(), review.getReviewerId());
 
-            imageService.deleteImage(ImageType.REVIEW, review.getId());
-            imageService.createImage(multipartFiles, ImageType.REVIEW, review.getId());
-        }
-        throw new ForbiddenException(GlobalErrorCode.INVALID_REQUEST_EXCEPTION,
-                String.format("유저 식별자 불일치 -> %d", userInfo.userId()));
+        review.update(request.rating(), request.content());
+        review.getRestaurant().updateAverageRating();
+
+        if (Objects.isNull(multipartFiles) || multipartFiles.isEmpty()) return;
+
+        imageService.deleteImage(ImageType.REVIEW, review.getId());
+        imageService.createImage(multipartFiles, ImageType.REVIEW, review.getId());
     }
 
     @Override
     public void deleteReview(UserInfo userInfo, Long id) {
         Review review = getReviewPort.getById(id);
-        if (review.getReviewerId().equals(userInfo.userId())) {
-            deleteReviewPort.deleteById(id);
-            imageService.deleteImage(ImageType.REVIEW, review.getId());
-            return;
-        }
-        throw new ForbiddenException(GlobalErrorCode.INVALID_REQUEST_EXCEPTION,
-                String.format("유저 식별자 불일치 -> %d", userInfo.userId()));
+
+        validateUser(userInfo.userId(), review.getReviewerId());
+
+        deleteReviewPort.deleteById(id);
+        imageService.deleteImage(ImageType.REVIEW, review.getId());
+    }
+
+    private void validateUser(Long userId, Long reviewerId) {
+        if (!userId.equals(reviewerId))
+            throw new ForbiddenException(GlobalErrorCode.INVALID_REQUEST_EXCEPTION,
+                    String.format("유저 식별자 불일치 -> %d", userId));
     }
 
 }
