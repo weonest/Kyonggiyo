@@ -55,15 +55,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         AuthInfo authInfo = tokenService.getAuthInfo(accessToken);
         try {
             tokenService.validate(accessToken);
-            authContext.registerAuthInfo(authInfo);
-
-            filterChain.doFilter(request, response);
         } catch (ExpiredTokenException expiredTokenException) {
             Cookie refreshTokenCookie = CookieUtils.getRefreshTokenCookie(request);
             tokenService.validate(refreshTokenCookie.getValue());
             tokenService.reissueToken(response, refreshTokenCookie.getValue());
-            authContext.registerAuthInfo(authInfo);
         }
+        authContext.registerAuthInfo(authInfo);
+        filterChain.doFilter(request, response);
     }
 
     private String resolveTokenFromHeader(HttpServletRequest request) {
