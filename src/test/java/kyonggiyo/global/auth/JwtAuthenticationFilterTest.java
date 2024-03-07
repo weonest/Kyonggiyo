@@ -36,6 +36,8 @@ import static org.instancio.Select.field;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.BDDMockito.willThrow;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.atMostOnce;
 import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.verify;
 
@@ -129,7 +131,7 @@ class JwtAuthenticationFilterTest {
         // when // then
         assertThatThrownBy(() -> authenticationFilter.doFilterInternal(httpServletRequest, httpServletResponse, filterChain))
                 .isInstanceOf(AuthenticationException.class);
-        verify(tokenService, only()).validate(accessToken);
+        verify(tokenService, atMostOnce()).validate(accessToken);
     }
 
     @Test

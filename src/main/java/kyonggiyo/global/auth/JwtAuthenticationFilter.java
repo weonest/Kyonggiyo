@@ -53,7 +53,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String accessToken = resolveTokenFromHeader(request);
         AuthInfo authInfo = tokenService.getAuthInfo(accessToken);
-        System.out.println("authInfo1 = " + authInfo);
         try {
             tokenService.validate(accessToken);
             filterChain.doFilter(request, response);
