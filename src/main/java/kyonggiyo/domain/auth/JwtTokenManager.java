@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import kyonggiyo.domain.auth.exception.ExpiredTokenException;
 import kyonggiyo.domain.auth.exception.InvalidTokenException;
@@ -12,6 +13,7 @@ import kyonggiyo.domain.user.Role;
 import kyonggiyo.global.auth.AuthInfo;
 import kyonggiyo.global.property.JwtProperties;
 import lombok.RequiredArgsConstructor;
+import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
@@ -31,7 +33,7 @@ public class JwtTokenManager implements TokenManager {
         int primaryNum = RandomGenerator.getDefault().nextInt();
         long expiresIn = currentTimeMillis + (jwtProperties.accessTokenExpireTime() * 1000L);
 
-        Claims claims =  Jwts.claims()
+        Claims claims = Jwts.claims()
                 .add(jwtProperties.claimId(), userId)
                 .add(jwtProperties.claimRole(), role)
                 .build();
@@ -84,16 +86,11 @@ public class JwtTokenManager implements TokenManager {
 
     @Override
     public AuthInfo extract(String token) {
-        Claims claims = Jwts.parser()
-                .setSigningKey(decodedKey(jwtProperties.secretKey()))
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
-
-        Long id = claims.get(jwtProperties.claimId(), Long.class);
-        String role = claims.get(jwtProperties.claimRole(), String.class);
-
-        return new AuthInfo(id, Role.valueOf(role));
+        String claims = token.split("\\.")[1];
+        byte[] claimsBytes = Decoders.BASE64URL.decode(claims);
+        String decodedClaims = new String(claimsBytes, StandardCharsets.UTF_8);
+        JSONObject jsonObject = new JSONObject(decodedClaims);
+        return new AuthInfo(jsonObject.getLong("id"), Role.valueOf(jsonObject.get("role").toString()));
     }
 
     private static Key decodedKey(String key) {
