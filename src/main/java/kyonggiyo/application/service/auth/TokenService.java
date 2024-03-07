@@ -17,6 +17,7 @@ import kyonggiyo.global.auth.AuthInfo;
 import kyonggiyo.global.auth.UserInfo;
 import kyonggiyo.global.util.CookieUtils;
 import lombok.RequiredArgsConstructor;
+import org.apache.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -78,6 +79,7 @@ public class TokenService {
                 .refreshTokenMaxAge(newRefreshToken.getExpiresIn())
                 .build();
 
+        httpServletResponse.addHeader(HttpHeaders.AUTHORIZATION, newAccessToken.value());
         CookieUtils.setCookie(httpServletResponse, tokenResponse);
 
         return tokenResponse;
