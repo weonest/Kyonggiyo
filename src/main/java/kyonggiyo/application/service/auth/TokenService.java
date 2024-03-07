@@ -1,5 +1,6 @@
 package kyonggiyo.application.service.auth;
 
+import jakarta.servlet.http.HttpServletResponse;
 import kyonggiyo.adapter.in.web.auth.dto.TokenResponse;
 import kyonggiyo.application.port.in.auth.ReissueTokenUseCase;
 import kyonggiyo.application.port.out.auth.DeleteRefreshTokenPort;
@@ -14,6 +15,7 @@ import kyonggiyo.domain.user.Role;
 import kyonggiyo.domain.user.User;
 import kyonggiyo.global.auth.AuthInfo;
 import kyonggiyo.global.auth.UserInfo;
+import kyonggiyo.global.util.CookieUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -21,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class TokenService implements ReissueTokenUseCase {
+public class TokenService {
 
     private final TokenManager tokenManager;
     private final SaveRefreshTokenPort saveRefreshTokenPort;
@@ -56,9 +58,8 @@ public class TokenService implements ReissueTokenUseCase {
         return tokenManager.extract(token);
     }
 
-    @Override
     @Transactional
-    public TokenResponse reissueToken(String refreshToken) {
+    public TokenResponse reissueToken(HttpServletResponse httpServletResponse, String refreshToken) {
         RefreshToken retrivedRefreshToken = findRefreshTokenByValuePort.findByValue(refreshToken)
                 .orElseThrow(() -> new ExpiredTokenException(TokenErrorCode.EXPIRED_TOKEN_EXCEPTION));
 
@@ -70,12 +71,16 @@ public class TokenService implements ReissueTokenUseCase {
 
         saveRefreshTokenPort.save(newRefreshToken);
 
-        return TokenResponse.builder()
+        TokenResponse tokenResponse = TokenResponse.builder()
                 .accessToken(newAccessToken.value())
                 .accessTokenMaxAge(newAccessToken.expiresIn())
                 .refreshToken(newRefreshToken.getValue())
                 .refreshTokenMaxAge(newRefreshToken.getExpiresIn())
                 .build();
+
+        CookieUtils.setCookie(httpServletResponse, tokenResponse);
+
+        return tokenResponse;
     }
 
 }

@@ -1,14 +1,17 @@
 package kyonggiyo.global.auth;
 
+import io.jsonwebtoken.lang.Strings;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import kyonggiyo.adapter.in.web.auth.dto.TokenResponse;
 import kyonggiyo.application.service.auth.TokenService;
 import kyonggiyo.domain.auth.exception.ExpiredTokenException;
 import kyonggiyo.global.exception.AuthenticationException;
 import kyonggiyo.global.exception.GlobalErrorCode;
+import kyonggiyo.global.util.CookieUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
@@ -25,7 +28,6 @@ import java.util.Arrays;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private static final String BEARER_TYPE = "Bearer";
-    private static final String REFRESH_TOKEN = "Refresh-Token";
 
     private final AuthContext authContext;
     private final TokenService tokenService;
@@ -50,21 +52,25 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String accessToken = resolveTokenFromHeader(request);
+        AuthInfo authInfo = tokenService.getAuthInfo(accessToken);
+        System.out.println("authInfo1 = " + authInfo);
         try {
             tokenService.validate(accessToken);
-            AuthInfo authInfo = tokenService.getAuthInfo(accessToken);
-            authContext.registerAuthInfo(authInfo);
-
             filterChain.doFilter(request, response);
         } catch (ExpiredTokenException expiredTokenException) {
-            Cookie refreshTokenCookie = resolveTokenFromCookie(request);
+            Cookie refreshTokenCookie = CookieUtils.getRefreshTokenCookie(request);
             tokenService.validate(refreshTokenCookie.getValue());
-            request.getRequestDispatcher("/api/v1/auth/reissue").forward(request, response);
+            tokenService.reissueToken(response, refreshTokenCookie.getValue());
+        } finally {
+            authContext.registerAuthInfo(authInfo);
         }
     }
 
     private String resolveTokenFromHeader(HttpServletRequest request) {
         final String token = request.getHeader(HttpHeaders.AUTHORIZATION);
+        if (!Strings.hasText(token)) {
+            throw new AuthenticationException(GlobalErrorCode.NO_AUTHENTICATION_INFO_EXCEPTION);
+        }
         return checkType(token.split(" "));
     }
 
@@ -73,16 +79,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return token[1];
         }
         throw new AuthenticationException(GlobalErrorCode.INVALID_REQUEST_EXCEPTION);
-    }
-
-    private Cookie resolveTokenFromCookie(HttpServletRequest request) {
-        if (request.getCookies() != null) {
-            return Arrays.stream(request.getCookies())
-                    .filter(cookie -> cookie.getName().equals(REFRESH_TOKEN))
-                    .findFirst()
-                    .orElseThrow(() -> new AuthenticationException(GlobalErrorCode.NO_AUTHENTICATION_INFO_EXCEPTION, "Refresh Cookie가 존재하지 않습니다."));
-        }
-        throw new AuthenticationException(GlobalErrorCode.NO_AUTHENTICATION_INFO_EXCEPTION, "Cookie가 존재하지 않습니다.");
     }
 
 }
