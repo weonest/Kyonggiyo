@@ -1,21 +1,15 @@
 package kyonggiyo.adapter.in.web.auth;
 
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kyonggiyo.adapter.in.web.auth.dto.LogInResponse;
-import kyonggiyo.adapter.in.web.auth.dto.TokenResponse;
 import kyonggiyo.application.port.in.auth.OAuthLoginUseCase;
 import kyonggiyo.application.port.in.auth.OAuthLogoutUseCase;
 import kyonggiyo.application.port.in.auth.ProvideAuthCodeUrlUseCase;
-import kyonggiyo.application.port.in.auth.ReissueTokenUseCase;
 import kyonggiyo.domain.auth.Platform;
-import kyonggiyo.domain.auth.exception.ExpiredTokenException;
-import kyonggiyo.domain.auth.exception.TokenErrorCode;
 import kyonggiyo.global.auth.UserInfo;
+import kyonggiyo.global.util.CookieUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,9 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
-import java.util.Arrays;
 import java.util.Objects;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,7 +30,6 @@ public class AuthController {
     private final ProvideAuthCodeUrlUseCase provideAuthCodeUrlUseCase;
     private final OAuthLoginUseCase oAuthLoginUseCase;
     private final OAuthLogoutUseCase oAuthLogoutUseCase;
-    private final ReissueTokenUseCase reissueTokenUseCase;
 
     @GetMapping("/login/{platform}")
     public ResponseEntity<Void> authCodeRequestUrlProvide(@PathVariable Platform platform) {
@@ -52,7 +43,7 @@ public class AuthController {
         LogInResponse response = oAuthLoginUseCase.login(platform, code);
 
         if (Objects.nonNull(response.token())) {
-            setCookie(httpServletResponse, response.token());
+            CookieUtils.setCookie(httpServletResponse, response.token());
         }
 
         return ResponseEntity.ok(response);
@@ -64,51 +55,9 @@ public class AuthController {
                                        HttpServletResponse httpServletResponse) {
         oAuthLogoutUseCase.logout(userInfo);
 
-        removeCookie(httpServletRequest, httpServletResponse);
+        CookieUtils.removeCookie(httpServletRequest, httpServletResponse);
 
         return ResponseEntity.noContent().build();
-    }
-
-    @GetMapping("/reissue")
-    public ResponseEntity<TokenResponse> tokenReissue(HttpServletRequest httpServletRequest,
-                                                 HttpServletResponse httpServletResponse) {
-        Optional<Cookie> refreshTokenCookie = findRefreshTokenCookie(httpServletRequest);
-        if (refreshTokenCookie.isPresent()) {
-            Cookie cookie = refreshTokenCookie.get();
-            TokenResponse tokenResponse = reissueTokenUseCase.reissueToken(cookie.getValue());
-
-            setCookie(httpServletResponse, tokenResponse);
-
-            return ResponseEntity.ok(tokenResponse);
-        }
-        throw new ExpiredTokenException(TokenErrorCode.EXPIRED_TOKEN_EXCEPTION, "리프레시 토큰 재발급 요청에서 만료");
-    }
-
-    private Optional<Cookie> findRefreshTokenCookie(HttpServletRequest httpServletRequest) {
-        return Arrays.stream(httpServletRequest.getCookies())
-                .filter(cookie -> cookie.getName().equals(REFRESH_TOKEN))
-                .findFirst();
-    }
-
-    private void setCookie(HttpServletResponse httpServletResponse, TokenResponse tokenResponse) {
-        ResponseCookie cookie = ResponseCookie.from(REFRESH_TOKEN, tokenResponse.refreshToken())
-                .path("/")
-                .sameSite("None")
-                .httpOnly(true)
-                .secure(true)
-                .maxAge(tokenResponse.refreshTokenMaxAge())
-                .build();
-
-        httpServletResponse.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-    }
-
-    private void removeCookie(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-        Optional<Cookie> refreshTokenCookie = findRefreshTokenCookie(httpServletRequest);
-        if (refreshTokenCookie.isPresent()) {
-            Cookie cookie = refreshTokenCookie.get();
-            cookie.setMaxAge(0);
-            httpServletResponse.addCookie(cookie);
-        }
     }
 
 }
