@@ -36,7 +36,10 @@ public class Candidate extends BaseEntity {
     @Embedded
     private Address address;
 
-    private Status status;
+    private String reason;
+
+    @Enumerated(EnumType.STRING)
+    private Status status = Status.WAITING;
 
     private Long requesterId;
 
@@ -47,11 +50,13 @@ public class Candidate extends BaseEntity {
                       String address,
                       double lat,
                       double lng,
+                      String reason,
                       Long requesterId) {
         this.name = name;
         this.category = category;
         this.contact = contact;
         this.address = new Address(address, lat, lng);
+        this.reason = reason;
         this.requesterId = requesterId;
     }
 

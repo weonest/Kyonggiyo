@@ -65,7 +65,8 @@ class CandidateControllerTest extends ControllerTest {
                                 fieldWithPath("contact").type(JsonFieldType.STRING).description("연락처").optional(),
                                 fieldWithPath("address").type(JsonFieldType.STRING).description("주소"),
                                 fieldWithPath("lat").type(JsonFieldType.NUMBER).description("위도"),
-                                fieldWithPath("lng").type(JsonFieldType.NUMBER).description("경도")
+                                fieldWithPath("lng").type(JsonFieldType.NUMBER).description("경도"),
+                                fieldWithPath("reason").type(JsonFieldType.STRING).description("추천 이유")
                         )));
 
         // then
@@ -107,6 +108,7 @@ class CandidateControllerTest extends ControllerTest {
                                 fieldWithPath("data[].address").type(JsonFieldType.STRING).description("주소"),
                                 fieldWithPath("data[].lat").type(JsonFieldType.NUMBER).description("위도"),
                                 fieldWithPath("data[].lng").type(JsonFieldType.NUMBER).description("경도"),
+                                fieldWithPath("data[].reason").type(JsonFieldType.STRING).description("추천 이유"),
                                 fieldWithPath("data[].createdAt").type(JsonFieldType.STRING).description("생성일"),
                                 fieldWithPath("data[].requesterId").type(JsonFieldType.NUMBER).description("요청자 식별자"),
                                 fieldWithPath("numberOfElements").type(JsonFieldType.NUMBER).description("조회된 데이터 수"),

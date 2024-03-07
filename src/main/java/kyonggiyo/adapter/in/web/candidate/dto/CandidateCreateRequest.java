@@ -9,7 +9,8 @@ public record CandidateCreateRequest(
         String contact,
         String address,
         double lat,
-        double lng
+        double lng,
+        String reason
 ) {
 
     public Candidate toEntity(Long requestId) {
@@ -20,6 +21,7 @@ public record CandidateCreateRequest(
                 .address(address)
                 .lat(lat)
                 .lng(lng)
+                .reason(reason)
                 .requesterId(requestId)
                 .build();
     }

@@ -13,6 +13,7 @@ public record CandidateResponse(
         String address,
         double lat,
         double lng,
+        String reason,
         LocalDateTime createdAt,
         Long requesterId
 ) {
@@ -26,6 +27,7 @@ public record CandidateResponse(
                 candidate.getAddress().getAddress(),
                 candidate.getAddress().getLat(),
                 candidate.getAddress().getLng(),
+                candidate.getReason(),
                 candidate.getCreatedAt(),
                 candidate.getRequesterId()
         );
