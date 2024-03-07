@@ -4,12 +4,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import kyonggiyo.adapter.in.web.auth.dto.TokenResponse;
 import kyonggiyo.application.service.auth.TokenService;
-import kyonggiyo.domain.auth.JwtTokenManager;
 import kyonggiyo.domain.auth.exception.ExpiredTokenException;
 import kyonggiyo.domain.auth.exception.TokenErrorCode;
 import kyonggiyo.domain.user.Role;
 import kyonggiyo.global.exception.AuthenticationException;
-import kyonggiyo.global.util.CookieUtils;
 import org.apache.http.HttpHeaders;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -21,24 +19,19 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpMethod;
-import org.springframework.mock.http.server.reactive.MockServerHttpRequest;
 import org.springframework.mock.web.MockFilterChain;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.random.RandomGenerator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.instancio.Select.field;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.BDDMockito.willThrow;
-import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.atMostOnce;
-import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
