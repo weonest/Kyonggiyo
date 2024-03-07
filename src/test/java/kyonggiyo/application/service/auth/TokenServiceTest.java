@@ -16,6 +16,7 @@ import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.util.Optional;
@@ -113,6 +114,7 @@ class TokenServiceTest extends ServiceTest {
 
     @Test
     void 리프레시_토큰을_통해서_토큰을_재발급_할_수_있다() {
+        MockHttpServletResponse httpServletResponse = new MockHttpServletResponse();
         String authenticatedRefreshToken = "Valid token";
         AccessToken accessToken = Instancio.create(AccessToken.class);
         RefreshToken refreshToken = Instancio.create(RefreshToken.class);
@@ -130,7 +132,7 @@ class TokenServiceTest extends ServiceTest {
         willDoNothing().given(saveRefreshTokenPort).save(refreshToken);
 
         // when
-        TokenResponse result = tokenService.reissueToken(authenticatedRefreshToken);
+        TokenResponse result = tokenService.reissueToken(httpServletResponse, authenticatedRefreshToken);
 
         // then
         assertThat(result).isEqualTo(tokenResponse);
