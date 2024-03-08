@@ -2,7 +2,6 @@ package kyonggiyo.application.service.auth;
 
 import jakarta.servlet.http.HttpServletResponse;
 import kyonggiyo.adapter.in.web.auth.dto.TokenResponse;
-import kyonggiyo.application.port.in.auth.ReissueTokenUseCase;
 import kyonggiyo.application.port.out.auth.DeleteRefreshTokenPort;
 import kyonggiyo.application.port.out.auth.FindRefreshTokenByValuePort;
 import kyonggiyo.application.port.out.auth.SaveRefreshTokenPort;

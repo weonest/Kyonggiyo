@@ -6,7 +6,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import kyonggiyo.adapter.in.web.auth.dto.TokenResponse;
 import kyonggiyo.application.service.auth.TokenService;
 import kyonggiyo.domain.auth.exception.ExpiredTokenException;
 import kyonggiyo.global.exception.AuthenticationException;
