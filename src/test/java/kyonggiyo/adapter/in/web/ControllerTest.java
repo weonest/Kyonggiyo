@@ -9,9 +9,11 @@ import kyonggiyo.adapter.in.web.user.UserController;
 import kyonggiyo.application.port.in.auth.OAuthLoginUseCase;
 import kyonggiyo.application.port.in.auth.OAuthLogoutUseCase;
 import kyonggiyo.application.port.in.auth.ProvideAuthCodeUrlUseCase;
+import kyonggiyo.application.port.in.candidate.AcceptCandidateUseCase;
 import kyonggiyo.application.port.in.candidate.CreateCandidateUseCase;
 import kyonggiyo.application.port.in.candidate.DeleteCandidateUseCase;
 import kyonggiyo.application.port.in.candidate.FindCandidateUseCase;
+import kyonggiyo.application.port.in.candidate.UpdateCandidateUseCase;
 import kyonggiyo.application.port.in.restaurant.CreateRestaurantUseCase;
 import kyonggiyo.application.port.in.restaurant.review.CreateReviewUseCase;
 import kyonggiyo.application.port.in.restaurant.GetRestaurantUseCase;
@@ -73,6 +75,10 @@ public abstract class ControllerTest {
     protected TokenService tokenService;
     @MockBean
     protected CreateCandidateUseCase createCandidateUseCase;
+    @MockBean
+    protected AcceptCandidateUseCase acceptCandidateUseCase;
+    @MockBean
+    protected UpdateCandidateUseCase updateCandidateUseCase;
     @MockBean
     protected FindCandidateUseCase findCandidateUseCase;
     @MockBean

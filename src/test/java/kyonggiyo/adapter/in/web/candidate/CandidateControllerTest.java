@@ -74,6 +74,59 @@ class CandidateControllerTest extends ControllerTest {
     }
 
     @Test
+    void 맛집_후보를_승인한다() throws Exception {
+        // given
+        Long candidateId = 1L;
+
+        // when
+        ResultActions resultActions = mockMvc.perform(
+                        post("/api/v1/candidates/{candidateId}", candidateId)
+                                .header(HttpHeaders.AUTHORIZATION, BEARER_TOKEN))
+                .andDo(document("update-candidate",
+                        resourceDetails().tag("후보").description("후보 수정"),
+                        requestHeaders(
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("액세스 토큰")
+                        )));
+
+        // then
+        resultActions.andExpect(status().isOk());
+    }
+
+    @Test
+    void 맛집_후보를_수정한다() throws Exception {
+        // given
+        Long candidateId = 1L;
+        CandidateCreateRequest request = Instancio.create(CandidateCreateRequest.class);
+
+        willDoNothing().given(createCandidateUseCase).createCandidate(any(UserInfo.class), eq(request));
+
+        // when
+        ResultActions resultActions = mockMvc.perform(
+                        post("/api/v1/candidates/{candidateId}", candidateId)
+                                .header(HttpHeaders.AUTHORIZATION, BEARER_TOKEN)
+                                .content(objectMapper.writeValueAsString(request))
+                                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(document("update-candidate",
+                        resourceDetails().tag("후보").description("후보 수정")
+                                .requestSchema(Schema.schema("CandidateUpdateRequest")),
+                        requestHeaders(
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("액세스 토큰")
+                        ),
+                        requestFields(
+                                fieldWithPath("name").type(JsonFieldType.STRING).description("식당 이름"),
+                                fieldWithPath("category").type(JsonFieldType.STRING).description("카테고리"),
+                                fieldWithPath("contact").type(JsonFieldType.STRING).description("연락처").optional(),
+                                fieldWithPath("address").type(JsonFieldType.STRING).description("주소"),
+                                fieldWithPath("lat").type(JsonFieldType.NUMBER).description("위도"),
+                                fieldWithPath("lng").type(JsonFieldType.NUMBER).description("경도"),
+                                fieldWithPath("reason").type(JsonFieldType.STRING).description("추천 이유")
+                        )));
+
+        // then
+        resultActions.andExpect(status().isOk());
+    }
+
+    @Test
     void 맛집_후보의_등록_상태에_따라_조회한다() throws Exception {
         // given
         Status status = Instancio.create(Status.class);
