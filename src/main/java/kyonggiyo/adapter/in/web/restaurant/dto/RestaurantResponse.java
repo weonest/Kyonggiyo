@@ -16,6 +16,7 @@ public record RestaurantResponse(
         String address,
         double lat,
         double lng,
+        String reason,
         float averageRating,
         List<ReviewResponse> reviews
 ) {
@@ -29,6 +30,7 @@ public record RestaurantResponse(
                 restaurant.getAddress().getAddress(),
                 restaurant.getAddress().getLat(),
                 restaurant.getAddress().getLng(),
+                restaurant.getReason(),
                 restaurant.getAverageRating(),
                 restaurant.getReviews().stream()
                         .map(v -> ReviewResponse.of(v, imagesList.poll()))

@@ -40,6 +40,8 @@ public class Restaurant extends BaseEntity {
     @Embedded
     private Address address;
 
+    private String reason;
+
     @OrderBy("createdAt desc")
     @OneToMany(mappedBy = "restaurant", orphanRemoval = true)
     private Set<Review> reviews = new HashSet<>();
@@ -52,11 +54,13 @@ public class Restaurant extends BaseEntity {
                        String contact,
                        String address,
                        double lat,
-                       double lng) {
+                       double lng,
+                       String reason) {
         this.name = name;
         this.contact = contact;
         this.address = new Address(address, lat, lng);
         this.category = category;
+        this.reason = reason;
     }
 
     public void updateAverageRating() {
