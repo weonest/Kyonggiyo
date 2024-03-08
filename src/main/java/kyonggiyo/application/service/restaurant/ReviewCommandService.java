@@ -81,8 +81,9 @@ public class ReviewCommandService implements CreateReviewUseCase, UpdateReviewUs
     @Override
     public void deleteReview(UserInfo userInfo, Long id) {
         Review review = getReviewPort.getById(id);
-
         validateUser(userInfo.userId(), review.getReviewerId());
+
+        review.deleteReview();
 
         deleteReviewPort.deleteById(id);
         imageService.deleteImage(ImageType.REVIEW, review.getId());

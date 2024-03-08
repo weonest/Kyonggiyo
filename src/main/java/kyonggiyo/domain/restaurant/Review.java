@@ -56,6 +56,12 @@ public class Review extends BaseEntity {
         this.content = content;
     }
 
+    public void deleteReview() {
+        this.restaurant.getReviews().remove(this);
+        this.restaurant.updateAverageRating();
+        this.restaurant = null;
+    }
+
     private void setRestaurant(Restaurant restaurant) {
         if (this.restaurant != null) {
             this.restaurant.getReviews().remove(this);
