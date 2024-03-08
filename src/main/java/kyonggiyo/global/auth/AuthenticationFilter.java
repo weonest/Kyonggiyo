@@ -14,7 +14,6 @@ import kyonggiyo.global.util.CookieUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -24,7 +23,7 @@ import java.util.Arrays;
 @Order(2)
 @Component
 @RequiredArgsConstructor
-public class JwtAuthenticationFilter extends OncePerRequestFilter {
+public class AuthenticationFilter extends OncePerRequestFilter {
 
     private static final String BEARER_TYPE = "Bearer";
 
@@ -45,7 +44,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 "/api.json",
         };
         String path = request.getRequestURI();
-        return Arrays.stream(whiteList).anyMatch(path::startsWith) || request.getMethod().equals(HttpMethod.OPTIONS.name());
+        return Arrays.stream(whiteList).anyMatch(path::startsWith);
     }
 
     @Override

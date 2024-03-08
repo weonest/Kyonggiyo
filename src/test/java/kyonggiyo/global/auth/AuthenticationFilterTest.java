@@ -36,10 +36,10 @@ import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class JwtAuthenticationFilterTest {
+class AuthenticationFilterTest {
 
     @InjectMocks
-    private JwtAuthenticationFilter authenticationFilter;
+    private AuthenticationFilter authenticationFilter;
 
     @Spy
     private AuthContext authContext;
@@ -64,18 +64,6 @@ class JwtAuthenticationFilterTest {
         RandomGenerator aDefault = RandomGenerator.getDefault();
         int i = aDefault.nextInt(0, whiteList.length - 1);
         MockHttpServletRequest httpServletRequest = new MockHttpServletRequest(HttpMethod.GET.name(), whiteList[i]);
-
-        // when
-        boolean result = authenticationFilter.shouldNotFilter(httpServletRequest);
-
-        // then
-        assertThat(result).isTrue();
-    }
-
-    @Test
-    void preflight_요청에_해당하면_필터는_동작하지_않는다() {
-        // given
-        MockHttpServletRequest httpServletRequest = new MockHttpServletRequest(HttpMethod.OPTIONS.name(), "requestURI");
 
         // when
         boolean result = authenticationFilter.shouldNotFilter(httpServletRequest);
