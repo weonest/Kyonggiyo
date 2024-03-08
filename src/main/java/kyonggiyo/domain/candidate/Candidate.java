@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import kyonggiyo.domain.BaseEntity;
 import kyonggiyo.domain.restaurant.Address;
+import kyonggiyo.domain.restaurant.Restaurant;
 import kyonggiyo.domain.restaurant.RestaurantCategory;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -62,6 +63,38 @@ public class Candidate extends BaseEntity {
 
     public void accept() {
         this.status = Status.ACCEPTED;
+    }
+
+    public void updateName(String name) {
+        this.name = name;
+    }
+
+    public void updateCategory(RestaurantCategory category) {
+        this.category = category;
+    }
+
+    public void updateContact(String contact) {
+        this.contact = contact;
+    }
+
+    public void updateAddress(String address, double lat, double lng) {
+        this.address = new Address(address, lat, lng);
+    }
+
+    public void updateReason(String reason) {
+        this.reason = reason;
+    }
+
+    public Restaurant toRestaurant() {
+        return Restaurant.builder()
+                .name(name)
+                .category(category)
+                .contact(contact)
+                .address(address.getAddress())
+                .lat(address.getLat())
+                .lng(address.getLng())
+                .reason(reason)
+                .build();
     }
 
 }
