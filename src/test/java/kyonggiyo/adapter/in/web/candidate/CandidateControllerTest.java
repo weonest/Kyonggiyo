@@ -4,6 +4,7 @@ import com.epages.restdocs.apispec.Schema;
 import kyonggiyo.adapter.in.web.ControllerTest;
 import kyonggiyo.adapter.in.web.candidate.dto.CandidateCreateRequest;
 import kyonggiyo.adapter.in.web.candidate.dto.CandidateResponse;
+import kyonggiyo.adapter.in.web.candidate.dto.CandidateUpdateRequest;
 import kyonggiyo.domain.candidate.Status;
 import kyonggiyo.global.auth.UserInfo;
 import kyonggiyo.global.response.SliceResponse;
@@ -29,6 +30,7 @@ import static org.springframework.restdocs.headers.HeaderDocumentation.headerWit
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
@@ -83,7 +85,7 @@ class CandidateControllerTest extends ControllerTest {
                         post("/api/v1/candidates/{candidateId}", candidateId)
                                 .header(HttpHeaders.AUTHORIZATION, BEARER_TOKEN))
                 .andDo(document("update-candidate",
-                        resourceDetails().tag("후보").description("후보 수정"),
+                        resourceDetails().tag("후보").description("후보 승인"),
                         requestHeaders(
                                 headerWithName(HttpHeaders.AUTHORIZATION).description("액세스 토큰")
                         )));
@@ -96,13 +98,13 @@ class CandidateControllerTest extends ControllerTest {
     void 맛집_후보를_수정한다() throws Exception {
         // given
         Long candidateId = 1L;
-        CandidateCreateRequest request = Instancio.create(CandidateCreateRequest.class);
+        CandidateUpdateRequest request = Instancio.create(CandidateUpdateRequest.class);
 
-        willDoNothing().given(createCandidateUseCase).createCandidate(any(UserInfo.class), eq(request));
+        willDoNothing().given(updateCandidateUseCase).updateCandidate(candidateId, request);
 
         // when
         ResultActions resultActions = mockMvc.perform(
-                        post("/api/v1/candidates/{candidateId}", candidateId)
+                        patch("/api/v1/candidates/{candidateId}", candidateId)
                                 .header(HttpHeaders.AUTHORIZATION, BEARER_TOKEN)
                                 .content(objectMapper.writeValueAsString(request))
                                 .contentType(MediaType.APPLICATION_JSON))
