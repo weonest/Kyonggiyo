@@ -84,7 +84,7 @@ class CandidateControllerTest extends ControllerTest {
         ResultActions resultActions = mockMvc.perform(
                         post("/api/v1/candidates/{candidateId}", candidateId)
                                 .header(HttpHeaders.AUTHORIZATION, BEARER_TOKEN))
-                .andDo(document("update-candidate",
+                .andDo(document("accept-candidate",
                         resourceDetails().tag("후보").description("후보 승인"),
                         requestHeaders(
                                 headerWithName(HttpHeaders.AUTHORIZATION).description("액세스 토큰")
