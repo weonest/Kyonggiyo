@@ -23,7 +23,7 @@ public class JpaCandidateRepositoryImpl implements CandidateRepository {
 
     @Override
     public Slice<Candidate> findAllByStatus(Status status, Pageable pageable) {
-        return jpaRepository.findAllByStatus(status);
+        return jpaRepository.findAllByStatus(status, pageable);
     }
 
     @Override
