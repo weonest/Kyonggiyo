@@ -89,6 +89,7 @@ class RestaurantControllerTest extends ControllerTest {
                                 fieldWithPath("data[].category").type(JsonFieldType.STRING).description("식당 카테고리"),
                                 fieldWithPath("data[].lat").type(JsonFieldType.NUMBER).description("위도"),
                                 fieldWithPath("data[].lng").type(JsonFieldType.NUMBER).description("경도"),
+                                fieldWithPath("data[].reason").type(JsonFieldType.STRING).description("추천 이유"),
                                 fieldWithPath("size").type(JsonFieldType.NUMBER).description("데이터 수")
                         )));
 
@@ -123,6 +124,7 @@ class RestaurantControllerTest extends ControllerTest {
                                 fieldWithPath("data[].category").type(JsonFieldType.STRING).description("식당 카테고리"),
                                 fieldWithPath("data[].lat").type(JsonFieldType.NUMBER).description("위도"),
                                 fieldWithPath("data[].lng").type(JsonFieldType.NUMBER).description("경도"),
+                                fieldWithPath("data[].reason").type(JsonFieldType.STRING).description("추천 이유"),
                                 fieldWithPath("size").type(JsonFieldType.NUMBER).description("데이터 수")
                         )));
 
@@ -158,6 +160,7 @@ class RestaurantControllerTest extends ControllerTest {
                                 fieldWithPath("data[].category").type(JsonFieldType.STRING).description("식당 카테고리"),
                                 fieldWithPath("data[].lat").type(JsonFieldType.NUMBER).description("위도"),
                                 fieldWithPath("data[].lng").type(JsonFieldType.NUMBER).description("경도"),
+                                fieldWithPath("data[].reason").type(JsonFieldType.STRING).description("추천 이유"),
                                 fieldWithPath("size").type(JsonFieldType.NUMBER).description("데이터 수")
                         )));
 

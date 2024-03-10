@@ -9,7 +9,8 @@ public record RestaurantMarkerResponse(
         float averageRating,
         RestaurantCategory category,
         double lat,
-        double lng
+        double lng,
+        String reason
 ) {
 
     public static RestaurantMarkerResponse from(Restaurant restaurant) {
@@ -19,7 +20,8 @@ public record RestaurantMarkerResponse(
                 restaurant.getAverageRating(),
                 restaurant.getCategory(),
                 restaurant.getAddress().getLat(),
-                restaurant.getAddress().getLng()
+                restaurant.getAddress().getLng(),
+                restaurant.getReason()
         );
     }
 
