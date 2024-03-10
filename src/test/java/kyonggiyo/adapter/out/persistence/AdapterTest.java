@@ -5,6 +5,9 @@ import jakarta.persistence.PersistenceContext;
 import kyonggiyo.adapter.out.persistence.account.AccountJpaRepository;
 import kyonggiyo.adapter.out.persistence.account.AccountPersistenceAdapter;
 import kyonggiyo.adapter.out.persistence.account.JpaAccountRepositoryImpl;
+import kyonggiyo.adapter.out.persistence.candidate.CandidateJpaRepository;
+import kyonggiyo.adapter.out.persistence.candidate.CandidatePersistenceAdapter;
+import kyonggiyo.adapter.out.persistence.candidate.JpaCandidateRepositoryImpl;
 import kyonggiyo.adapter.out.persistence.restaurant.JpaRestaurantRepositoryImpl;
 import kyonggiyo.adapter.out.persistence.restaurant.RestaurantJpaRepository;
 import kyonggiyo.adapter.out.persistence.restaurant.RestaurantPersistenceAdapter;
@@ -29,6 +32,7 @@ public abstract class AdapterTest {
     @TestConfiguration
     public static class AdapterTestConfig {
 
+        // account
         @Bean
         public JpaAccountRepositoryImpl jpaAccountRepositoryImpl(AccountJpaRepository accountJpaRepository) {
             return new JpaAccountRepositoryImpl(accountJpaRepository);
@@ -39,6 +43,7 @@ public abstract class AdapterTest {
             return new AccountPersistenceAdapter(jpaAccountRepository);
         }
 
+        // restaurant
         @Bean
         public JpaRestaurantRepositoryImpl jpaRestaurantRepositoryImpl(RestaurantJpaRepository restaurantJpaRepository) {
             return new JpaRestaurantRepositoryImpl(restaurantJpaRepository);
@@ -49,6 +54,7 @@ public abstract class AdapterTest {
             return new RestaurantPersistenceAdapter(jpaRestaurantRepository);
         }
 
+        // review
         @Bean
         public JpaReviewRepositoryImpl jpaReviewRepositoryImpl(ReviewJpaRepository reviewJpaRepository) {
             return new JpaReviewRepositoryImpl(reviewJpaRepository);
@@ -57,6 +63,17 @@ public abstract class AdapterTest {
         @Bean
         public ReviewPersistenceAdapter reviewPersistenceAdapter(JpaReviewRepositoryImpl jpaReviewRepository) {
             return new ReviewPersistenceAdapter(jpaReviewRepository);
+        }
+
+        // candidate
+        @Bean
+        public JpaCandidateRepositoryImpl jpaCandidateRepositoryImpl(CandidateJpaRepository candidateJpaRepository) {
+            return new JpaCandidateRepositoryImpl(candidateJpaRepository);
+        }
+
+        @Bean
+        public CandidatePersistenceAdapter candidatePersistenceAdapter(JpaCandidateRepositoryImpl jpaCandidateRepository) {
+            return new CandidatePersistenceAdapter(jpaCandidateRepository);
         }
 
     }

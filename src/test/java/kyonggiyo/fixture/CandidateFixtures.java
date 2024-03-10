@@ -25,9 +25,11 @@ public class CandidateFixtures {
                 .create();
     }
 
-    public static List<Candidate> generateRejectedCandidateList() {
+    public static List<Candidate> generateDomainListWithStatusAndSize(Status status, int size) {
         return Instancio.ofList(Candidate.class)
-                .set(field(Candidate::getStatus), Status.REJECTED)
+                .size(size)
+                .ignore(field(Candidate::getId))
+                .set(field(Candidate::getStatus), status)
                 .create();
     }
 

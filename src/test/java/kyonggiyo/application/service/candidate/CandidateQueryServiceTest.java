@@ -54,8 +54,7 @@ class CandidateQueryServiceTest extends ServiceTest {
 
     private List<Candidate> getCandidateListFixture(Status status) {
         if (status == Status.WAITING) return CandidateFixtures.generateWaitingCandidateList();
-        if (status == Status.ACCEPTED) return CandidateFixtures.generateAcceptedCandidateList();
-        return CandidateFixtures.generateRejectedCandidateList();
+        return CandidateFixtures.generateAcceptedCandidateList();
     }
 
 }
