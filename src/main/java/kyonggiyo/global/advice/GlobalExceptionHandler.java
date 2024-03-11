@@ -1,6 +1,7 @@
 package kyonggiyo.global.advice;
 
 import kyonggiyo.domain.auth.exception.ExpiredTokenException;
+import kyonggiyo.domain.image.exception.ImageException;
 import kyonggiyo.global.exception.AuthenticationException;
 import kyonggiyo.global.exception.ForbiddenException;
 import kyonggiyo.global.exception.GlobalErrorCode;
@@ -36,6 +37,13 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handlerException(ExpiredTokenException exception) {
         log.warn(exception.getLoggingMessage(), exception);
         return ResponseEntity.status(BAD_REQUEST)
+                .body(ErrorResponse.of(exception.getErrorCode()));
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handlerException(ImageException exception) {
+        log.warn(exception.getLoggingMessage(), exception);
+        return ResponseEntity.status(INTERNAL_SERVER_ERROR)
                 .body(ErrorResponse.of(exception.getErrorCode()));
     }
 
