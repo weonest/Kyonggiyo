@@ -19,6 +19,11 @@ public class JpaUserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public boolean existByNickname(String nickname) {
+        return jpaRepository.existsByNickname(nickname);
+    }
+
+    @Override
     public User save(User user) {
         return jpaRepository.save(user);
     }
