@@ -3,6 +3,8 @@ package kyonggiyo.adapter.in.web.user;
 import com.epages.restdocs.apispec.Schema;
 import kyonggiyo.adapter.in.web.ControllerTest;
 import kyonggiyo.adapter.in.web.auth.dto.UserCreateRequst;
+import kyonggiyo.adapter.in.web.user.dto.ValidateNicknameRequest;
+import kyonggiyo.adapter.in.web.user.dto.ValidateNicknameResponse;
 import kyonggiyo.domain.auth.Platform;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
@@ -19,9 +21,14 @@ import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.resour
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.queryParameters;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -61,6 +68,34 @@ class UserControllerTest extends ControllerTest {
         // then
         resultActions.andExpect(status().isCreated())
                 .andExpect(redirectedUrl(expectUri.toString()));
+    }
+
+    @Test
+    void 프로필_등록시_닉네임_중복검사를_한다() throws Exception{
+        // given
+        ValidateNicknameRequest request = Instancio.create(ValidateNicknameRequest.class);
+        ValidateNicknameResponse response = new ValidateNicknameResponse(true);
+
+        given(validateNicknameUseCase.existByNickname(request.nickname())).willReturn(false);
+
+        // when
+        ResultActions resultActions = mockMvc.perform(
+                        get("/api/v1/users/profile/nickname")
+                                .param("nickname", request.nickname()))
+                .andDo(document("user-validate-nickname",
+                        resourceDetails().tag("유저").description("유저 닉네임 유효성 검사")
+                                .requestSchema(Schema.schema("ValidateNicknameRequest"))
+                                .responseSchema(Schema.schema("ValidateNicknameResponse")),
+                        queryParameters(
+                                parameterWithName("nickname").description("닉네임")
+                        ),
+                        responseFields(
+                                fieldWithPath("flag").type(JsonFieldType.BOOLEAN).description("사용 가능 여부")
+                        )));
+
+        // then
+        resultActions.andExpect(status().isOk())
+                .andExpect(content().string(objectMapper.writeValueAsString(response)));
     }
 
 }

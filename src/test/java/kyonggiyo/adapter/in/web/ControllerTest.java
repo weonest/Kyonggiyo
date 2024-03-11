@@ -20,6 +20,7 @@ import kyonggiyo.application.port.in.restaurant.GetRestaurantUseCase;
 import kyonggiyo.application.port.in.restaurant.review.DeleteReviewUseCase;
 import kyonggiyo.application.port.in.restaurant.review.UpdateReviewUseCase;
 import kyonggiyo.application.port.in.user.CreateUserUseCase;
+import kyonggiyo.application.port.in.user.ValidateNicknameUseCase;
 import kyonggiyo.application.service.auth.TokenService;
 import kyonggiyo.domain.auth.util.PlatformConverter;
 import kyonggiyo.domain.candidate.util.StatusConverter;
@@ -95,6 +96,8 @@ public abstract class ControllerTest {
     protected DeleteReviewUseCase deleteReviewUseCase;
     @MockBean
     protected CreateUserUseCase createUserUseCase;
+    @MockBean
+    protected ValidateNicknameUseCase validateNicknameUseCase;
 
     @BeforeEach
     void setUp(WebApplicationContext context, RestDocumentationContextProvider restDocumentationContextProvider) {
