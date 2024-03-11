@@ -11,6 +11,7 @@ public enum RestaurantCategory {
     FLOUR,
     CAFE,
     BAKERY,
+    CHICKEN,
     ALCOHOL,
     ETC,
 }

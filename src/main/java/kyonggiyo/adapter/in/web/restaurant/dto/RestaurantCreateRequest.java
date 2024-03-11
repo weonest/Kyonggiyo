@@ -9,7 +9,8 @@ public record RestaurantCreateRequest(
         String contact,
         String address,
         double lat,
-        double lng
+        double lng,
+        String reason
 ){
 
     public Restaurant toEntity() {
