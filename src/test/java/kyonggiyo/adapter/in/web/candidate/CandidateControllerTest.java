@@ -137,7 +137,7 @@ class CandidateControllerTest extends ControllerTest {
         SliceResponse<CandidateResponse> response = SliceResponse.of(new SliceImpl<>(candidateResponse));
 
 
-        given(findCandidateUseCase.findAllByStatus(any(UserInfo.class), eq(status), eq(pageable))).willReturn(response);
+        given(loadCandidateUseCase.findAllByStatus(any(UserInfo.class), eq(status), eq(pageable))).willReturn(response);
 
         // when
         ResultActions resultActions = mockMvc.perform(

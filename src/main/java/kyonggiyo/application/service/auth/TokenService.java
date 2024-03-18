@@ -3,7 +3,7 @@ package kyonggiyo.application.service.auth;
 import jakarta.servlet.http.HttpServletResponse;
 import kyonggiyo.adapter.in.web.auth.dto.TokenResponse;
 import kyonggiyo.application.port.out.auth.DeleteRefreshTokenPort;
-import kyonggiyo.application.port.out.auth.FindRefreshTokenByValuePort;
+import kyonggiyo.application.port.out.auth.LoadRefreshTokenPort;
 import kyonggiyo.application.port.out.auth.SaveRefreshTokenPort;
 import kyonggiyo.domain.auth.AccessToken;
 import kyonggiyo.domain.auth.RefreshToken;
@@ -28,7 +28,7 @@ public class TokenService {
     private final TokenManager tokenManager;
     private final SaveRefreshTokenPort saveRefreshTokenPort;
     private final DeleteRefreshTokenPort deleteRefreshTokenPort;
-    private final FindRefreshTokenByValuePort findRefreshTokenByValuePort;
+    private final LoadRefreshTokenPort loadRefreshTokenPort;
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public TokenResponse generateToken(User user) {
@@ -60,7 +60,7 @@ public class TokenService {
 
     @Transactional
     public TokenResponse reissueToken(HttpServletResponse httpServletResponse, String refreshToken) {
-        RefreshToken retrivedRefreshToken = findRefreshTokenByValuePort.findByValue(refreshToken)
+        RefreshToken retrivedRefreshToken = loadRefreshTokenPort.findByValue(refreshToken)
                 .orElseThrow(() -> new ExpiredTokenException(TokenErrorCode.EXPIRED_TOKEN_EXCEPTION));
 
         Long userId = retrivedRefreshToken.getUserId();

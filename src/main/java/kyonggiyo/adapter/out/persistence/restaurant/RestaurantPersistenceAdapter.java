@@ -1,6 +1,6 @@
 package kyonggiyo.adapter.out.persistence.restaurant;
 
-import kyonggiyo.application.port.out.restaurant.GetRestaurantPort;
+import kyonggiyo.application.port.out.restaurant.LoadRestaurantPort;
 import kyonggiyo.application.port.out.restaurant.SaveRestaurantPort;
 import kyonggiyo.domain.restaurant.Restaurant;
 import kyonggiyo.domain.restaurant.RestaurantCategory;
@@ -11,7 +11,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class RestaurantPersistenceAdapter implements GetRestaurantPort, SaveRestaurantPort {
+public class RestaurantPersistenceAdapter implements LoadRestaurantPort, SaveRestaurantPort {
 
     private final RestaurantRepository repository;
 

@@ -1,6 +1,6 @@
 package kyonggiyo.adapter.out.persistence.account;
 
-import kyonggiyo.application.port.out.auth.FindAccountPort;
+import kyonggiyo.application.port.out.auth.LoadAccountPort;
 import kyonggiyo.application.port.out.auth.SaveAccountPort;
 import kyonggiyo.domain.auth.Account;
 import kyonggiyo.domain.auth.Platform;
@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class AccountPersistenceAdapter implements FindAccountPort, SaveAccountPort {
+public class AccountPersistenceAdapter implements LoadAccountPort, SaveAccountPort {
 
     private final AccountRepository repository;
 

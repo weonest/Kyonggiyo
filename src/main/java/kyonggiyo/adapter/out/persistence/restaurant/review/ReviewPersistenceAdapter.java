@@ -1,7 +1,7 @@
 package kyonggiyo.adapter.out.persistence.restaurant.review;
 
 import kyonggiyo.application.port.out.restaurant.review.DeleteReviewPort;
-import kyonggiyo.application.port.out.restaurant.review.GetReviewPort;
+import kyonggiyo.application.port.out.restaurant.review.LoadReviewPort;
 import kyonggiyo.application.port.out.restaurant.review.SaveReviewPort;
 import kyonggiyo.domain.restaurant.Review;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class ReviewPersistenceAdapter implements SaveReviewPort, GetReviewPort, DeleteReviewPort {
+public class ReviewPersistenceAdapter implements SaveReviewPort, LoadReviewPort, DeleteReviewPort {
 
     private final ReviewRepository reviewRepository;
 

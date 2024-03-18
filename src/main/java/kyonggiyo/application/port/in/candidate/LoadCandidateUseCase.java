@@ -6,7 +6,7 @@ import kyonggiyo.global.auth.UserInfo;
 import kyonggiyo.global.response.SliceResponse;
 import org.springframework.data.domain.Pageable;
 
-public interface FindCandidateUseCase {
+public interface LoadCandidateUseCase {
 
     SliceResponse<CandidateResponse> findAllByStatus(UserInfo userInfo, Status status, Pageable pageable);
 

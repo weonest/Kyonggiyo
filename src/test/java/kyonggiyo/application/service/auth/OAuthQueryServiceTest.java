@@ -1,7 +1,7 @@
 package kyonggiyo.application.service.auth;
 
-import kyonggiyo.application.port.out.auth.RequestOAuthTokenPort;
-import kyonggiyo.application.port.out.auth.RequestOAuthUserInfoPort;
+import kyonggiyo.application.port.out.auth.LoadOAuthTokenPort;
+import kyonggiyo.application.port.out.auth.LoadOAuthUserInfoPort;
 import kyonggiyo.application.service.ServiceTest;
 import kyonggiyo.domain.auth.Platform;
 import org.instancio.Instancio;
@@ -20,10 +20,10 @@ class OAuthQueryServiceTest extends ServiceTest {
     private OAuthQueryService oAuthQueryService;
 
     @MockBean
-    private RequestOAuthTokenPort requestOAuthTokenPort;
+    private LoadOAuthTokenPort loadOAuthTokenPort;
 
     @MockBean
-    private RequestOAuthUserInfoPort requestOAuthUserInfoPort;
+    private LoadOAuthUserInfoPort loadOAuthUserInfoPort;
 
     @Test
     void 로그인_플랫폼에_맞는_플랫폼_아이디를_반환한다() {
@@ -33,8 +33,8 @@ class OAuthQueryServiceTest extends ServiceTest {
         String accessToken = "accessToken";
         String providerId = "providerId";
 
-        given(requestOAuthTokenPort.requestToken(platform, authCode)).willReturn(accessToken);
-        given(requestOAuthUserInfoPort.requestUserInfo(platform, accessToken)).willReturn(providerId);
+        given(loadOAuthTokenPort.requestToken(platform, authCode)).willReturn(accessToken);
+        given(loadOAuthUserInfoPort.requestUserInfo(platform, accessToken)).willReturn(providerId);
 
         // when
         String result = oAuthQueryService.getProviderId(platform, authCode);

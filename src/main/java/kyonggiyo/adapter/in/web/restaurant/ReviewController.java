@@ -32,7 +32,7 @@ public class ReviewController {
     @PostMapping
     public ResponseEntity<Void> reviewCreate(@Auth UserInfo userInfo,
                                              @PathVariable Long restaurantId,
-                                             @RequestPart ReviewCreateRequest request,
+                                             ReviewCreateRequest request,
                                              @RequestPart(value = "image", required = false) List<MultipartFile> multipartFiles) {
         createReviewUseCase.createReview(userInfo, restaurantId, request, multipartFiles);
         return ResponseEntity.ok().build();

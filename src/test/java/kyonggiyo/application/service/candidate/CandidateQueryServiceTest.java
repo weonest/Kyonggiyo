@@ -1,8 +1,8 @@
 package kyonggiyo.application.service.candidate;
 
 import kyonggiyo.adapter.in.web.candidate.dto.CandidateResponse;
-import kyonggiyo.application.port.in.candidate.FindCandidateUseCase;
-import kyonggiyo.application.port.out.candidate.FindCandidatePort;
+import kyonggiyo.application.port.in.candidate.LoadCandidateUseCase;
+import kyonggiyo.application.port.out.candidate.LoadCandidatePort;
 import kyonggiyo.application.service.ServiceTest;
 import kyonggiyo.domain.candidate.Candidate;
 import kyonggiyo.domain.candidate.Status;
@@ -28,10 +28,10 @@ import static org.mockito.BDDMockito.given;
 class CandidateQueryServiceTest extends ServiceTest {
 
     @Autowired
-    private FindCandidateUseCase findCandidateUseCase;
+    private LoadCandidateUseCase loadCandidateUseCase;
 
     @MockBean
-    private FindCandidatePort findCandidatePort;
+    private LoadCandidatePort loadCandidatePort;
 
     @Test
     void 맛집_후보군의_상태에_따라_조회할_수_있다() {
@@ -43,10 +43,10 @@ class CandidateQueryServiceTest extends ServiceTest {
         List<Candidate> candidates = getCandidateListFixture(status);
         SliceImpl<Candidate> slice = new SliceImpl<>(candidates);
 
-        given(findCandidatePort.findAllByStatus(status, pageable)).willReturn(slice);
+        given(loadCandidatePort.findAllByStatus(status, pageable)).willReturn(slice);
 
         // when
-        SliceResponse<CandidateResponse> result = findCandidateUseCase.findAllByStatus(userInfo, status, pageable);
+        SliceResponse<CandidateResponse> result = loadCandidateUseCase.findAllByStatus(userInfo, status, pageable);
 
         // then
         assertThat(result.data()).hasSameSizeAs(candidates);

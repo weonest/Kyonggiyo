@@ -6,7 +6,7 @@ import kyonggiyo.domain.candidate.Status;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
-public interface FindCandidatePort {
+public interface LoadCandidatePort {
 
     Candidate getById(Long id);
 

@@ -1,6 +1,6 @@
 package kyonggiyo.application.service.auth;
 
-import kyonggiyo.application.port.out.auth.FindAccountPort;
+import kyonggiyo.application.port.out.auth.LoadAccountPort;
 import kyonggiyo.application.service.ServiceTest;
 import kyonggiyo.domain.auth.Account;
 import kyonggiyo.fixture.AccountFixtures;
@@ -21,7 +21,7 @@ class AccountLoginServiceTest extends ServiceTest {
     private AccountLoginService accountLoginService;
 
     @MockBean
-    private FindAccountPort findAccountPort;
+    private LoadAccountPort loadAccountPort;
 
     @MockBean
     private AccountSignUpService accountSignUpService;
@@ -31,7 +31,7 @@ class AccountLoginServiceTest extends ServiceTest {
         // given
         Account account = AccountFixtures.generateAccountEntityWithoutUser();
 
-        given(findAccountPort.findByPlatformAndPlatformId(account.getPlatform(), account.getPlatformId()))
+        given(loadAccountPort.findByPlatformAndPlatformId(account.getPlatform(), account.getPlatformId()))
                 .willReturn(Optional.of(account));
 
         // when
@@ -45,7 +45,7 @@ class AccountLoginServiceTest extends ServiceTest {
         // given
         Account account = AccountFixtures.generateAccountEntityWithoutUser();
 
-        given(findAccountPort.findByPlatformAndPlatformId(account.getPlatform(), account.getPlatformId()))
+        given(loadAccountPort.findByPlatformAndPlatformId(account.getPlatform(), account.getPlatformId()))
                 .willReturn(Optional.empty());
         given(accountSignUpService.signup(account.getPlatform(), account.getPlatformId()))
                 .willReturn(account);

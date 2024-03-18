@@ -2,11 +2,11 @@ package kyonggiyo.application.service.restaurant;
 
 import kyonggiyo.adapter.in.web.restaurant.dto.review.ReviewCreateRequest;
 import kyonggiyo.adapter.in.web.restaurant.dto.review.ReviewUpdateRequest;
-import kyonggiyo.application.port.out.restaurant.GetRestaurantPort;
+import kyonggiyo.application.port.out.restaurant.LoadRestaurantPort;
 import kyonggiyo.application.port.out.restaurant.review.DeleteReviewPort;
-import kyonggiyo.application.port.out.restaurant.review.GetReviewPort;
+import kyonggiyo.application.port.out.restaurant.review.LoadReviewPort;
 import kyonggiyo.application.port.out.restaurant.review.SaveReviewPort;
-import kyonggiyo.application.port.out.user.GetUserPort;
+import kyonggiyo.application.port.out.user.LoadUserPort;
 import kyonggiyo.application.service.ServiceTest;
 import kyonggiyo.application.service.image.ImageService;
 import kyonggiyo.domain.restaurant.Restaurant;
@@ -33,11 +33,11 @@ class ReviewCommandServiceTest extends ServiceTest {
     private ReviewCommandService reviewCommandService;
 
     @MockBean
-    private GetUserPort getUserPort;
+    private LoadUserPort loadUserPort;
     @MockBean
-    private GetRestaurantPort getRestaurantPort;
+    private LoadRestaurantPort loadRestaurantPort;
     @MockBean
-    private GetReviewPort getReviewPort;
+    private LoadReviewPort loadReviewPort;
     @MockBean
     private SaveReviewPort saveReviewPort;
     @MockBean
@@ -61,16 +61,16 @@ class ReviewCommandServiceTest extends ServiceTest {
                 .reviewerNickname(reviewer.getNickname())
                 .build();
 
-        given(getUserPort.getById(userInfo.userId())).willReturn(reviewer);
-        given(getRestaurantPort.getById(restaurant.getId())).willReturn(restaurant);
+        given(loadUserPort.getById(userInfo.userId())).willReturn(reviewer);
+        given(loadRestaurantPort.getById(restaurant.getId())).willReturn(restaurant);
         given(saveReviewPort.save(review)).willReturn(review);
 
         // when
         reviewCommandService.createReview(userInfo, restaurant.getId(), request, null);
 
         // then
-        verify(getUserPort, only()).getById(userInfo.userId());
-        verify(getRestaurantPort, only()).getById(restaurant.getId());
+        verify(loadUserPort, only()).getById(userInfo.userId());
+        verify(loadRestaurantPort, only()).getById(restaurant.getId());
         verify(saveReviewPort, only()).save(review);
     }
 
@@ -90,13 +90,13 @@ class ReviewCommandServiceTest extends ServiceTest {
                 .reviewerNickname(reviewer.getNickname())
                 .build();
 
-        given(getReviewPort.getById(any())).willReturn(review);
+        given(loadReviewPort.getById(any())).willReturn(review);
 
         // when
         reviewCommandService.updateReview(userInfo, restaurant.getId(), request, null);
 
         // then
-        verify(getReviewPort, only()).getById(any());
+        verify(loadReviewPort, only()).getById(any());
     }
 
     @Test
@@ -115,13 +115,13 @@ class ReviewCommandServiceTest extends ServiceTest {
                 .reviewerNickname(reviewer.getNickname())
                 .build();
 
-        given(getReviewPort.getById(any())).willReturn(review);
+        given(loadReviewPort.getById(any())).willReturn(review);
 
         // when
         reviewCommandService.deleteReview(userInfo, review.getId());
 
         // then
-        verify(getReviewPort, only()).getById(any());
+        verify(loadReviewPort, only()).getById(any());
     }
 
 }

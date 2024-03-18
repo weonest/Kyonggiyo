@@ -5,7 +5,7 @@ import kyonggiyo.domain.image.ImageType;
 
 import java.util.List;
 
-public interface GetImagePort {
+public interface LoadImagePort {
 
     List<Image> findAllByImageTypeAndReferenceId(ImageType imageType, Long referenceId);
 

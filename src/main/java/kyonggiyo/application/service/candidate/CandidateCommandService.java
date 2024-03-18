@@ -7,7 +7,7 @@ import kyonggiyo.application.port.in.candidate.CreateCandidateUseCase;
 import kyonggiyo.application.port.in.candidate.DeleteCandidateUseCase;
 import kyonggiyo.application.port.in.candidate.UpdateCandidateUseCase;
 import kyonggiyo.application.port.out.candidate.DeleteCandidatePort;
-import kyonggiyo.application.port.out.candidate.FindCandidatePort;
+import kyonggiyo.application.port.out.candidate.LoadCandidatePort;
 import kyonggiyo.application.port.out.candidate.SaveCandidatePort;
 import kyonggiyo.application.port.out.restaurant.SaveRestaurantPort;
 import kyonggiyo.domain.candidate.Candidate;
@@ -27,7 +27,7 @@ public class CandidateCommandService implements CreateCandidateUseCase, AcceptCa
 
     private final SaveCandidatePort saveCandidatePort;
     private final SaveRestaurantPort saveRestaurantPort;
-    private final FindCandidatePort findCandidatePort;
+    private final LoadCandidatePort loadCandidatePort;
     private final DeleteCandidatePort deleteCandidatePort;
 
     @Override
@@ -38,7 +38,7 @@ public class CandidateCommandService implements CreateCandidateUseCase, AcceptCa
 
     @Override
     public void updateCandidate(Long candidateId, CandidateUpdateRequest request) {
-        Candidate candidate = findCandidatePort.getById(candidateId);
+        Candidate candidate = loadCandidatePort.getById(candidateId);
         candidate.updateName(request.name());
         candidate.updateCategory(request.category());
         candidate.updateContact(request.contact());
@@ -48,14 +48,14 @@ public class CandidateCommandService implements CreateCandidateUseCase, AcceptCa
 
     @Override
     public void acceptCandidate(Long candidateId) {
-        Candidate candidate = findCandidatePort.getById(candidateId);
+        Candidate candidate = loadCandidatePort.getById(candidateId);
         candidate.accept();
         saveRestaurantPort.save(candidate.toRestaurant());
     }
 
     @Override
     public void deleteCandidate(UserInfo userInfo, Long id) {
-        Candidate candidate = findCandidatePort.getById(id);
+        Candidate candidate = loadCandidatePort.getById(id);
         if (userInfo.role().equals(Role.ADMIN) || candidate.getRequesterId().equals(userInfo.userId())) {
             deleteCandidatePort.deleteById(id);
             return;

@@ -8,7 +8,7 @@ import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantMarkerResponse;
 import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantResponse;
 import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantResponses;
 import kyonggiyo.application.port.in.restaurant.CreateRestaurantUseCase;
-import kyonggiyo.application.port.in.restaurant.GetRestaurantUseCase;
+import kyonggiyo.application.port.in.restaurant.LoadRestaurantUseCase;
 import kyonggiyo.application.service.restaurant.dto.RestaurantCategoryParam;
 import kyonggiyo.global.auth.Admin;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ import java.util.List;
 public class RestaurantController {
 
     private final CreateRestaurantUseCase createRestaurantUseCase;
-    private final GetRestaurantUseCase getRestaurantUseCase;
+    private final LoadRestaurantUseCase loadRestaurantUseCase;
 
     @Admin
     @PostMapping
@@ -39,26 +39,26 @@ public class RestaurantController {
 
     @GetMapping("/markers")
     public ResponseEntity<RestaurantResponses<RestaurantMarkerResponse>> restaurantMarkers() {
-        List<RestaurantMarkerResponse> response = getRestaurantUseCase.getAllRestaurantsForMarker();
+        List<RestaurantMarkerResponse> response = loadRestaurantUseCase.getAllRestaurantsForMarker();
         return ResponseEntity.ok(RestaurantResponses.from(response));
     }
 
     @GetMapping("/markers/search")
     public ResponseEntity<RestaurantResponses<RestaurantMarkerResponse>> restaurantSearch(RestaurantByKeywordRequest request) {
-        List<RestaurantMarkerResponse> response = getRestaurantUseCase.searchByKeyword(request);
+        List<RestaurantMarkerResponse> response = loadRestaurantUseCase.searchByKeyword(request);
         return ResponseEntity.ok(RestaurantResponses.from(response));
     }
 
     @GetMapping("/markers/filter")
     public ResponseEntity<RestaurantResponses<RestaurantMarkerResponse>> restaurantSearch(@Valid RestaurantFilterRequest request) {
         RestaurantCategoryParam param = RestaurantCategoryParam.from(request.categories());
-        List<RestaurantMarkerResponse> response = getRestaurantUseCase.filterRestaurants(param);
+        List<RestaurantMarkerResponse> response = loadRestaurantUseCase.filterRestaurants(param);
         return ResponseEntity.ok(RestaurantResponses.from(response));
     }
 
     @GetMapping("/markers/{restaurantId}")
     public ResponseEntity<RestaurantResponse> restaurantDetail(@PathVariable Long restaurantId) {
-        RestaurantResponse response = getRestaurantUseCase.getById(restaurantId);
+        RestaurantResponse response = loadRestaurantUseCase.getById(restaurantId);
         return ResponseEntity.ok(response);
     }
 

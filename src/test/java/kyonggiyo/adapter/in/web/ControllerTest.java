@@ -12,11 +12,11 @@ import kyonggiyo.application.port.in.auth.ProvideAuthCodeUrlUseCase;
 import kyonggiyo.application.port.in.candidate.AcceptCandidateUseCase;
 import kyonggiyo.application.port.in.candidate.CreateCandidateUseCase;
 import kyonggiyo.application.port.in.candidate.DeleteCandidateUseCase;
-import kyonggiyo.application.port.in.candidate.FindCandidateUseCase;
+import kyonggiyo.application.port.in.candidate.LoadCandidateUseCase;
 import kyonggiyo.application.port.in.candidate.UpdateCandidateUseCase;
 import kyonggiyo.application.port.in.restaurant.CreateRestaurantUseCase;
 import kyonggiyo.application.port.in.restaurant.review.CreateReviewUseCase;
-import kyonggiyo.application.port.in.restaurant.GetRestaurantUseCase;
+import kyonggiyo.application.port.in.restaurant.LoadRestaurantUseCase;
 import kyonggiyo.application.port.in.restaurant.review.DeleteReviewUseCase;
 import kyonggiyo.application.port.in.restaurant.review.UpdateReviewUseCase;
 import kyonggiyo.application.port.in.user.CreateUserUseCase;
@@ -81,13 +81,13 @@ public abstract class ControllerTest {
     @MockBean
     protected UpdateCandidateUseCase updateCandidateUseCase;
     @MockBean
-    protected FindCandidateUseCase findCandidateUseCase;
+    protected LoadCandidateUseCase loadCandidateUseCase;
     @MockBean
     protected DeleteCandidateUseCase deleteCandidateUseCase;
     @MockBean
     protected CreateRestaurantUseCase createRestaurantUseCase;
     @MockBean
-    protected GetRestaurantUseCase getRestaurantUseCase;
+    protected LoadRestaurantUseCase loadRestaurantUseCase;
     @MockBean
     protected CreateReviewUseCase createReviewUseCase;
     @MockBean

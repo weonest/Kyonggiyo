@@ -2,7 +2,7 @@ package kyonggiyo.application.service.user;
 
 import kyonggiyo.adapter.in.web.auth.dto.UserCreateRequst;
 import kyonggiyo.application.port.in.user.CreateUserUseCase;
-import kyonggiyo.application.port.out.auth.FindAccountPort;
+import kyonggiyo.application.port.out.auth.LoadAccountPort;
 import kyonggiyo.application.port.out.user.SaveUserPort;
 import kyonggiyo.application.service.ServiceTest;
 import kyonggiyo.domain.auth.Account;
@@ -27,7 +27,7 @@ class UserCommandServiceTest extends ServiceTest {
     private CreateUserUseCase createUserUseCase;
 
     @MockBean
-    private FindAccountPort findAccountPort;
+    private LoadAccountPort loadAccountPort;
 
     @MockBean
     private SaveUserPort saveUserPort;
@@ -39,7 +39,7 @@ class UserCommandServiceTest extends ServiceTest {
         Account account = AccountFixtures.generateAccountEntityWithoutUser();
         UserCreateRequst userCreateRequst = new UserCreateRequst(account.getId(), user.getNickname());
 
-        given(findAccountPort.findById(account.getId())).willReturn(Optional.of(account));
+        given(loadAccountPort.findById(account.getId())).willReturn(Optional.of(account));
         given(saveUserPort.save(user)).willReturn(user);
 
         // when

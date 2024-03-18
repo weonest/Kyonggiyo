@@ -1,7 +1,7 @@
 package kyonggiyo.adapter.out.persistence.candidate;
 
 import kyonggiyo.application.port.out.candidate.DeleteCandidatePort;
-import kyonggiyo.application.port.out.candidate.FindCandidatePort;
+import kyonggiyo.application.port.out.candidate.LoadCandidatePort;
 import kyonggiyo.application.port.out.candidate.SaveCandidatePort;
 import kyonggiyo.domain.candidate.Candidate;
 import kyonggiyo.domain.candidate.Status;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class CandidatePersistenceAdapter implements FindCandidatePort, SaveCandidatePort, DeleteCandidatePort {
+public class CandidatePersistenceAdapter implements LoadCandidatePort, SaveCandidatePort, DeleteCandidatePort {
 
     private final CandidateRepository repository;
 

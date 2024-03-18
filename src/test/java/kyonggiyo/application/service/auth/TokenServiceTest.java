@@ -3,7 +3,7 @@ package kyonggiyo.application.service.auth;
 import kyonggiyo.adapter.in.web.auth.dto.TokenResponse;
 import kyonggiyo.domain.auth.TokenManager;
 import kyonggiyo.application.port.out.auth.DeleteRefreshTokenPort;
-import kyonggiyo.application.port.out.auth.FindRefreshTokenByValuePort;
+import kyonggiyo.application.port.out.auth.LoadRefreshTokenPort;
 import kyonggiyo.application.port.out.auth.SaveRefreshTokenPort;
 import kyonggiyo.application.service.ServiceTest;
 import kyonggiyo.domain.auth.AccessToken;
@@ -43,7 +43,7 @@ class TokenServiceTest extends ServiceTest {
     private DeleteRefreshTokenPort deleteRefreshTokenPort;
 
     @MockBean
-    private FindRefreshTokenByValuePort findRefreshTokenByValuePort;
+    private LoadRefreshTokenPort loadRefreshTokenPort;
 
     @Test
     void 유저의_정보를_통해_토큰을_생성하고_반환할_수_있다() {
@@ -125,7 +125,7 @@ class TokenServiceTest extends ServiceTest {
                 .refreshTokenMaxAge(refreshToken.getExpiresIn())
                 .build();
 
-        given(findRefreshTokenByValuePort.findByValue(authenticatedRefreshToken))
+        given(loadRefreshTokenPort.findByValue(authenticatedRefreshToken))
                 .willReturn(Optional.of(refreshToken));
         given(tokenManager.generateAccessToken(refreshToken.getUserId(), refreshToken.getRole())).willReturn(accessToken);
         given(tokenManager.generateRefreshToken(refreshToken.getUserId(), refreshToken.getRole())).willReturn(refreshToken);

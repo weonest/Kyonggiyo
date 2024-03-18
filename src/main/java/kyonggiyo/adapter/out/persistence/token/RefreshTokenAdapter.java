@@ -1,7 +1,7 @@
 package kyonggiyo.adapter.out.persistence.token;
 
 import kyonggiyo.application.port.out.auth.DeleteRefreshTokenPort;
-import kyonggiyo.application.port.out.auth.FindRefreshTokenByValuePort;
+import kyonggiyo.application.port.out.auth.LoadRefreshTokenPort;
 import kyonggiyo.application.port.out.auth.SaveRefreshTokenPort;
 import kyonggiyo.domain.auth.RefreshToken;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class RefreshTokenAdapter implements SaveRefreshTokenPort, FindRefreshTokenByValuePort,
+public class RefreshTokenAdapter implements SaveRefreshTokenPort, LoadRefreshTokenPort,
         DeleteRefreshTokenPort {
 
     private final RefreshTokenRepository refreshTokenRepository;

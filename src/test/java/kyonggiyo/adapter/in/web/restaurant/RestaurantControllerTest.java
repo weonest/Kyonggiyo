@@ -75,7 +75,7 @@ class RestaurantControllerTest extends ControllerTest {
         List<RestaurantMarkerResponse> restaurants = Instancio.ofList(RestaurantMarkerResponse.class).create();
         RestaurantResponses<RestaurantMarkerResponse> response = RestaurantResponses.from(restaurants);
 
-        given(getRestaurantUseCase.getAllRestaurantsForMarker()).willReturn(restaurants);
+        given(loadRestaurantUseCase.getAllRestaurantsForMarker()).willReturn(restaurants);
 
         // when
         ResultActions resultActions = mockMvc.perform(
@@ -106,7 +106,7 @@ class RestaurantControllerTest extends ControllerTest {
         List<RestaurantMarkerResponse> restaurants = Instancio.ofList(RestaurantMarkerResponse.class).create();
         RestaurantResponses<RestaurantMarkerResponse> response = RestaurantResponses.from(restaurants);
 
-        given(getRestaurantUseCase.searchByKeyword(new RestaurantByKeywordRequest(keyword))).willReturn(restaurants);
+        given(loadRestaurantUseCase.searchByKeyword(new RestaurantByKeywordRequest(keyword))).willReturn(restaurants);
 
         // when
         ResultActions resultActions = mockMvc.perform(
@@ -142,7 +142,7 @@ class RestaurantControllerTest extends ControllerTest {
         List<RestaurantMarkerResponse> restaurants = Instancio.ofList(RestaurantMarkerResponse.class).create();
         RestaurantResponses<RestaurantMarkerResponse> response = RestaurantResponses.from(restaurants);
 
-        given(getRestaurantUseCase.filterRestaurants(new RestaurantCategoryParam(categoryList))).willReturn(restaurants);
+        given(loadRestaurantUseCase.filterRestaurants(new RestaurantCategoryParam(categoryList))).willReturn(restaurants);
 
         // when
         ResultActions resultActions = mockMvc.perform(
@@ -176,7 +176,7 @@ class RestaurantControllerTest extends ControllerTest {
         RestaurantResponse response = Instancio.create(RestaurantResponse.class);
         Long restaurantId = response.id();
 
-        given(getRestaurantUseCase.getById(restaurantId)).willReturn(response);
+        given(loadRestaurantUseCase.getById(restaurantId)).willReturn(response);
 
         // when
         ResultActions resultActions = mockMvc.perform(

@@ -1,7 +1,7 @@
 package kyonggiyo.adapter.out.client.oauth;
 
-import kyonggiyo.application.port.out.auth.RequestOAuthTokenPort;
-import kyonggiyo.application.port.out.auth.RequestOAuthUserInfoPort;
+import kyonggiyo.application.port.out.auth.LoadOAuthTokenPort;
+import kyonggiyo.application.port.out.auth.LoadOAuthUserInfoPort;
 import kyonggiyo.domain.auth.Platform;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +11,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Component
-public class OAuthClientAdapter implements RequestOAuthTokenPort, RequestOAuthUserInfoPort {
+public class OAuthClientAdapter implements LoadOAuthTokenPort, LoadOAuthUserInfoPort {
 
     private final Map<Platform, OAuthClient> oAuthClients;
 

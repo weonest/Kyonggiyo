@@ -8,7 +8,7 @@ import kyonggiyo.application.service.restaurant.dto.RestaurantCategoryParam;
 
 import java.util.List;
 
-public interface GetRestaurantUseCase {
+public interface LoadRestaurantUseCase {
 
     RestaurantResponse getById(Long id);
 

@@ -2,7 +2,7 @@ package kyonggiyo.application.service.user;
 
 import kyonggiyo.adapter.in.web.auth.dto.UserCreateRequst;
 import kyonggiyo.application.port.in.user.CreateUserUseCase;
-import kyonggiyo.application.port.out.auth.FindAccountPort;
+import kyonggiyo.application.port.out.auth.LoadAccountPort;
 import kyonggiyo.application.port.out.user.SaveUserPort;
 import kyonggiyo.domain.auth.Account;
 import kyonggiyo.domain.auth.Platform;
@@ -18,12 +18,12 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserCommandService implements CreateUserUseCase {
 
-    private final FindAccountPort findAccountPort;
+    private final LoadAccountPort loadAccountPort;
     private final SaveUserPort saveUserPort;
 
     @Override
     public Platform createUser(UserCreateRequst userCreateRequst) {
-        Account account = findAccountPort.findById(userCreateRequst.accountId())
+        Account account = loadAccountPort.findById(userCreateRequst.accountId())
                 .orElseThrow(() -> new NotFoundException(GlobalErrorCode.NOT_FOUND_ENTITY_EXCEPTION));
 
         User user = userCreateRequst.toEntity();

@@ -2,7 +2,7 @@ package kyonggiyo.application.service.image;
 
 import kyonggiyo.adapter.out.client.image.ImageUploader;
 import kyonggiyo.application.port.out.image.DeleteImagePort;
-import kyonggiyo.application.port.out.image.GetImagePort;
+import kyonggiyo.application.port.out.image.LoadImagePort;
 import kyonggiyo.application.port.out.image.SaveImagePort;
 import kyonggiyo.domain.image.Image;
 import kyonggiyo.domain.image.ImageType;
@@ -19,7 +19,7 @@ public class ImageService {
 
     private final ImageUploader imageUploader;
     private final SaveImagePort saveImagePort;
-    private final GetImagePort getImagePort;
+    private final LoadImagePort loadImagePort;
     private final DeleteImagePort deleteImagePort;
 
     // TODO: 2024-03-06 ReviewCommandService의 트랜잭션에서 계속 이어지고 있음. 테스트 후에 분리해보기
@@ -33,7 +33,7 @@ public class ImageService {
 
     @Transactional
     public void deleteImage(ImageType imageType, Long referenceId) {
-        List<Image> images = getImagePort.findAllByImageTypeAndReferenceId(imageType, referenceId);
+        List<Image> images = loadImagePort.findAllByImageTypeAndReferenceId(imageType, referenceId);
         List<Long> ids = images.stream()
                 .map(Image::getId).toList();
 

@@ -5,7 +5,7 @@ import kyonggiyo.domain.restaurant.RestaurantCategory;
 
 import java.util.List;
 
-public interface GetRestaurantPort {
+public interface LoadRestaurantPort {
 
     Restaurant getById(Long id);
 

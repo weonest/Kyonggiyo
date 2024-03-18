@@ -1,7 +1,7 @@
 package kyonggiyo.adapter.out.persistence.image;
 
 import kyonggiyo.application.port.out.image.DeleteImagePort;
-import kyonggiyo.application.port.out.image.GetImagePort;
+import kyonggiyo.application.port.out.image.LoadImagePort;
 import kyonggiyo.application.port.out.image.SaveImagePort;
 import kyonggiyo.domain.image.Image;
 import kyonggiyo.domain.image.ImageType;
@@ -12,7 +12,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class ImagePersistenceAdapter implements SaveImagePort, GetImagePort, DeleteImagePort {
+public class ImagePersistenceAdapter implements SaveImagePort, LoadImagePort, DeleteImagePort {
 
     private final ImageRepository imageRepository;
 

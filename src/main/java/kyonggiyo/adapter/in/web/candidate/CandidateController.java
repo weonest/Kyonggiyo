@@ -6,7 +6,7 @@ import kyonggiyo.adapter.in.web.candidate.dto.CandidateUpdateRequest;
 import kyonggiyo.application.port.in.candidate.AcceptCandidateUseCase;
 import kyonggiyo.application.port.in.candidate.CreateCandidateUseCase;
 import kyonggiyo.application.port.in.candidate.DeleteCandidateUseCase;
-import kyonggiyo.application.port.in.candidate.FindCandidateUseCase;
+import kyonggiyo.application.port.in.candidate.LoadCandidateUseCase;
 import kyonggiyo.application.port.in.candidate.UpdateCandidateUseCase;
 import kyonggiyo.domain.candidate.Status;
 import kyonggiyo.global.auth.Admin;
@@ -37,7 +37,7 @@ public class CandidateController {
     private final CreateCandidateUseCase createCandidateUseCase;
     private final AcceptCandidateUseCase acceptCandidateUseCase;
     private final UpdateCandidateUseCase updateCandidateUseCase;
-    private final FindCandidateUseCase findCandidateUseCase;
+    private final LoadCandidateUseCase loadCandidateUseCase;
     private final DeleteCandidateUseCase deleteCandidateUseCase;
 
     @PostMapping
@@ -51,7 +51,7 @@ public class CandidateController {
                                                                    @RequestParam Status status,
                                                                    @RequestParam(required = false, defaultValue = "0", value = "page") int page) {
         Pageable pageable = PageRequest.of(page, DEFAULT_PAGE_SIZE);
-        SliceResponse<CandidateResponse> response = findCandidateUseCase.findAllByStatus(userInfo, status, pageable);
+        SliceResponse<CandidateResponse> response = loadCandidateUseCase.findAllByStatus(userInfo, status, pageable);
         return ResponseEntity.ok(response);
     }
 

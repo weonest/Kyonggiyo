@@ -5,11 +5,11 @@ import kyonggiyo.adapter.in.web.restaurant.dto.review.ReviewUpdateRequest;
 import kyonggiyo.application.port.in.restaurant.review.CreateReviewUseCase;
 import kyonggiyo.application.port.in.restaurant.review.DeleteReviewUseCase;
 import kyonggiyo.application.port.in.restaurant.review.UpdateReviewUseCase;
-import kyonggiyo.application.port.out.restaurant.GetRestaurantPort;
+import kyonggiyo.application.port.out.restaurant.LoadRestaurantPort;
 import kyonggiyo.application.port.out.restaurant.review.DeleteReviewPort;
-import kyonggiyo.application.port.out.restaurant.review.GetReviewPort;
+import kyonggiyo.application.port.out.restaurant.review.LoadReviewPort;
 import kyonggiyo.application.port.out.restaurant.review.SaveReviewPort;
-import kyonggiyo.application.port.out.user.GetUserPort;
+import kyonggiyo.application.port.out.user.LoadUserPort;
 import kyonggiyo.application.service.image.ImageService;
 import kyonggiyo.domain.image.ImageType;
 import kyonggiyo.domain.restaurant.Restaurant;
@@ -31,9 +31,9 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class ReviewCommandService implements CreateReviewUseCase, UpdateReviewUseCase, DeleteReviewUseCase {
 
-    private final GetUserPort getUserPort;
-    private final GetRestaurantPort getRestaurantPort;
-    private final GetReviewPort getReviewPort;
+    private final LoadUserPort loadUserPort;
+    private final LoadRestaurantPort loadRestaurantPort;
+    private final LoadReviewPort loadReviewPort;
     private final SaveReviewPort saveReviewPort;
     private final DeleteReviewPort deleteReviewPort;
     private final ImageService imageService;
@@ -43,8 +43,8 @@ public class ReviewCommandService implements CreateReviewUseCase, UpdateReviewUs
                              Long restaurantId,
                              ReviewCreateRequest request,
                              List<MultipartFile> multipartFiles) {
-        User user = getUserPort.getById(userInfo.userId());
-        Restaurant restaurant = getRestaurantPort.getById(restaurantId);
+        User user = loadUserPort.getById(userInfo.userId());
+        Restaurant restaurant = loadRestaurantPort.getById(restaurantId);
         Review review = Review.builder()
                 .rating(request.rating())
                 .content(request.content())
@@ -65,7 +65,7 @@ public class ReviewCommandService implements CreateReviewUseCase, UpdateReviewUs
                              Long id,
                              ReviewUpdateRequest request,
                              List<MultipartFile> multipartFiles) {
-        Review review = getReviewPort.getById(id);
+        Review review = loadReviewPort.getById(id);
 
         validateUser(userInfo.userId(), review.getReviewerId());
 
@@ -80,7 +80,7 @@ public class ReviewCommandService implements CreateReviewUseCase, UpdateReviewUs
 
     @Override
     public void deleteReview(UserInfo userInfo, Long id) {
-        Review review = getReviewPort.getById(id);
+        Review review = loadReviewPort.getById(id);
         validateUser(userInfo.userId(), review.getReviewerId());
 
         review.deleteReview();

@@ -4,7 +4,7 @@ import kyonggiyo.domain.auth.RefreshToken;
 
 import java.util.Optional;
 
-public interface FindRefreshTokenByValuePort {
+public interface LoadRefreshTokenPort {
 
     Optional<RefreshToken> findByValue(String token);
 

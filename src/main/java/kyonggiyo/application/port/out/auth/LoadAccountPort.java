@@ -5,7 +5,7 @@ import kyonggiyo.domain.auth.Platform;
 
 import java.util.Optional;
 
-public interface FindAccountPort {
+public interface LoadAccountPort {
 
     Optional<Account> findById(Long accountId);
 
