@@ -1,5 +1,6 @@
 package kyonggiyo.adapter.in.web.restaurant.dto.review;
 
+import kyonggiyo.adapter.in.web.image.dto.ImageResponse;
 import kyonggiyo.adapter.in.web.user.dto.UserResponse;
 import kyonggiyo.domain.image.Image;
 import kyonggiyo.domain.restaurant.Review;
