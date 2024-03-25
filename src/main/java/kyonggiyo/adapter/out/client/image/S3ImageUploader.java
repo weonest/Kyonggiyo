@@ -35,6 +35,7 @@ public class S3ImageUploader implements ImageUploader{
     public List<String> uploadImage(List<MultipartFile> multipartFiles) {
         List<String> keys = new ArrayList<>();
 
+        // 비동기 -> 순서?
         for (MultipartFile multipartFile : multipartFiles) {
             validateFileExtension(multipartFile);
             try{

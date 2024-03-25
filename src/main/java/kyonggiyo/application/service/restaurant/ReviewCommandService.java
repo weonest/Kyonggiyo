@@ -10,6 +10,7 @@ import kyonggiyo.application.port.out.restaurant.review.DeleteReviewPort;
 import kyonggiyo.application.port.out.restaurant.review.LoadReviewPort;
 import kyonggiyo.application.port.out.restaurant.review.SaveReviewPort;
 import kyonggiyo.application.port.out.user.LoadUserPort;
+import kyonggiyo.application.service.event.ImageCreateEvent;
 import kyonggiyo.application.service.image.ImageService;
 import kyonggiyo.domain.image.ImageType;
 import kyonggiyo.domain.restaurant.Restaurant;
@@ -19,6 +20,7 @@ import kyonggiyo.global.auth.UserInfo;
 import kyonggiyo.global.exception.ForbiddenException;
 import kyonggiyo.global.exception.GlobalErrorCode;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,6 +38,7 @@ public class ReviewCommandService implements CreateReviewUseCase, UpdateReviewUs
     private final LoadReviewPort loadReviewPort;
     private final SaveReviewPort saveReviewPort;
     private final DeleteReviewPort deleteReviewPort;
+    private final ApplicationEventPublisher eventPublisher;
     private final ImageService imageService;
 
     @Override
@@ -52,14 +55,18 @@ public class ReviewCommandService implements CreateReviewUseCase, UpdateReviewUs
                 .reviewerId(user.getId())
                 .reviewerNickname(user.getNickname())
                 .build();
-        restaurant.updateAverageRating();
-        Review savedReview = saveReviewPort.save(review);
+        restaurant.updateAverageRating(); // update -> 지연 -> 공유락 걸린 테이블을 업데이트
+        Review savedReview = saveReviewPort.save(review); // insert -> 바로 날아가고 Restaurant에  공유락이 select for share
 
         if (Objects.isNull(multipartFiles) || multipartFiles.isEmpty()) return;
 
-        imageService.createImage(multipartFiles, ImageType.REVIEW, savedReview.getId());
+        // 비동기 & 트랜잭션 분리 -> @Async, Facade , EventListener (Event 저장소)
+        eventPublisher.publishEvent(ImageCreateEvent.of(
+                savedReview.getId(), ImageType.REVIEW, multipartFiles));
+//        imageService.createImage(multipartFiles, ImageType.REVIEW, savedReview.getId());
     }
-
+    
+    // 밑에도 해야함
     @Override
     public void updateReview(UserInfo userInfo,
                              Long id,
