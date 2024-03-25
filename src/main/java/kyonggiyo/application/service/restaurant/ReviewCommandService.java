@@ -44,8 +44,7 @@ public class ReviewCommandService implements CreateReviewUseCase, UpdateReviewUs
     @Override
     public void createReview(UserInfo userInfo,
                              Long restaurantId,
-                             ReviewCreateRequest request,
-                             List<MultipartFile> multipartFiles) {
+                             ReviewCreateRequest request) {
         User user = loadUserPort.getById(userInfo.userId());
         Restaurant restaurant = loadRestaurantPort.getById(restaurantId);
         Review review = Review.builder()
@@ -55,23 +54,19 @@ public class ReviewCommandService implements CreateReviewUseCase, UpdateReviewUs
                 .reviewerId(user.getId())
                 .reviewerNickname(user.getNickname())
                 .build();
-        restaurant.updateAverageRating(); // update -> 지연 -> 공유락 걸린 테이블을 업데이트
-        Review savedReview = saveReviewPort.save(review); // insert -> 바로 날아가고 Restaurant에  공유락이 select for share
+        restaurant.updateAverageRating();
+        Review savedReview = saveReviewPort.save(review);
 
-        if (Objects.isNull(multipartFiles) || multipartFiles.isEmpty()) return;
+        if (Objects.isNull(request.imageUrls()) || request.imageUrls().isEmpty())
+            return;
 
-        // 비동기 & 트랜잭션 분리 -> @Async, Facade , EventListener (Event 저장소)
-        eventPublisher.publishEvent(ImageCreateEvent.of(
-                savedReview.getId(), ImageType.REVIEW, multipartFiles));
-//        imageService.createImage(multipartFiles, ImageType.REVIEW, savedReview.getId());
+        eventPublisher.publishEvent(ImageCreateEvent.of(request.imageUrls(), ImageType.REVIEW, savedReview.getId()));
     }
     
-    // 밑에도 해야함
     @Override
     public void updateReview(UserInfo userInfo,
                              Long id,
-                             ReviewUpdateRequest request,
-                             List<MultipartFile> multipartFiles) {
+                             ReviewUpdateRequest request) {
         Review review = loadReviewPort.getById(id);
 
         validateUser(userInfo.userId(), review.getReviewerId());
@@ -79,10 +74,11 @@ public class ReviewCommandService implements CreateReviewUseCase, UpdateReviewUs
         review.update(request.rating(), request.content());
         review.getRestaurant().updateAverageRating();
 
-        if (Objects.isNull(multipartFiles) || multipartFiles.isEmpty()) return;
+        if (Objects.isNull(request.imageUrls()) || request.imageUrls().isEmpty())
+            return;
 
-        imageService.deleteImage(ImageType.REVIEW, review.getId());
-        imageService.createImage(multipartFiles, ImageType.REVIEW, review.getId());
+        imageService.deleteByImageTypeAndReferenceId(ImageType.REVIEW, review.getId());
+        imageService.createImage(request.imageUrls(), ImageType.REVIEW, review.getId());
     }
 
     @Override
@@ -93,7 +89,7 @@ public class ReviewCommandService implements CreateReviewUseCase, UpdateReviewUs
         review.deleteReview();
 
         deleteReviewPort.deleteById(id);
-        imageService.deleteImage(ImageType.REVIEW, review.getId());
+        imageService.deleteByImageTypeAndReferenceId(ImageType.REVIEW, review.getId());
     }
 
     private void validateUser(Long userId, Long reviewerId) {
