@@ -24,6 +24,11 @@ public class JpaImageRepositoryImpl implements ImageRepository {
     }
 
     @Override
+    public void deleteById(Long id) {
+        imageJpaRepository.deleteById(id);
+    }
+
+    @Override
     public void deleteAllByIdInBatch(List<Long> ids) {
         imageJpaRepository.deleteAllByIdInBatch(ids);
     }

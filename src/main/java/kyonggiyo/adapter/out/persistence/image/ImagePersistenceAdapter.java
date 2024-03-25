@@ -27,6 +27,11 @@ public class ImagePersistenceAdapter implements SaveImagePort, LoadImagePort, De
     }
 
     @Override
+    public void deleteById(Long id) {
+        imageRepository.deleteById(id);
+    }
+
+    @Override
     public void deleteAllByIdInBatch(List<Long> ids) {
         imageRepository.deleteAllByIdInBatch(ids);
     }
