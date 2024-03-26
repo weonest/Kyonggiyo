@@ -67,3 +67,9 @@ cloud:
       bucket-name: ${S3_BUCKET_NAME}
 
 web-application: true
+
+logging:
+  level:
+    org:
+      springframework:
+        jdbc: debug
