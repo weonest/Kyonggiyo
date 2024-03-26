@@ -15,10 +15,16 @@ import java.util.List;
 public class ImagePersistenceAdapter implements SaveImagePort, LoadImagePort, DeleteImagePort {
 
     private final ImageRepository imageRepository;
+    private final ImageBatchRepository imageBatchRepository;
 
     @Override
     public List<Image> saveAll(List<Image> images) {
         return imageRepository.saveAll(images);
+    }
+
+    @Override
+    public void saveAllInBatch(List<Image> images) {
+        imageBatchRepository.saveAllInBatch(images);
     }
 
     @Override

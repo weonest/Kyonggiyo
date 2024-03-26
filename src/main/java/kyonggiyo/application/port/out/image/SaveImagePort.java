@@ -8,4 +8,6 @@ public interface SaveImagePort {
 
     List<Image> saveAll(List<Image> images);
 
+    void saveAllInBatch(List<Image> images);
+
 }
