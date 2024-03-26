@@ -13,6 +13,10 @@ public class MDCRequestHandlerCommentInterceptor implements StatementInspector {
 
     @Override
     public String inspect(String sql) {
+        if (MDC.getCopyOfContextMap() == null) {
+            log.info(sql);
+            return sql;
+        }
         log.info(sql);
         String count = MDC.get("query");
         MDC.put("query", String.valueOf(Integer.valueOf(count) + 1));
