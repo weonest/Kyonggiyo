@@ -1,9 +1,20 @@
 package kyonggiyo.domain.event;
 
+import kyonggiyo.application.service.event.ImageCreateEvent;
+
 public enum EventType {
 
-    IMAGE_CREATE,
-    IMAGE_UPDATE,
-    IMAGE_DELETE
+    IMAGE_CREATE(ImageCreateEvent.class),
+    ;
+
+    public final Class clazz;
+
+    EventType(Class clazz) {
+        this.clazz = clazz;
+    }
+
+    public Class getClazz() {
+        return clazz;
+    }
 
 }

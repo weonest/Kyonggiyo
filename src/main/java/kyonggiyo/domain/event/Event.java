@@ -31,7 +31,7 @@ public class Event extends BaseEntity {
 
     private Long entityId;
 
-    private String EntityData;
+    private String entityData;
 
     private boolean status = false;
 
@@ -43,7 +43,7 @@ public class Event extends BaseEntity {
         this.eventType = eventType;
         this.entityType = entityType;
         this.entityId = entityId;
-        EntityData = entityData;
+        this.entityData = entityData;
     }
 
     public void successEvent() {
