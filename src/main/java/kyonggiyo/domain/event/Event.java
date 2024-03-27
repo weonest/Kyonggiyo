@@ -20,7 +20,6 @@ import lombok.NoArgsConstructor;
 public class Event extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Enumerated(EnumType.STRING)
@@ -36,10 +35,12 @@ public class Event extends BaseEntity {
     private boolean status = false;
 
     @Builder
-    private Event(EventType eventType,
+    private Event(Long id,
+                  EventType eventType,
                   EntityType entityType,
                   Long entityId,
                   String entityData) {
+        this.id = id;
         this.eventType = eventType;
         this.entityType = entityType;
         this.entityId = entityId;

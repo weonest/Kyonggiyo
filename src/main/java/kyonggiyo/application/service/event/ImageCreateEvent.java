@@ -8,19 +8,25 @@ import kyonggiyo.domain.image.ImageType;
 import java.util.List;
 
 public record ImageCreateEvent(
+        Long id,
         List<String> imageUrls,
         ImageType imageType,
         Long referenceId
 ) {
 
-    public static ImageCreateEvent of(List<String> imageUrls, ImageType imageType, Long referenceId) {
-        return new ImageCreateEvent(imageUrls,
+    public static ImageCreateEvent of(Long id,
+                                      List<String> imageUrls,
+                                      ImageType imageType,
+                                      Long referenceId) {
+        return new ImageCreateEvent(id,
+                imageUrls,
                 imageType,
                 referenceId);
     }
 
     public Event toEvent(String entityData) {
         return Event.builder()
+                .id(id)
                 .entityType(EntityType.REVIEW)
                 .eventType(EventType.IMAGE_CREATE)
                 .entityId(referenceId)
