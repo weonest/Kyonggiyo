@@ -48,6 +48,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator:3.2.2'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
+    // IdGenerator
+    implementation 'com.github.f4b6a3:tsid-creator:5.2.4'
+
     // Lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
