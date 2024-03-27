@@ -22,6 +22,11 @@ public class EventPersistenceAdapter implements SaveEventPort, LoadEventPort, Up
     }
 
     @Override
+    public Event getById(Long id) {
+        return eventRepository.getById(id);
+    }
+
+    @Override
     public List<Event> findAllByEventTypeAndStatus(EventType eventType, boolean status) {
         return eventRepository.findAllByEventTypeAndStatus(eventType, status);
     }

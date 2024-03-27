@@ -2,6 +2,8 @@ package kyonggiyo.adapter.out.persistence.event;
 
 import kyonggiyo.domain.event.Event;
 import kyonggiyo.domain.event.EventType;
+import kyonggiyo.global.exception.GlobalErrorCode;
+import kyonggiyo.global.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +18,12 @@ public class JpaEventRepositoryImpl implements EventRepository {
     @Override
     public Event save(Event event) {
         return eventJpaRepository.save(event);
+    }
+
+    @Override
+    public Event getById(Long id) {
+        return eventJpaRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(GlobalErrorCode.NOT_FOUND_ENTITY_EXCEPTION));
     }
 
     @Override
