@@ -23,7 +23,7 @@ public class ImageService implements DeleteImageUseCase {
     private final DeleteImagePort deleteImagePort;
 
     @Transactional
-    public void createImage(List<String> imageUrls, ImageType imageType, Long referenceId) {
+    public void createImages(List<String> imageUrls, ImageType imageType, Long referenceId) {
         List<Image> images = imageUrls.stream()
                 .map(v -> {
                     String key = presignedUrlProvider.extractImageKey(v);

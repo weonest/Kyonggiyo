@@ -1,7 +1,6 @@
 package kyonggiyo.application.service.event;
 
 import kyonggiyo.application.service.image.ImageService;
-import kyonggiyo.domain.event.Event;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
@@ -21,14 +20,11 @@ public class ImageCreateEventListener {
     @Async("EVENT_HANDLER_TASK_EXECUTOR")
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     public void createImage(ImageCreateEvent imageCreateEvent) {
-        String entityData = eventService.convertEventToJson(imageCreateEvent);
-        Event event = eventService.createEvent(imageCreateEvent.toEvent(entityData));
-
         imageService.createImages(imageCreateEvent.imageUrls(),
                 imageCreateEvent.imageType(),
                 imageCreateEvent.referenceId());
-
-        eventService.successEvent(event);
+        // 이미지 저장 성공시 이벤트 상태 변경
+        eventService.successEvent(imageCreateEvent.id());
     }
 
 }

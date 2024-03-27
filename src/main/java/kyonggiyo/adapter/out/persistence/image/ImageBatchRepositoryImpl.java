@@ -24,12 +24,14 @@ public class ImageBatchRepositoryImpl implements ImageBatchRepository {
             SqlParameterSource source = new MapSqlParameterSource()
                     .addValue("upload_key", image.getKey())
                     .addValue("image_type", image.getImageType().name())
-                    .addValue("reference_id", image.getReferenceId());
+                    .addValue("reference_id", image.getReferenceId())
+                    .addValue("created_at", image.getCreatedAt())
+                    .addValue("updated_at", image.getUpdatedAt());
             sqlParameterSources[idx++] = source;
         }
         String sql = """
-                insert into images (upload_key, image_type, reference_id)
-                values(:upload_key, :image_type, :reference_id)""";
+                insert into images (upload_key, image_type, reference_id, created_at, updated_at)
+                values(:upload_key, :image_type, :reference_id, :created_at, :updated_at)""";
         jdbcTemplate.batchUpdate(sql, sqlParameterSources);
     }
 

@@ -2,6 +2,7 @@ package kyonggiyo.application.service.event;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import kyonggiyo.application.port.out.event.LoadEventPort;
 import kyonggiyo.application.port.out.event.SaveEventPort;
 import kyonggiyo.domain.event.EntityType;
 import kyonggiyo.domain.event.Event;
@@ -19,6 +20,7 @@ public class EventService<T> {
 
     private final ObjectMapper objectMapper;
     private final SaveEventPort saveEventPort;
+    private final LoadEventPort loadEventPort;
 
     @Transactional
     public Event createEvent(Event event) {
@@ -26,7 +28,8 @@ public class EventService<T> {
     }
 
     @Transactional
-    public void successEvent(Event event) {
+    public void successEvent(Long id) {
+        Event event = loadEventPort.getById(id);
         event.successEvent();
     }
 

@@ -1,5 +1,6 @@
 package kyonggiyo.application.service.restaurant;
 
+import com.github.f4b6a3.tsid.TsidCreator;
 import kyonggiyo.adapter.in.web.restaurant.dto.review.ReviewCreateRequest;
 import kyonggiyo.adapter.in.web.restaurant.dto.review.ReviewUpdateRequest;
 import kyonggiyo.application.port.in.restaurant.review.CreateReviewUseCase;
@@ -23,9 +24,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -60,7 +59,9 @@ public class ReviewCommandService implements CreateReviewUseCase, UpdateReviewUs
         if (Objects.isNull(request.imageUrls()) || request.imageUrls().isEmpty())
             return;
 
-        eventPublisher.publishEvent(ImageCreateEvent.of(request.imageUrls(), ImageType.REVIEW, savedReview.getId()));
+        Long eventId = TsidCreator.getTsid().toLong();
+        ImageCreateEvent imageCreateEvent = ImageCreateEvent.of(eventId, request.imageUrls(), ImageType.REVIEW, savedReview.getId());
+        eventPublisher.publishEvent(imageCreateEvent);
     }
     
     @Override
@@ -77,8 +78,9 @@ public class ReviewCommandService implements CreateReviewUseCase, UpdateReviewUs
         if (Objects.isNull(request.imageUrls()) || request.imageUrls().isEmpty())
             return;
 
-        imageService.deleteByImageTypeAndReferenceId(ImageType.REVIEW, review.getId());
-        imageService.createImage(request.imageUrls(), ImageType.REVIEW, review.getId());
+        Long eventId = TsidCreator.getTsid().toLong();
+        ImageCreateEvent imageCreateEvent = ImageCreateEvent.of(eventId, request.imageUrls(), ImageType.REVIEW, review.getId());
+        eventPublisher.publishEvent(imageCreateEvent);
     }
 
     @Override
