@@ -6,7 +6,6 @@ import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.S3Object;
 import io.findify.s3mock.S3Mock;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -19,17 +18,13 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
-import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockMultipartFile;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Import(S3ImageUploaderTest.S3MockConfig.class)
+@Import(S3PresignedUrlProviderTest.S3MockConfig.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class S3ImageUploaderTest {
+class S3PresignedUrlProviderTest {
 
     public static final String BUCKET_NAME = "kyonggiyo-bucket";
 
@@ -63,10 +58,7 @@ class S3ImageUploaderTest {
     }
 
     @Autowired
-    private AmazonS3 amazonS3;
-
-    @Autowired
-    private ImageUploader imageUploader;
+    private PresignedUrlProvider presignedUrlProvider;
 
     @BeforeAll
     static void beforeAll(@Autowired S3Mock s3Mock, @Autowired AmazonS3 s3Client) {
@@ -81,30 +73,15 @@ class S3ImageUploaderTest {
     }
 
     @Test
-    void 이미지를_S3_버킷에_업로드한다() {
+    void 파일명을_통해_presignedUrl을_생성한다() {
         // given
-        MockMultipartFile file = new MockMultipartFile("image", "image.png", MediaType.IMAGE_PNG_VALUE, "<<data>>".getBytes());
+        String filename = "image.jpg";
 
         // when
-        List<String> keys = imageUploader.uploadImage(List.of(file));
-        S3Object object = amazonS3.getObject(BUCKET_NAME, keys.get(0));
+        String presignedUrl = presignedUrlProvider.generatePresignedUrl(filename);
 
         // then
-        assertThat(keys).hasSize(1);
-        assertThat(object.getKey()).isEqualTo(keys.get(0));
-    }
-
-    @Test
-    void 이미지를_S3_버킷에서_삭제한다() {
-        // given
-        MockMultipartFile file = new MockMultipartFile("image", "image.png", MediaType.IMAGE_PNG_VALUE, "<<data>>".getBytes());
-        List<String> keys = imageUploader.uploadImage(List.of(file));
-
-        // when
-        imageUploader.deleteImage(keys.get(0));
-        boolean objectExist = amazonS3.doesObjectExist(BUCKET_NAME, keys.get(0));
-        // then
-        assertThat(objectExist).isFalse();
+        assertThat(presignedUrl).isNotNull();
     }
 
 }
