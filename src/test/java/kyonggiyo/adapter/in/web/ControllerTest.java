@@ -3,9 +3,11 @@ package kyonggiyo.adapter.in.web;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kyonggiyo.adapter.in.web.auth.AuthController;
 import kyonggiyo.adapter.in.web.candidate.CandidateController;
+import kyonggiyo.adapter.in.web.image.ImageController;
 import kyonggiyo.adapter.in.web.restaurant.RestaurantController;
 import kyonggiyo.adapter.in.web.restaurant.ReviewController;
 import kyonggiyo.adapter.in.web.user.UserController;
+import kyonggiyo.adapter.out.client.image.PresignedUrlProvider;
 import kyonggiyo.application.port.in.auth.OAuthLoginUseCase;
 import kyonggiyo.application.port.in.auth.OAuthLogoutUseCase;
 import kyonggiyo.application.port.in.auth.ProvideAuthCodeUrlUseCase;
@@ -14,6 +16,7 @@ import kyonggiyo.application.port.in.candidate.CreateCandidateUseCase;
 import kyonggiyo.application.port.in.candidate.DeleteCandidateUseCase;
 import kyonggiyo.application.port.in.candidate.LoadCandidateUseCase;
 import kyonggiyo.application.port.in.candidate.UpdateCandidateUseCase;
+import kyonggiyo.application.port.in.image.DeleteImageUseCase;
 import kyonggiyo.application.port.in.restaurant.CreateRestaurantUseCase;
 import kyonggiyo.application.port.in.restaurant.review.CreateReviewUseCase;
 import kyonggiyo.application.port.in.restaurant.LoadRestaurantUseCase;
@@ -51,6 +54,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
         RestaurantController.class,
         ReviewController.class,
         UserController.class,
+        ImageController.class
 })
 @AutoConfigureWebMvc
 @ExtendWith(RestDocumentationExtension.class)
@@ -89,6 +93,8 @@ public abstract class ControllerTest {
     @MockBean
     protected LoadRestaurantUseCase loadRestaurantUseCase;
     @MockBean
+    protected PresignedUrlProvider presignedUrlProvider;
+    @MockBean
     protected CreateReviewUseCase createReviewUseCase;
     @MockBean
     protected UpdateReviewUseCase updateReviewUseCase;
@@ -98,6 +104,8 @@ public abstract class ControllerTest {
     protected CreateUserUseCase createUserUseCase;
     @MockBean
     protected ValidateNicknameUseCase validateNicknameUseCase;
+    @MockBean
+    protected DeleteImageUseCase deleteImageUseCase;
 
     @BeforeEach
     void setUp(WebApplicationContext context, RestDocumentationContextProvider restDocumentationContextProvider) {
