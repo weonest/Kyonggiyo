@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,7 +22,7 @@ public class ImageController {
     private final DeleteImageUseCase deleteImageUseCase;
 
     @PostMapping("/presignedUrl")
-    private ResponseEntity<PresignedUrlResponse> presignedUrlGenerate(PresignedUrlRequest request) {
+    private ResponseEntity<PresignedUrlResponse> presignedUrlGenerate(@RequestBody PresignedUrlRequest request) {
         String presignedUrl = presignedUrlProvider.generatePresignedUrl(request.filename());
         return ResponseEntity.ok(new PresignedUrlResponse(presignedUrl));
     }
