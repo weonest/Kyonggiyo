@@ -8,6 +8,9 @@ import kyonggiyo.adapter.out.persistence.account.JpaAccountRepositoryImpl;
 import kyonggiyo.adapter.out.persistence.candidate.CandidateJpaRepository;
 import kyonggiyo.adapter.out.persistence.candidate.CandidatePersistenceAdapter;
 import kyonggiyo.adapter.out.persistence.candidate.JpaCandidateRepositoryImpl;
+import kyonggiyo.adapter.out.persistence.event.EventJpaRepository;
+import kyonggiyo.adapter.out.persistence.event.EventPersistenceAdapter;
+import kyonggiyo.adapter.out.persistence.event.JpaEventRepositoryImpl;
 import kyonggiyo.adapter.out.persistence.restaurant.JpaRestaurantRepositoryImpl;
 import kyonggiyo.adapter.out.persistence.restaurant.RestaurantJpaRepository;
 import kyonggiyo.adapter.out.persistence.restaurant.RestaurantPersistenceAdapter;
@@ -74,6 +77,17 @@ public abstract class AdapterTest {
         @Bean
         public CandidatePersistenceAdapter candidatePersistenceAdapter(JpaCandidateRepositoryImpl jpaCandidateRepository) {
             return new CandidatePersistenceAdapter(jpaCandidateRepository);
+        }
+
+        // evnet
+        @Bean
+        public JpaEventRepositoryImpl jpaEventRepositoryImpl(EventJpaRepository eventJpaRepository) {
+            return new JpaEventRepositoryImpl(eventJpaRepository);
+        }
+
+        @Bean
+        public EventPersistenceAdapter eventPersistenceAdapter(JpaEventRepositoryImpl jpaEventRepository) {
+            return new EventPersistenceAdapter(jpaEventRepository);
         }
 
     }
