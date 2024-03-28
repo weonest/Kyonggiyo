@@ -63,8 +63,7 @@ public class ReviewConcurrencyTest {
                     int rating = RandomGenerator.getDefault().nextInt(1, 5);
                     reviewCommandService.createReview(new UserInfo(user.getId(), user.getRole()),
                             restaurant.getId(),
-                            new ReviewCreateRequest(rating, "good"),
-                            null);
+                            new ReviewCreateRequest(rating, "good", List.of("url")));
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {

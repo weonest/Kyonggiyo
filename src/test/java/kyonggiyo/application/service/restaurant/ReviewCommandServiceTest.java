@@ -23,6 +23,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.verify;
 
@@ -66,7 +67,7 @@ class ReviewCommandServiceTest extends ServiceTest {
         given(saveReviewPort.save(review)).willReturn(review);
 
         // when
-        reviewCommandService.createReview(userInfo, restaurant.getId(), request, null);
+        reviewCommandService.createReview(userInfo, restaurant.getId(), request);
 
         // then
         verify(loadUserPort, only()).getById(userInfo.userId());
@@ -93,7 +94,7 @@ class ReviewCommandServiceTest extends ServiceTest {
         given(loadReviewPort.getById(any())).willReturn(review);
 
         // when
-        reviewCommandService.updateReview(userInfo, restaurant.getId(), request, null);
+        reviewCommandService.updateReview(userInfo, restaurant.getId(), request);
 
         // then
         verify(loadReviewPort, only()).getById(any());
@@ -116,12 +117,16 @@ class ReviewCommandServiceTest extends ServiceTest {
                 .build();
 
         given(loadReviewPort.getById(any())).willReturn(review);
+        willDoNothing().given(deleteReviewPort).deleteById(any());
+        willDoNothing().given(imageService).deleteByImageTypeAndReferenceId(any(), any());
 
         // when
         reviewCommandService.deleteReview(userInfo, review.getId());
 
         // then
         verify(loadReviewPort, only()).getById(any());
+        verify(deleteReviewPort, only()).deleteById(any());
+        verify(imageService, only()).deleteByImageTypeAndReferenceId(any(), any());
     }
 
 }

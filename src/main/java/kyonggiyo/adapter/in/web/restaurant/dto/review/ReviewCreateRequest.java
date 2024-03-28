@@ -10,7 +10,7 @@ import java.util.List;
 public record ReviewCreateRequest(
         @Min(1) @Max(5)
         int rating,
-        @NotBlank
+        @NotBlank(message = "내용은 필수입니다.")
         String content,
         @Nullable
         List<String> imageUrls
