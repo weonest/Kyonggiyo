@@ -200,7 +200,9 @@ class RestaurantControllerTest extends ControllerTest {
                                 fieldWithPath("reviews[].createdAt").type(JsonFieldType.STRING).description("리뷰 생성일"),
                                 fieldWithPath("reviews[].reviewer.id").type(JsonFieldType.NUMBER).description("리뷰어(유저) 식별자"),
                                 fieldWithPath("reviews[].reviewer.nickname").type(JsonFieldType.STRING).description("리뷰어 닉네임"),
-                                fieldWithPath("reviews[].images[].imageUrl").type(JsonFieldType.STRING).description("이미지 URL")
+                                fieldWithPath("reviews[].images[].id").type(JsonFieldType.NUMBER).description("이미지 URL"),
+                                fieldWithPath("reviews[].images[].imageUrl").type(JsonFieldType.STRING).description("이미지 URL"),
+                                fieldWithPath("reviews[].images[].key").type(JsonFieldType.STRING).description("이미지 Key")
                         )));
 
         // then
