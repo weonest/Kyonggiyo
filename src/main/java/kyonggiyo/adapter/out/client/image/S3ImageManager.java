@@ -2,6 +2,7 @@ package kyonggiyo.adapter.out.client.image;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.HttpMethod;
+import com.amazonaws.SdkClientException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import kyonggiyo.domain.image.exception.ImageErrorCode;
@@ -16,15 +17,16 @@ import org.springframework.util.StringUtils;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.random.RandomGenerator;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class S3PresignedUrlProvider implements PresignedUrlProvider {
+public class S3ImageManager implements ImageManager {
 
     public static final String UPLOAD_PATH_FORMAT = "public/{0}_{1}";
     private static final String URL_PATH = "https://kyonggiyo-bucket.s3.ap-northeast-2.amazonaws.com/";
+    private static final ThreadLocalRandom random = ThreadLocalRandom.current();
 
     private final AmazonS3 s3Client;
     private final AwsProperties awsProperties;
@@ -52,7 +54,7 @@ public class S3PresignedUrlProvider implements PresignedUrlProvider {
     }
 
     private String generateImageKey(String filename) {
-        int identifier = RandomGenerator.getDefault().nextInt();
+        String identifier = String.valueOf(random.nextInt(Integer.MAX_VALUE));
         return MessageFormat.format(UPLOAD_PATH_FORMAT, identifier, filename);
     }
 
@@ -70,6 +72,16 @@ public class S3PresignedUrlProvider implements PresignedUrlProvider {
         } catch (AmazonServiceException e) {
             log.warn("PresignedUrl 생성에 실패하였습니다. {}", e.getMessage());
             throw new ImageException(ImageErrorCode.UPLOAD_EXCEPTION);
+        }
+    }
+
+    @Override
+    public void deleteImage(String key) {
+        try {
+            s3Client.deleteObject(awsProperties.getBucketName(), key);
+        } catch (SdkClientException e) {
+            log.warn("S3 이미지 삭제 작업에 실패하였습니다.");
+            throw new ImageException(ImageErrorCode.DELETE_EXCEPTION);
         }
     }
 
