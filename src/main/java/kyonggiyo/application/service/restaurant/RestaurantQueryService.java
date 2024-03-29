@@ -1,8 +1,10 @@
 package kyonggiyo.application.service.restaurant;
 
+import kyonggiyo.adapter.in.web.image.dto.ImageResponse;
 import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantByKeywordRequest;
 import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantMarkerResponse;
 import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantResponse;
+import kyonggiyo.adapter.in.web.restaurant.dto.review.ReviewResponse;
 import kyonggiyo.application.port.in.restaurant.LoadRestaurantUseCase;
 import kyonggiyo.application.port.out.image.LoadImagePort;
 import kyonggiyo.application.port.out.restaurant.LoadRestaurantPort;
@@ -10,13 +12,16 @@ import kyonggiyo.application.service.restaurant.dto.RestaurantCategoryParam;
 import kyonggiyo.domain.image.Image;
 import kyonggiyo.domain.image.ImageType;
 import kyonggiyo.domain.restaurant.Restaurant;
+import kyonggiyo.domain.restaurant.Review;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,11 +36,26 @@ public class RestaurantQueryService implements LoadRestaurantUseCase {
     public RestaurantResponse getById(Long id) {
         Restaurant restaurant = loadRestaurantPort.getById(id);
 
-        Queue<List<Image>> imagesList = restaurant.getReviews().stream()
-                .map(v -> loadImagePort.findAllByImageTypeAndReferenceId(ImageType.REVIEW, v.getId()))
-                .collect(Collectors.toCollection(LinkedList::new));
+        Set<Review> reviews = restaurant.getReviews();
 
-        return RestaurantResponse.of(restaurant, imagesList);
+        List<Long> reviewIds = reviews.stream()
+                .map(v -> v.getId())
+                .toList();
+
+        Map<Long, List<Image>> images = loadImagePort.findAllByImageTypeAndReferenceIdIn(ImageType.REVIEW, reviewIds)
+                .stream()
+                .collect(Collectors.groupingBy(Image::getReferenceId));
+
+        List<ReviewResponse> reviewResponses = reviews.stream()
+                .map(v -> {
+                    List<ImageResponse> imageResponses = Optional.ofNullable(images.get(v.getId()))
+                            .filter(Predicate.not(List::isEmpty))
+                            .map(list -> list.stream().map(ImageResponse::from).toList())
+                            .orElse(null);
+                    return ReviewResponse.of(v, imageResponses);
+                }).toList();
+
+        return RestaurantResponse.of(restaurant, reviewResponses);
     }
 
     @Override

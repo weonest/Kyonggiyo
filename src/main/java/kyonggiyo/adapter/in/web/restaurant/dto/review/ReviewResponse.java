@@ -2,7 +2,6 @@ package kyonggiyo.adapter.in.web.restaurant.dto.review;
 
 import kyonggiyo.adapter.in.web.image.dto.ImageResponse;
 import kyonggiyo.adapter.in.web.user.dto.UserResponse;
-import kyonggiyo.domain.image.Image;
 import kyonggiyo.domain.restaurant.Review;
 
 import java.time.LocalDateTime;
@@ -17,7 +16,7 @@ public record ReviewResponse(
         List<ImageResponse> images
 ) {
 
-    public static ReviewResponse of(Review review, List<Image> images) {
+    public static ReviewResponse of(Review review, List<ImageResponse> images) {
         return new ReviewResponse(
                 review.getId(),
                 review.getRating(),
@@ -25,9 +24,7 @@ public record ReviewResponse(
                 review.getCreatedAt(),
                 new UserResponse(review.getReviewerId(),
                         review.getReviewerNickname()),
-                images.stream()
-                        .map(ImageResponse::from)
-                        .toList()
+                images
         );
     }
 
