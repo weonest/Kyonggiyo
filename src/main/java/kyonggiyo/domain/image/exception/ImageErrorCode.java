@@ -4,8 +4,9 @@ import kyonggiyo.global.exception.ErrorCode;
 
 public enum ImageErrorCode implements ErrorCode {
 
-    INVALID_FILE_EXTENSION("E001", "잘못된 파일 확장자입니다."),
-    UPLOAD_EXCEPTION("E002", "이미지 업로드에 실패하였습니다.")
+    INVALID_FILE_EXTENSION("I001", "잘못된 파일 확장자입니다."),
+    UPLOAD_EXCEPTION("I002", "이미지 업로드에 실패하였습니다."),
+    DELETE_EXCEPTION("I003", "이미지 삭제에 실패하였습니다.")
     ;
 
     private final String code;
