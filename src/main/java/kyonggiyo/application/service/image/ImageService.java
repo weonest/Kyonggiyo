@@ -1,6 +1,7 @@
 package kyonggiyo.application.service.image;
 
-import kyonggiyo.adapter.out.client.image.PresignedUrlProvider;
+import kyonggiyo.adapter.in.web.image.dto.ImageDeleteRequest;
+import kyonggiyo.adapter.out.client.image.ImageManager;
 import kyonggiyo.application.port.in.image.DeleteImageUseCase;
 import kyonggiyo.application.port.out.image.DeleteImagePort;
 import kyonggiyo.application.port.out.image.LoadImagePort;
@@ -17,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ImageService implements DeleteImageUseCase {
 
-    private final PresignedUrlProvider presignedUrlProvider;
+    private final ImageManager imageManager;
     private final SaveImagePort saveImagePort;
     private final LoadImagePort loadImagePort;
     private final DeleteImagePort deleteImagePort;
@@ -26,7 +27,7 @@ public class ImageService implements DeleteImageUseCase {
     public void createImages(List<String> imageUrls, ImageType imageType, Long referenceId) {
         List<Image> images = imageUrls.stream()
                 .map(v -> {
-                    String key = presignedUrlProvider.extractImageKey(v);
+                    String key = imageManager.extractImageKey(v);
                     return new Image(key, imageType, referenceId);
                 })
                 .toList();
@@ -35,8 +36,9 @@ public class ImageService implements DeleteImageUseCase {
 
     @Override
     @Transactional
-    public void deleteById(Long id) {
-        deleteImagePort.deleteById(id);
+    public void deleteById(ImageDeleteRequest request) {
+        deleteImagePort.deleteById(request.id());
+        imageManager.deleteImage(request.key());
     }
 
     @Transactional

@@ -1,6 +1,8 @@
 package kyonggiyo.adapter.in.web.image;
 
+import com.amazonaws.services.ec2.model.DeleteFpgaImageRequest;
 import kyonggiyo.adapter.in.web.ControllerTest;
+import kyonggiyo.adapter.in.web.image.dto.ImageDeleteRequest;
 import kyonggiyo.adapter.in.web.image.dto.PresignedUrlRequest;
 import kyonggiyo.adapter.in.web.image.dto.PresignedUrlResponse;
 import org.junit.jupiter.api.Test;
@@ -30,7 +32,7 @@ class ImageControllerTest extends ControllerTest {
         String presignedUrl = "url";
         PresignedUrlResponse response = new PresignedUrlResponse(presignedUrl);
 
-        given(presignedUrlProvider.generatePresignedUrl(request.filename())).willReturn(presignedUrl);
+        given(imageManager.generatePresignedUrl(request.filename())).willReturn(presignedUrl);
 
         // when
         ResultActions resultActions = mockMvc.perform(
@@ -56,15 +58,20 @@ class ImageControllerTest extends ControllerTest {
     void 이미지_식별자로_이미지를_삭제한다() throws Exception {
         // given
         Long id = 1L;
+        ImageDeleteRequest request = new ImageDeleteRequest(id, "image key");
 
-        willDoNothing().given(deleteImageUseCase).deleteById(id);
+        willDoNothing().given(deleteImageUseCase).deleteById(request);
 
         // when
         ResultActions resultActions = mockMvc.perform(
                         delete("/api/v1/images/{imageId}", id)
                                 .header(HttpHeaders.AUTHORIZATION, BEARER_TOKEN))
                 .andDo(document("delete-images",
-                        resourceDetails().tag("이미지").description("이미지 삭제")));
+                        resourceDetails().tag("이미지").description("이미지 삭제"),
+                        requestFields(
+                                fieldWithPath("id").type(JsonFieldType.NUMBER).description("이미지 식별자"),
+                                fieldWithPath("key").type(JsonFieldType.STRING).description("이미지 key")
+                        )));
 
         // then
         resultActions.andExpect(status().isNoContent());

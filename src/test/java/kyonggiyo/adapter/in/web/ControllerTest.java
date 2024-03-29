@@ -7,7 +7,7 @@ import kyonggiyo.adapter.in.web.image.ImageController;
 import kyonggiyo.adapter.in.web.restaurant.RestaurantController;
 import kyonggiyo.adapter.in.web.restaurant.ReviewController;
 import kyonggiyo.adapter.in.web.user.UserController;
-import kyonggiyo.adapter.out.client.image.PresignedUrlProvider;
+import kyonggiyo.adapter.out.client.image.ImageManager;
 import kyonggiyo.application.port.in.auth.OAuthLoginUseCase;
 import kyonggiyo.application.port.in.auth.OAuthLogoutUseCase;
 import kyonggiyo.application.port.in.auth.ProvideAuthCodeUrlUseCase;
@@ -93,7 +93,7 @@ public abstract class ControllerTest {
     @MockBean
     protected LoadRestaurantUseCase loadRestaurantUseCase;
     @MockBean
-    protected PresignedUrlProvider presignedUrlProvider;
+    protected ImageManager imageManager;
     @MockBean
     protected CreateReviewUseCase createReviewUseCase;
     @MockBean

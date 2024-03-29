@@ -1,6 +1,6 @@
 package kyonggiyo.application.service.schedule;
 
-import kyonggiyo.adapter.out.client.image.PresignedUrlProvider;
+import kyonggiyo.adapter.out.client.image.ImageManager;
 import kyonggiyo.application.port.out.event.LoadEventPort;
 import kyonggiyo.application.port.out.event.UpdateEventPort;
 import kyonggiyo.application.port.out.image.SaveImagePort;
@@ -24,7 +24,7 @@ public class ImageScheduleService {
     private final LoadEventPort loadEventPort;
     private final SaveImagePort saveImagePort;
     private final UpdateEventPort updateEventPort;
-    private final PresignedUrlProvider presignedUrlProvider;
+    private final ImageManager imageManager;
     private final EventService<ImageCreateEvent> eventService;
 
     @Transactional
@@ -41,7 +41,7 @@ public class ImageScheduleService {
         List<Image> images = new ArrayList<>();
         for (ImageCreateEvent imageCreateEvent : imageCreateEvents) {
             for (String url : imageCreateEvent.imageUrls()) {
-                images.add(new Image(presignedUrlProvider.extractImageKey(url),
+                images.add(new Image(imageManager.extractImageKey(url),
                         imageCreateEvent.imageType(),
                         imageCreateEvent.referenceId()));
             }

@@ -21,10 +21,10 @@ import org.springframework.context.annotation.Primary;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Import(S3PresignedUrlProviderTest.S3MockConfig.class)
+@Import(S3ImageManagerTest.S3MockConfig.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class S3PresignedUrlProviderTest {
+class S3ImageManagerTest {
 
     public static final String BUCKET_NAME = "kyonggiyo-bucket";
 
@@ -58,7 +58,7 @@ class S3PresignedUrlProviderTest {
     }
 
     @Autowired
-    private PresignedUrlProvider presignedUrlProvider;
+    private ImageManager imageManager;
 
     @BeforeAll
     static void beforeAll(@Autowired S3Mock s3Mock, @Autowired AmazonS3 s3Client) {
@@ -78,7 +78,7 @@ class S3PresignedUrlProviderTest {
         String filename = "image.jpg";
 
         // when
-        String presignedUrl = presignedUrlProvider.generatePresignedUrl(filename);
+        String presignedUrl = imageManager.generatePresignedUrl(filename);
 
         // then
         assertThat(presignedUrl).isNotNull();
