@@ -65,6 +65,8 @@ class ImageControllerTest extends ControllerTest {
         // when
         ResultActions resultActions = mockMvc.perform(
                         delete("/api/v1/images/{imageId}", id)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(request))
                                 .header(HttpHeaders.AUTHORIZATION, BEARER_TOKEN))
                 .andDo(document("delete-images",
                         resourceDetails().tag("이미지").description("이미지 삭제"),
