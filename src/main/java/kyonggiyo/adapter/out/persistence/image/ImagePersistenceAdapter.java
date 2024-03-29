@@ -33,6 +33,11 @@ public class ImagePersistenceAdapter implements SaveImagePort, LoadImagePort, De
     }
 
     @Override
+    public List<Image> findAllByImageTypeAndReferenceIdIn(ImageType imageType, List<Long> ids) {
+        return imageRepository.findByImageTypeAndReferenceIdIn(imageType, ids);
+    }
+
+    @Override
     public void deleteById(Long id) {
         imageRepository.deleteById(id);
     }

@@ -10,4 +10,6 @@ public interface ImageJpaRepository extends JpaRepository<Image, Long> {
 
     List<Image> findByImageTypeAndReferenceId(ImageType imageType, Long referenceId);
 
+    List<Image> findByImageTypeAndReferenceIdIn(ImageType imageType, List<Long> ids);
+
 }

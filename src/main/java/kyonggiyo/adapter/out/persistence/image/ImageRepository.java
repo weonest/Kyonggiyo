@@ -11,6 +11,8 @@ public interface ImageRepository {
 
     List<Image> findByImageTypeAndReferenceId(ImageType imageType, Long referenceId);
 
+    List<Image> findByImageTypeAndReferenceIdIn(ImageType imageType, List<Long> ids);
+
     void deleteById(Long id);
 
     void deleteAllByIdInBatch(List<Long> ids);

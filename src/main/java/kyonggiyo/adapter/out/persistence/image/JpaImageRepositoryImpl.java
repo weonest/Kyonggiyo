@@ -24,6 +24,11 @@ public class JpaImageRepositoryImpl implements ImageRepository {
     }
 
     @Override
+    public List<Image> findByImageTypeAndReferenceIdIn(ImageType imageType, List<Long> ids) {
+        return imageJpaRepository.findByImageTypeAndReferenceIdIn(imageType, ids);
+    }
+
+    @Override
     public void deleteById(Long id) {
         imageJpaRepository.deleteById(id);
     }
