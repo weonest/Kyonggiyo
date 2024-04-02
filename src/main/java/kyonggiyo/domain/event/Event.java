@@ -3,8 +3,6 @@ package kyonggiyo.domain.event;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import kyonggiyo.domain.BaseEntity;
@@ -12,12 +10,13 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.Persistable;
 
 @Getter
 @Entity
 @Table(name = "events")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Event extends BaseEntity {
+public class Event extends BaseEntity implements Persistable<Long> {
 
     @Id
     private Long id;
@@ -49,6 +48,11 @@ public class Event extends BaseEntity {
 
     public void successEvent() {
         this.status = true;
+    }
+
+    @Override
+    public boolean isNew() {
+        return getCreatedAt() != null;
     }
 
 }
