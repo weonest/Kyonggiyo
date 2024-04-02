@@ -1,6 +1,7 @@
 package kyonggiyo.application.service.restaurant;
 
 import com.github.f4b6a3.tsid.TsidCreator;
+import jakarta.persistence.EntityManager;
 import kyonggiyo.adapter.in.web.restaurant.dto.review.ReviewCreateRequest;
 import kyonggiyo.adapter.in.web.restaurant.dto.review.ReviewUpdateRequest;
 import kyonggiyo.application.port.in.restaurant.review.CreateReviewUseCase;
@@ -39,6 +40,7 @@ public class ReviewCommandService implements CreateReviewUseCase, UpdateReviewUs
     private final DeleteReviewPort deleteReviewPort;
     private final ApplicationEventPublisher eventPublisher;
     private final ImageService imageService;
+    private final EntityManager entityManager;
 
     @Override
     public void createReview(UserInfo userInfo,
@@ -53,7 +55,8 @@ public class ReviewCommandService implements CreateReviewUseCase, UpdateReviewUs
                 .reviewerId(user.getId())
                 .reviewerNickname(user.getNickname())
                 .build();
-        restaurant.updateAverageRating();
+
+        updateRestaurantWithoutDirtyChecking(restaurant);
         Review savedReview = saveReviewPort.save(review);
 
         if (Objects.isNull(request.imageUrls()) || request.imageUrls().isEmpty())
@@ -92,6 +95,11 @@ public class ReviewCommandService implements CreateReviewUseCase, UpdateReviewUs
 
         deleteReviewPort.deleteById(id);
         imageService.deleteByImageTypeAndReferenceId(ImageType.REVIEW, review.getId());
+    }
+
+    private void updateRestaurantWithoutDirtyChecking(Restaurant restaurant) {
+        restaurant.updateAverageRating();
+        entityManager.flush();
     }
 
     private void validateUser(Long userId, Long reviewerId) {
