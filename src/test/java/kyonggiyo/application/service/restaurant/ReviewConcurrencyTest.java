@@ -8,15 +8,12 @@ import kyonggiyo.domain.restaurant.Restaurant;
 import kyonggiyo.domain.restaurant.Review;
 import kyonggiyo.domain.user.User;
 import kyonggiyo.fixture.RestaurantFixtures;
-import kyonggiyo.fixture.ReviewFixtures;
 import kyonggiyo.global.auth.UserInfo;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -43,26 +40,20 @@ public class ReviewConcurrencyTest {
     private ReviewCommandService reviewCommandService;
 
     @Test
-    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     void 식당_리뷰_생성_동시성_테스트() throws InterruptedException {
         User user = userRepository.save(new User("tester"));
-        Restaurant restaurantDomain = RestaurantFixtures.generateRestaurantDomainWithoutReview();
-        Review reviewDomain = ReviewFixtures.createReviewDomain(restaurantDomain);
-
-        Restaurant restaurant = restaurantRepository.save(restaurantDomain);
-        reviewRepository.save(reviewDomain);
+        UserInfo userInfo = new UserInfo(user.getId(), user.getRole());
+        Restaurant restaurant = restaurantRepository.save(RestaurantFixtures.generateRestaurantDomainWithoutReview());
 
         int count = 100;
         ExecutorService executorService = Executors.newFixedThreadPool(count);
         CountDownLatch countDownLatch = new CountDownLatch(count);
 
-        // when
         for (int i = 0; i < count; i++) {
+            int rating = RandomGenerator.getDefault().nextInt(1, 5);
             executorService.submit(() -> {
                 try {
-                    int rating = RandomGenerator.getDefault().nextInt(1, 5);
-                    reviewCommandService.createReview(new UserInfo(user.getId(), user.getRole()),
-                            restaurant.getId(),
+                    reviewCommandService.createReview(userInfo, restaurant.getId(),
                             new ReviewCreateRequest(rating, "good", List.of("url")));
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -75,7 +66,7 @@ public class ReviewConcurrencyTest {
 
         // then
         List<Review> savedReviews = reviewRepository.findAll();
-        assertThat(savedReviews.size() - 1).isEqualTo(count);
+        assertThat(savedReviews.size()).isEqualTo(count);
     }
 
 }

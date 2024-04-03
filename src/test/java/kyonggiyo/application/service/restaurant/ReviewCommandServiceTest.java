@@ -1,5 +1,6 @@
 package kyonggiyo.application.service.restaurant;
 
+import jakarta.persistence.EntityManager;
 import kyonggiyo.adapter.in.web.restaurant.dto.review.ReviewCreateRequest;
 import kyonggiyo.adapter.in.web.restaurant.dto.review.ReviewUpdateRequest;
 import kyonggiyo.application.port.out.restaurant.LoadRestaurantPort;
@@ -45,6 +46,8 @@ class ReviewCommandServiceTest extends ServiceTest {
     private DeleteReviewPort deleteReviewPort;
     @MockBean
     private ImageService imageService;
+    @MockBean
+    private EntityManager entityManager;
 
     @Test
     void 유저의_요청을_통해_리뷰를_생성한다() {
