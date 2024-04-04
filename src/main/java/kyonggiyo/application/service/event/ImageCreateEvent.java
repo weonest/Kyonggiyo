@@ -1,8 +1,8 @@
 package kyonggiyo.application.service.event;
 
 import kyonggiyo.domain.event.EntityType;
-import kyonggiyo.domain.event.Event;
 import kyonggiyo.domain.event.EventType;
+import kyonggiyo.domain.event.ImageEvent;
 import kyonggiyo.domain.image.ImageType;
 
 import java.util.List;
@@ -24,13 +24,14 @@ public record ImageCreateEvent(
                 referenceId);
     }
 
-    public Event toEvent(String entityData) {
-        return Event.builder()
+    public ImageEvent toImageEvent(String imageUrls) {
+        return ImageEvent.builder()
                 .id(id)
-                .entityType(EntityType.REVIEW)
-                .eventType(EventType.IMAGE_CREATE)
+                .eventType(EventType.IMAGE)
+                .entityType(EntityType.valueOf(imageType.name().toUpperCase()))
                 .entityId(referenceId)
-                .entityData(entityData)
+                .reason("/리뷰이미지생성")
+                .imageUrls(imageUrls)
                 .build();
     }
 
