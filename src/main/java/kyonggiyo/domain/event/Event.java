@@ -1,8 +1,7 @@
 package kyonggiyo.domain.event;
 
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import kyonggiyo.domain.BaseEntity;
@@ -21,15 +20,8 @@ public class Event extends BaseEntity implements Persistable<Long> {
     @Id
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    private EventType eventType;
-
-    @Enumerated(EnumType.STRING)
-    private EntityType entityType;
-
-    private Long entityId;
-
-    private String entityData;
+    @Embedded
+    private EventPayload payload;
 
     private boolean status = false;
 
@@ -38,12 +30,15 @@ public class Event extends BaseEntity implements Persistable<Long> {
                   EventType eventType,
                   EntityType entityType,
                   Long entityId,
-                  String entityData) {
+                  String reason) {
         this.id = id;
-        this.eventType = eventType;
-        this.entityType = entityType;
-        this.entityId = entityId;
-        this.entityData = entityData;
+        this.payload = EventPayload.builder()
+                .eventType(eventType)
+                .entityType(entityType)
+                .entityId(entityId)
+                .reason(reason)
+                .build();
+
     }
 
     public void successEvent() {
