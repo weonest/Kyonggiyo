@@ -3,6 +3,7 @@ package kyonggiyo.application.service.restaurant;
 import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantByKeywordRequest;
 import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantMarkerResponse;
 import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantResponse;
+import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantSearchResponse;
 import kyonggiyo.application.port.in.restaurant.LoadRestaurantUseCase;
 import kyonggiyo.application.port.out.image.LoadImagePort;
 import kyonggiyo.application.port.out.restaurant.LoadRestaurantPort;
@@ -89,7 +90,7 @@ class RestaurantQueryServiceTest extends ServiceTest {
         given(loadRestaurantPort.findByNameOrReviewContent(keyword)).willReturn(restaurants);
 
         // when
-        List<RestaurantMarkerResponse> result = loadRestaurantUseCase.searchByKeyword(new RestaurantByKeywordRequest(keyword));
+        List<RestaurantSearchResponse> result = loadRestaurantUseCase.searchByKeyword(new RestaurantByKeywordRequest(keyword));
 
         // then
         assertThat(result.size()).isEqualTo(targetSize);
@@ -110,7 +111,7 @@ class RestaurantQueryServiceTest extends ServiceTest {
         given(loadRestaurantPort.filterByCategory(categories)).willReturn(restaurants);
 
         // when
-        List<RestaurantMarkerResponse> result = loadRestaurantUseCase.filterRestaurants(new RestaurantCategoryParam(categories));
+        List<RestaurantSearchResponse> result = loadRestaurantUseCase.filterRestaurants(new RestaurantCategoryParam(categories));
 
         // then
         assertThat(result.size()).isEqualTo(koreanSize + japaneseSize);

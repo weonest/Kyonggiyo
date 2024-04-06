@@ -4,6 +4,7 @@ import com.github.f4b6a3.tsid.TsidCreator;
 import kyonggiyo.adapter.out.persistence.AdapterTest;
 import kyonggiyo.domain.event.EntityType;
 import kyonggiyo.domain.event.Event;
+import kyonggiyo.domain.event.EventReason;
 import kyonggiyo.domain.event.EventType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +25,9 @@ class EventPersistenceAdapterTest extends AdapterTest {
         Event event = Event.builder()
                 .id(id)
                 .entityType(EntityType.REVIEW)
-                .eventType(EventType.IMAGE_CREATE)
+                .eventType(EventType.IMAGE)
                 .entityId(reviewId)
-                .entityData("entityData")
+                .reason(EventReason.REVIEW_IMAGE_CREATE)
                 .build();
 
         // when

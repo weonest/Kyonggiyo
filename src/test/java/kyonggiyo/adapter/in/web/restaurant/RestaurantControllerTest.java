@@ -7,6 +7,7 @@ import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantCreateRequest;
 import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantMarkerResponse;
 import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantResponse;
 import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantResponses;
+import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantSearchResponse;
 import kyonggiyo.application.service.restaurant.dto.RestaurantCategoryParam;
 import kyonggiyo.domain.restaurant.RestaurantCategory;
 import org.instancio.Instancio;
@@ -103,8 +104,8 @@ class RestaurantControllerTest extends ControllerTest {
     void 검색_키워드를_통해_식당_마커를_조회한다() throws Exception{
         // given
         String keyword = "짜장면";
-        List<RestaurantMarkerResponse> restaurants = Instancio.ofList(RestaurantMarkerResponse.class).create();
-        RestaurantResponses<RestaurantMarkerResponse> response = RestaurantResponses.from(restaurants);
+        List<RestaurantSearchResponse> restaurants = Instancio.ofList(RestaurantSearchResponse.class).create();
+        RestaurantResponses<RestaurantSearchResponse> response = RestaurantResponses.from(restaurants);
 
         given(loadRestaurantUseCase.searchByKeyword(new RestaurantByKeywordRequest(keyword))).willReturn(restaurants);
 
@@ -123,9 +124,9 @@ class RestaurantControllerTest extends ControllerTest {
                                 fieldWithPath("data[].name").type(JsonFieldType.STRING).description("식당 이름"),
                                 fieldWithPath("data[].averageRating").type(JsonFieldType.NUMBER).description("식당 평점"),
                                 fieldWithPath("data[].category").type(JsonFieldType.STRING).description("식당 카테고리"),
+                                fieldWithPath("data[].address").type(JsonFieldType.STRING).description("추천 이유"),
                                 fieldWithPath("data[].lat").type(JsonFieldType.NUMBER).description("위도"),
                                 fieldWithPath("data[].lng").type(JsonFieldType.NUMBER).description("경도"),
-                                fieldWithPath("data[].reason").type(JsonFieldType.STRING).description("추천 이유"),
                                 fieldWithPath("size").type(JsonFieldType.NUMBER).description("데이터 수")
                         )));
 
@@ -139,8 +140,8 @@ class RestaurantControllerTest extends ControllerTest {
         // given
         String categories = "korean,cafe";
         List<RestaurantCategory> categoryList = List.of(RestaurantCategory.KOREAN, RestaurantCategory.CAFE);
-        List<RestaurantMarkerResponse> restaurants = Instancio.ofList(RestaurantMarkerResponse.class).create();
-        RestaurantResponses<RestaurantMarkerResponse> response = RestaurantResponses.from(restaurants);
+        List<RestaurantSearchResponse> restaurants = Instancio.ofList(RestaurantSearchResponse.class).create();
+        RestaurantResponses<RestaurantSearchResponse> response = RestaurantResponses.from(restaurants);
 
         given(loadRestaurantUseCase.filterRestaurants(new RestaurantCategoryParam(categoryList))).willReturn(restaurants);
 
@@ -159,9 +160,9 @@ class RestaurantControllerTest extends ControllerTest {
                                 fieldWithPath("data[].name").type(JsonFieldType.STRING).description("식당 이름"),
                                 fieldWithPath("data[].averageRating").type(JsonFieldType.NUMBER).description("식당 평점"),
                                 fieldWithPath("data[].category").type(JsonFieldType.STRING).description("식당 카테고리"),
+                                fieldWithPath("data[].address").type(JsonFieldType.STRING).description("추천 이유"),
                                 fieldWithPath("data[].lat").type(JsonFieldType.NUMBER).description("위도"),
                                 fieldWithPath("data[].lng").type(JsonFieldType.NUMBER).description("경도"),
-                                fieldWithPath("data[].reason").type(JsonFieldType.STRING).description("추천 이유"),
                                 fieldWithPath("size").type(JsonFieldType.NUMBER).description("데이터 수")
                         )));
 
