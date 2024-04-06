@@ -21,6 +21,7 @@ public record RestaurantCreateRequest(
                 .address(address)
                 .lat(lat)
                 .lng(lng)
+                .reason(reason)
                 .build();
     }
 
