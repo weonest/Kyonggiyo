@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface EventJpaRepository extends JpaRepository<Event, Long> {
 
-    List<Event> findAllByEventTypeAndStatus(EventType eventType, boolean status);
+    List<Event> findAllByPayload_EventTypeAndStatus(EventType eventType, boolean status);
 
     @Modifying(clearAutomatically = true)
     @Query("UPDATE Event e SET e.status = true WHERE e.id IN :ids")

@@ -28,7 +28,7 @@ public class JpaEventRepositoryImpl implements EventRepository {
 
     @Override
     public List<Event> findAllByEventTypeAndStatus(EventType eventType, boolean status) {
-        return eventJpaRepository.findAllByEventTypeAndStatus(eventType, status);
+        return eventJpaRepository.findAllByPayload_EventTypeAndStatus(eventType, status);
     }
 
     @Override
