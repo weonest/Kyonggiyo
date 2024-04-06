@@ -30,7 +30,7 @@ public class Event extends BaseEntity implements Persistable<Long> {
                   EventType eventType,
                   EntityType entityType,
                   Long entityId,
-                  String reason) {
+                  EventReason reason) {
         this.id = id;
         this.payload = EventPayload.builder()
                 .eventType(eventType)

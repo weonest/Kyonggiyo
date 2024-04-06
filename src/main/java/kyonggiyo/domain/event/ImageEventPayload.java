@@ -1,8 +1,10 @@
 package kyonggiyo.domain.event;
 
+import jakarta.persistence.Convert;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import kyonggiyo.domain.event.util.EventReasonConverter;
 import kyonggiyo.global.exception.GlobalErrorCode;
 import kyonggiyo.global.exception.InvalidValueException;
 import lombok.AccessLevel;
@@ -18,25 +20,21 @@ import java.util.Objects;
 public class ImageEventPayload {
 
     @Enumerated(EnumType.STRING)
-    private EventType eventType;
-
-    @Enumerated(EnumType.STRING)
     private EntityType entityType;
 
     private Long entityId;
 
-    private String reason;
+    @Convert(converter = EventReasonConverter.class, attributeName = "reason")
+    private EventReason reason;
 
     private String imageUrls;
 
     @Builder
-    private ImageEventPayload(EventType eventType,
-                              EntityType entityType,
+    private ImageEventPayload(EntityType entityType,
                               Long entityId,
-                              String reason,
+                              EventReason reason,
                               String imageUrls) {
         validateEntityId(entityId);
-        this.eventType = eventType;
         this.entityType = entityType;
         this.entityId = entityId;
         this.reason = reason;

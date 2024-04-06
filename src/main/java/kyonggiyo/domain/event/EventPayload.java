@@ -1,8 +1,10 @@
 package kyonggiyo.domain.event;
 
+import jakarta.persistence.Convert;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import kyonggiyo.domain.event.util.EventReasonConverter;
 import kyonggiyo.global.exception.GlobalErrorCode;
 import kyonggiyo.global.exception.InvalidValueException;
 import lombok.AccessLevel;
@@ -25,13 +27,14 @@ public class EventPayload {
 
     private Long entityId;
 
-    private String reason;
+    @Convert(converter = EventReasonConverter.class, attributeName = "reason")
+    private EventReason reason;
 
     @Builder
     private EventPayload(EventType eventType,
                          EntityType entityType,
                          Long entityId,
-                         String reason) {
+                         EventReason reason) {
         validateEntityId(entityId);
         this.eventType = eventType;
         this.entityType = entityType;
