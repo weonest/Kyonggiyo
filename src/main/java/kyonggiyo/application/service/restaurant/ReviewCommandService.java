@@ -12,7 +12,7 @@ import kyonggiyo.application.port.out.restaurant.review.DeleteReviewPort;
 import kyonggiyo.application.port.out.restaurant.review.LoadReviewPort;
 import kyonggiyo.application.port.out.restaurant.review.SaveReviewPort;
 import kyonggiyo.application.port.out.user.LoadUserPort;
-import kyonggiyo.application.service.event.ImageCreateEvent;
+import kyonggiyo.application.service.event.image.ImageCreateEvent;
 import kyonggiyo.application.service.image.ImageService;
 import kyonggiyo.domain.image.ImageType;
 import kyonggiyo.domain.restaurant.Restaurant;

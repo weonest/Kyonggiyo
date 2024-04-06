@@ -7,6 +7,7 @@ import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantFilterRequest;
 import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantMarkerResponse;
 import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantResponse;
 import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantResponses;
+import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantSearchResponse;
 import kyonggiyo.application.port.in.restaurant.CreateRestaurantUseCase;
 import kyonggiyo.application.port.in.restaurant.LoadRestaurantUseCase;
 import kyonggiyo.application.service.restaurant.dto.RestaurantCategoryParam;
@@ -44,15 +45,15 @@ public class RestaurantController {
     }
 
     @GetMapping("/markers/search")
-    public ResponseEntity<RestaurantResponses<RestaurantMarkerResponse>> restaurantSearch(RestaurantByKeywordRequest request) {
-        List<RestaurantMarkerResponse> response = loadRestaurantUseCase.searchByKeyword(request);
+    public ResponseEntity<RestaurantResponses<RestaurantSearchResponse>> restaurantSearch(RestaurantByKeywordRequest request) {
+        List<RestaurantSearchResponse> response = loadRestaurantUseCase.searchByKeyword(request);
         return ResponseEntity.ok(RestaurantResponses.from(response));
     }
 
     @GetMapping("/markers/filter")
-    public ResponseEntity<RestaurantResponses<RestaurantMarkerResponse>> restaurantSearch(@Valid RestaurantFilterRequest request) {
+    public ResponseEntity<RestaurantResponses<RestaurantSearchResponse>> restaurantSearch(@Valid RestaurantFilterRequest request) {
         RestaurantCategoryParam param = RestaurantCategoryParam.from(request.categories());
-        List<RestaurantMarkerResponse> response = loadRestaurantUseCase.filterRestaurants(param);
+        List<RestaurantSearchResponse> response = loadRestaurantUseCase.filterRestaurants(param);
         return ResponseEntity.ok(RestaurantResponses.from(response));
     }
 

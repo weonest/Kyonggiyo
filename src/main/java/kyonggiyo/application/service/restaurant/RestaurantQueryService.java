@@ -4,6 +4,7 @@ import kyonggiyo.adapter.in.web.image.dto.ImageResponse;
 import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantByKeywordRequest;
 import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantMarkerResponse;
 import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantResponse;
+import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantSearchResponse;
 import kyonggiyo.adapter.in.web.restaurant.dto.review.ReviewResponse;
 import kyonggiyo.application.port.in.restaurant.LoadRestaurantUseCase;
 import kyonggiyo.application.port.out.image.LoadImagePort;
@@ -66,17 +67,17 @@ public class RestaurantQueryService implements LoadRestaurantUseCase {
     }
 
     @Override
-    public List<RestaurantMarkerResponse> searchByKeyword(RestaurantByKeywordRequest request) {
+    public List<RestaurantSearchResponse> searchByKeyword(RestaurantByKeywordRequest request) {
         List<Restaurant> restaurants = loadRestaurantPort.findByNameOrReviewContent(request.keyword());
         return restaurants.stream()
-                .map(RestaurantMarkerResponse::from).toList();
+                .map(RestaurantSearchResponse::from).toList();
     }
 
     @Override
-    public List<RestaurantMarkerResponse> filterRestaurants(RestaurantCategoryParam param) {
+    public List<RestaurantSearchResponse> filterRestaurants(RestaurantCategoryParam param) {
         List<Restaurant> restaurants = loadRestaurantPort.filterByCategory(param.categories());
         return restaurants.stream()
-                .map(RestaurantMarkerResponse::from).toList();
+                .map(RestaurantSearchResponse::from).toList();
     }
 
 }
