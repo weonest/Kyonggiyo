@@ -1,4 +1,4 @@
-package kyonggiyo.application.service.event;
+package kyonggiyo.application.service.event.image;
 
 import kyonggiyo.application.port.out.event.image.LoadImageEventPort;
 import kyonggiyo.application.port.out.event.image.SaveImageEventPort;
@@ -21,8 +21,8 @@ public class ImageEventService {
     private final LoadImageEventPort loadImageEventPort;
 
     @Transactional
-    public ImageEvent createEvent(ImageEvent event) {
-        return saveImageEventPort.save(event);
+    public void createEvent(ImageEvent event) {
+        saveImageEventPort.save(event);
     }
 
     @Transactional

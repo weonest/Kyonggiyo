@@ -1,4 +1,4 @@
-package kyonggiyo.application.service.event;
+package kyonggiyo.application.service.event.image;
 
 import kyonggiyo.application.service.image.ImageService;
 import lombok.RequiredArgsConstructor;
