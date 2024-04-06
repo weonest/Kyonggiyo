@@ -2,7 +2,6 @@ package kyonggiyo.adapter.out.persistence.event.image;
 
 import kyonggiyo.application.port.out.event.image.LoadImageEventPort;
 import kyonggiyo.application.port.out.event.image.SaveImageEventPort;
-import kyonggiyo.domain.event.EventType;
 import kyonggiyo.domain.event.ImageEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -26,8 +25,8 @@ public class ImageEventPersistenceAdapter implements SaveImageEventPort, LoadIma
     }
 
     @Override
-    public List<ImageEvent> findAllByEventTypeAndStatus(EventType eventType, boolean status) {
-        return imageEventRepository.findAllByEventTypeAndStatus(eventType, status);
+    public List<ImageEvent> findAllFailedEvent() {
+        return imageEventRepository.findAllFailedEvent();
     }
 
 }

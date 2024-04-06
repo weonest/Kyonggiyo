@@ -1,6 +1,5 @@
 package kyonggiyo.adapter.out.persistence.event.image;
 
-import kyonggiyo.domain.event.EventType;
 import kyonggiyo.domain.event.ImageEvent;
 import kyonggiyo.global.exception.GlobalErrorCode;
 import kyonggiyo.global.exception.NotFoundException;
@@ -27,8 +26,8 @@ public class JpaImageImageEventRepositoryImpl implements ImageEventRepository {
     }
 
     @Override
-    public List<ImageEvent> findAllByEventTypeAndStatus(EventType eventType, boolean status) {
-        return imageEventJpaRepository.findAllByEventTypeAndStatus(eventType, status);
+    public List<ImageEvent> findAllFailedEvent() {
+        return imageEventJpaRepository.findAllByStatus(false);
     }
 
 }
