@@ -38,7 +38,6 @@ public class Event extends BaseEntity implements Persistable<Long> {
                 .entityId(entityId)
                 .reason(reason)
                 .build();
-
     }
 
     public void successEvent() {
