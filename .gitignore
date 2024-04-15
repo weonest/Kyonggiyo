@@ -35,5 +35,5 @@ out/
 
 ### VS Code ###
 .vscode/
-/src/main/resources/.env
-/src/main/resources/static/api.json
+/core/src/main/resources/.env
+/core/src/main/resources/static/api.json

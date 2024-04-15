@@ -1,32 +1,108 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.1.7'
-    id 'io.spring.dependency-management' version '1.1.4'
+    id 'org.springframework.boot' version '3.1.7' apply(false)
+    id 'io.spring.dependency-management' version '1.1.4' apply(false)
     id 'com.epages.restdocs-api-spec' version '0.18.2'
     id 'org.hidetake.swagger.generator' version '2.18.2'
 }
 
-group = 'kyonggiyo'
-version = '0.0.1-SNAPSHOT'
+allprojects {
+    apply plugin: 'java'
+
+    group = 'kyonggiyo'
+    version = '0.0.1-SNAPSHOT'
+
+    repositories {
+        mavenCentral()
+    }
+
+}
+
+subprojects {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+    jar {
+        enabled = false
+    }
+
+    bootJar{
+        enabled = false
+    }
+
+    ext {
+        set('snippetsDir', file("build/generated-snippets"))
+        // SpringCloud setting
+        set('springCloudVersion', "2022.0.3")
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        }
+    }
+
+    dependencies {
+        // Spring
+        annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+        // Lombok
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+
+        // Test
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testImplementation group: 'org.instancio', name: 'instancio-junit', version: '3.0.0'
+
+        // Documentation
+        testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.18.3'
+        testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+        implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+    }
+
+    openapi3 {
+        servers = [
+                { url = "http://localhost:8080" },
+                { url = "https://dev.kyonggiyo.site" }
+        ]
+        title = 'Kyonggiyo API Document'
+        description = '경기요 API 문서'
+        version = "${project.version}"
+        outputFileNamePrefix = 'api'
+        outputDirectory = 'build/resources/main/static/'
+    }
+
+    tasks.register('copyDocs') {
+        dependsOn(':openapi3')
+        doLast {
+            delete 'src/main/resources/static/api.json'
+            copy {
+                from "build/resources/main/static/api.json"
+                into "src/main/resources/static/"
+            }
+        }
+    }
+
+    bootJar {
+        dependsOn(':copyDocs')
+    }
+
+    tasks.named('test') {
+        useJUnitPlatform()
+    }
+}
 
 java {
     sourceCompatibility = '17'
 }
 
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-}
-
-repositories {
-    mavenCentral()
-}
-
 // Plain jar 생성하지 않도록
-jar {
-    enabled = false
-}
 
 ext {
     set('snippetsDir', file("build/generated-snippets"))
@@ -34,88 +110,33 @@ ext {
     set('springCloudVersion', "2022.0.3")
 }
 
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-    }
-}
-
-dependencies {
-    // Spring
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'org.springframework.boot:spring-boot-starter-actuator:3.2.2'
-    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-
-    // IdGenerator
-    implementation 'com.github.f4b6a3:tsid-creator:5.2.4'
-
-    // Lombok
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-
-    // OPEN FEIGN
-    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
-
-    // JWT
-    implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
-    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.3'
-    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.3'
-
-    // JSON
-    implementation 'org.json:json:20230618'
-
-    // DB
-    runtimeOnly 'com.h2database:h2'
-    runtimeOnly 'com.mysql:mysql-connector-j'
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-
-    // Test
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation group: 'org.instancio', name: 'instancio-junit', version: '3.0.0'
-
-    // Documentation
-    testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.18.3'
-    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
-
-    // AWS CloudWatch
-    implementation "ca.pjer:logback-awslogs-appender:1.6.0"
-
-    // AWS S3
-    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
-    testImplementation 'io.findify:s3mock_2.13:0.2.6'
-
-}
-
-openapi3 {
-    servers = [
-            { url = "http://localhost:8080" },
-            { url = "https://dev.kyonggiyo.site" }
-    ]
-    title = 'Kyonggiyo API Document'
-    description = '경기요 API 문서'
-    version = "${project.version}"
-    outputFileNamePrefix = 'api'
-    outputDirectory = 'build/resources/main/static/'
-}
-
-tasks.register('copyDocs') {
-    dependsOn(':openapi3')
-    doLast {
-        delete 'src/main/resources/static/api.json'
-        copy {
-            from "build/resources/main/static/api.json"
-            into "src/main/resources/static/"
-        }
-    }
-}
-
-bootJar {
-    dependsOn(':copyDocs')
-}
-
-tasks.named('test') {
-    useJUnitPlatform()
-}
+//openapi3 {
+//    servers = [
+//            { url = "http://localhost:8080" },
+//            { url = "https://dev.kyonggiyo.site" }
+//    ]
+//    title = 'Kyonggiyo API Document'
+//    description = '경기요 API 문서'
+//    version = "${project.version}"
+//    outputFileNamePrefix = 'api'
+//    outputDirectory = 'build/resources/main/static/'
+//}
+//
+//tasks.register('copyDocs') {
+//    dependsOn(':openapi3')
+//    doLast {
+//        delete 'src/main/resources/static/api.json'
+//        copy {
+//            from "build/resources/main/static/api.json"
+//            into "src/main/resources/static/"
+//        }
+//    }
+//}
+//
+//bootJar {
+//    dependsOn(':copyDocs')
+//}
+//
+//tasks.named('test') {
+//    useJUnitPlatform()
+//}
