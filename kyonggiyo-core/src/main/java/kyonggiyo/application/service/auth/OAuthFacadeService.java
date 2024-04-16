@@ -6,7 +6,6 @@ import kyonggiyo.application.port.in.auth.dto.LogInResponse;
 import kyonggiyo.application.port.in.auth.dto.TokenResponse;
 import kyonggiyo.domain.auth.Account;
 import kyonggiyo.domain.auth.Platform;
-import kyonggiyo.global.auth.UserInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

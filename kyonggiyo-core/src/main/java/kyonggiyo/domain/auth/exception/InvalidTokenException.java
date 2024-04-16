@@ -1,7 +1,7 @@
 package kyonggiyo.domain.auth.exception;
 
-import kyonggiyo.global.exception.AuthenticationException;
-import kyonggiyo.global.exception.ErrorCode;
+import kyonggiyo.common.exception.AuthenticationException;
+import kyonggiyo.common.exception.ErrorCode;
 
 public class InvalidTokenException extends AuthenticationException {
 

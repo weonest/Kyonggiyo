@@ -1,8 +1,9 @@
 package kyonggiyo.application.service.restaurant;
 
 import jakarta.persistence.EntityManager;
-import kyonggiyo.adapter.in.web.restaurant.dto.review.ReviewCreateRequest;
-import kyonggiyo.adapter.in.web.restaurant.dto.review.ReviewUpdateRequest;
+import kyonggiyo.application.port.in.auth.dto.UserInfo;
+import kyonggiyo.application.port.in.review.dto.ReviewCreateCommand;
+import kyonggiyo.application.port.in.review.dto.ReviewUpdateCommand;
 import kyonggiyo.application.port.out.restaurant.LoadRestaurantPort;
 import kyonggiyo.application.port.out.restaurant.review.DeleteReviewPort;
 import kyonggiyo.application.port.out.restaurant.review.LoadReviewPort;
@@ -16,7 +17,6 @@ import kyonggiyo.domain.review.Review;
 import kyonggiyo.domain.user.User;
 import kyonggiyo.fixture.RestaurantFixtures;
 import kyonggiyo.fixture.UserFixtures;
-import kyonggiyo.global.auth.UserInfo;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +56,7 @@ class ReviewCommandServiceTest extends ServiceTest {
         User reviewer = UserFixtures.generateUserEntity();
         UserInfo userInfo = new UserInfo(reviewer.getId(), reviewer.getRole());
         Restaurant restaurant = RestaurantFixtures.generateRestaurantEntityWithoutReview();
-        ReviewCreateRequest request = Instancio.create(ReviewCreateRequest.class);
+        ReviewCreateCommand request = Instancio.create(ReviewCreateCommand.class);
 
         Review review = Review.builder()
                 .rating(request.rating())
@@ -85,7 +85,7 @@ class ReviewCommandServiceTest extends ServiceTest {
         User reviewer = UserFixtures.generateUserEntity();
         UserInfo userInfo = new UserInfo(reviewer.getId(), reviewer.getRole());
         Restaurant restaurant = RestaurantFixtures.generateRestaurantEntityWithoutReview();
-        ReviewUpdateRequest request = Instancio.create(ReviewUpdateRequest.class);
+        ReviewUpdateCommand request = Instancio.create(ReviewUpdateCommand.class);
 
         Review review = Review.builder()
                 .rating(request.rating())
@@ -110,7 +110,7 @@ class ReviewCommandServiceTest extends ServiceTest {
         User reviewer = UserFixtures.generateUserEntity();
         UserInfo userInfo = new UserInfo(reviewer.getId(), reviewer.getRole());
         Restaurant restaurant = RestaurantFixtures.generateRestaurantEntityWithoutReview();
-        ReviewUpdateRequest request = Instancio.create(ReviewUpdateRequest.class);
+        ReviewUpdateCommand request = Instancio.create(ReviewUpdateCommand.class);
 
         Review review = Review.builder()
                 .rating(request.rating())

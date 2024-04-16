@@ -6,7 +6,7 @@ import kyonggiyo.application.port.in.review.CreateReviewUseCase;
 import kyonggiyo.application.port.in.review.DeleteReviewUseCase;
 import kyonggiyo.application.port.in.review.UpdateReviewUseCase;
 import kyonggiyo.auth.Auth;
-import kyonggiyo.auth.UserInfo;
+import kyonggiyo.application.port.in.auth.dto.UserInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

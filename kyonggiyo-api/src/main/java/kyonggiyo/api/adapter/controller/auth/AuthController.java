@@ -6,8 +6,9 @@ import kyonggiyo.application.port.in.auth.OAuthLoginUseCase;
 import kyonggiyo.application.port.in.auth.OAuthLogoutUseCase;
 import kyonggiyo.application.port.in.auth.ProvideAuthCodeUrlUseCase;
 import kyonggiyo.application.port.in.auth.dto.LogInResponse;
+import kyonggiyo.auth.Auth;
 import kyonggiyo.domain.auth.Platform;
-import kyonggiyo.auth.UserInfo;
+import kyonggiyo.application.port.in.auth.dto.UserInfo;
 import kyonggiyo.common.util.CookieUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -50,10 +51,10 @@ public class AuthController {
     }
 
     @GetMapping("/logout")
-    public ResponseEntity<Void> logout(UserInfo userInfo,
+    public ResponseEntity<Void> logout(@Auth UserInfo userInfo,
                                        HttpServletRequest httpServletRequest,
                                        HttpServletResponse httpServletResponse) {
-        oAuthLogoutUseCase.logout(userInfo);
+        oAuthLogoutUseCase.logout(userInfo.userId());
 
         CookieUtils.removeCookie(httpServletRequest, httpServletResponse);
 

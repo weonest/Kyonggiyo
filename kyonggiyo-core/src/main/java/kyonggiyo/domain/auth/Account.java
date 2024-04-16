@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 import kyonggiyo.domain.BaseEntity;
 import kyonggiyo.domain.auth.exception.AccountErrorCode;
 import kyonggiyo.domain.user.User;
-import kyonggiyo.global.exception.InvalidStateException;
+import kyonggiyo.common.exception.InvalidStateException;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

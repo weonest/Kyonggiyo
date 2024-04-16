@@ -1,19 +1,20 @@
 package kyonggiyo.application.service.candidate;
 
-import kyonggiyo.adapter.in.web.candidate.dto.CandidateResponse;
+import kyonggiyo.application.port.in.auth.dto.UserInfo;
 import kyonggiyo.application.port.in.candidate.LoadCandidateUseCase;
+import kyonggiyo.application.port.in.candidate.dto.CandidateResponse;
 import kyonggiyo.application.port.out.candidate.LoadCandidatePort;
 import kyonggiyo.application.service.ServiceTest;
+import kyonggiyo.common.response.SliceResponse;
 import kyonggiyo.domain.candidate.Candidate;
 import kyonggiyo.domain.candidate.Status;
 import kyonggiyo.domain.user.Role;
 import kyonggiyo.fixture.CandidateFixtures;
-import kyonggiyo.global.auth.UserInfo;
-import kyonggiyo.global.response.SliceResponse;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.SliceImpl;
 import org.springframework.test.context.ContextConfiguration;
@@ -38,7 +39,8 @@ class CandidateQueryServiceTest extends ServiceTest {
         // given
         UserInfo userInfo = new UserInfo(1L, Role.USER);
         Status status = Instancio.create(Status.class);
-        Pageable pageable = Instancio.create(Pageable.class);
+        int page = 10;
+        Pageable pageable = PageRequest.of(page, page);
 
         List<Candidate> candidates = getCandidateListFixture(status);
         SliceImpl<Candidate> slice = new SliceImpl<>(candidates);
@@ -46,7 +48,7 @@ class CandidateQueryServiceTest extends ServiceTest {
         given(loadCandidatePort.findAllByStatus(status, pageable)).willReturn(slice);
 
         // when
-        SliceResponse<CandidateResponse> result = loadCandidateUseCase.findAllByStatus(userInfo, status, pageable);
+        SliceResponse<CandidateResponse> result = loadCandidateUseCase.findAllByStatus(userInfo, status, page);
 
         // then
         assertThat(result.data()).hasSameSizeAs(candidates);

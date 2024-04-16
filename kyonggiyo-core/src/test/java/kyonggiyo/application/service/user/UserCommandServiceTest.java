@@ -1,7 +1,7 @@
 package kyonggiyo.application.service.user;
 
-import kyonggiyo.adapter.in.web.auth.dto.UserCreateRequst;
 import kyonggiyo.application.port.in.user.CreateUserUseCase;
+import kyonggiyo.application.port.in.user.dto.UserCreateCommand;
 import kyonggiyo.application.port.out.auth.LoadAccountPort;
 import kyonggiyo.application.port.out.user.SaveUserPort;
 import kyonggiyo.application.service.ServiceTest;
@@ -37,13 +37,13 @@ class UserCommandServiceTest extends ServiceTest {
         // given
         User user = UserFixtures.generateUserEntity();
         Account account = AccountFixtures.generateAccountEntityWithoutUser();
-        UserCreateRequst userCreateRequst = new UserCreateRequst(account.getId(), user.getNickname());
+        UserCreateCommand command = new UserCreateCommand(account.getId(), user.getNickname());
 
         given(loadAccountPort.findById(account.getId())).willReturn(Optional.of(account));
         given(saveUserPort.save(user)).willReturn(user);
 
         // when
-        Platform platform = createUserUseCase.createUser(userCreateRequst);
+        Platform platform = createUserUseCase.createUser(command);
 
         // then
         assertThat(platform).isEqualTo(account.getPlatform());

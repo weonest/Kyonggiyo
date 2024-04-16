@@ -1,8 +1,8 @@
 package kyonggiyo.domain.auth;
 
+import kyonggiyo.application.port.in.auth.dto.AuthInfo;
+import kyonggiyo.common.property.JwtProperties;
 import kyonggiyo.domain.user.Role;
-import kyonggiyo.global.auth.AuthInfo;
-import kyonggiyo.global.property.JwtProperties;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;

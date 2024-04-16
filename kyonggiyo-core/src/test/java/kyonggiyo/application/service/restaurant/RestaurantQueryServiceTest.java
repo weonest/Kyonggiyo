@@ -1,10 +1,10 @@
 package kyonggiyo.application.service.restaurant;
 
-import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantByKeywordRequest;
-import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantMarkerResponse;
-import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantResponse;
-import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantSearchResponse;
 import kyonggiyo.application.port.in.restaurant.LoadRestaurantUseCase;
+import kyonggiyo.application.port.in.restaurant.dto.RestaurantByKeywordQuery;
+import kyonggiyo.application.port.in.restaurant.dto.RestaurantMarkerResponse;
+import kyonggiyo.application.port.in.restaurant.dto.RestaurantResponse;
+import kyonggiyo.application.port.in.restaurant.dto.RestaurantSearchResponse;
 import kyonggiyo.application.port.out.image.LoadImagePort;
 import kyonggiyo.application.port.out.restaurant.LoadRestaurantPort;
 import kyonggiyo.application.service.ServiceTest;
@@ -90,7 +90,7 @@ class RestaurantQueryServiceTest extends ServiceTest {
         given(loadRestaurantPort.findByNameOrReviewContent(keyword)).willReturn(restaurants);
 
         // when
-        List<RestaurantSearchResponse> result = loadRestaurantUseCase.searchByKeyword(new RestaurantByKeywordRequest(keyword));
+        List<RestaurantSearchResponse> result = loadRestaurantUseCase.searchByKeyword(new RestaurantByKeywordQuery(keyword));
 
         // then
         assertThat(result.size()).isEqualTo(targetSize);

@@ -1,5 +1,6 @@
 package kyonggiyo.application.service.candidate;
 
+import kyonggiyo.application.port.in.auth.dto.UserInfo;
 import kyonggiyo.application.port.in.candidate.AcceptCandidateUseCase;
 import kyonggiyo.application.port.in.candidate.CreateCandidateUseCase;
 import kyonggiyo.application.port.in.candidate.DeleteCandidateUseCase;
@@ -12,9 +13,8 @@ import kyonggiyo.application.port.out.candidate.SaveCandidatePort;
 import kyonggiyo.application.port.out.restaurant.SaveRestaurantPort;
 import kyonggiyo.domain.candidate.Candidate;
 import kyonggiyo.domain.user.Role;
-import kyonggiyo.global.auth.UserInfo;
-import kyonggiyo.global.exception.ForbiddenException;
-import kyonggiyo.global.exception.GlobalErrorCode;
+import kyonggiyo.common.exception.ForbiddenException;
+import kyonggiyo.common.exception.GlobalErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

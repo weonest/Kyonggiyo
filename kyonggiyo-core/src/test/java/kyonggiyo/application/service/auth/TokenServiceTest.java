@@ -1,6 +1,7 @@
 package kyonggiyo.application.service.auth;
 
-import kyonggiyo.adapter.in.web.auth.dto.TokenResponse;
+import kyonggiyo.application.port.in.auth.dto.AuthInfo;
+import kyonggiyo.application.port.in.auth.dto.TokenResponse;
 import kyonggiyo.domain.auth.TokenManager;
 import kyonggiyo.application.port.out.auth.DeleteRefreshTokenPort;
 import kyonggiyo.application.port.out.auth.LoadRefreshTokenPort;
@@ -10,16 +11,12 @@ import kyonggiyo.domain.auth.AccessToken;
 import kyonggiyo.domain.auth.RefreshToken;
 import kyonggiyo.domain.user.User;
 import kyonggiyo.fixture.UserFixtures;
-import kyonggiyo.global.auth.AuthInfo;
-import kyonggiyo.global.auth.UserInfo;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
-
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -72,15 +69,15 @@ class TokenServiceTest extends ServiceTest {
     @Test
     void 인증된_유저_정보를_통해_토큰을_삭제할_수_있다() {
         // given
-        UserInfo userInfo = Instancio.create(UserInfo.class);
+        Long userId = 1L;
 
-        willDoNothing().given(deleteRefreshTokenPort).deleteByUserId(userInfo.userId());
+        willDoNothing().given(deleteRefreshTokenPort).deleteByUserId(userId);
 
         // when
-        tokenService.deleteRefreshTokenByUserId(userInfo);
+        tokenService.deleteRefreshTokenByUserId(userId);
 
         // then
-        verify(deleteRefreshTokenPort, atMostOnce()).deleteByUserId(userInfo.userId());
+        verify(deleteRefreshTokenPort, atMostOnce()).deleteByUserId(userId);
     }
 
     @Test
@@ -114,10 +111,10 @@ class TokenServiceTest extends ServiceTest {
 
     @Test
     void 리프레시_토큰을_통해서_토큰을_재발급_할_수_있다() {
-        MockHttpServletResponse httpServletResponse = new MockHttpServletResponse();
-        String authenticatedRefreshToken = "Valid token";
+        Long userId = 1L;
         AccessToken accessToken = Instancio.create(AccessToken.class);
         RefreshToken refreshToken = Instancio.create(RefreshToken.class);
+        String authenticatedRefreshToken = refreshToken.getValue();
         TokenResponse tokenResponse = TokenResponse.builder()
                 .accessToken(accessToken.value())
                 .accessTokenMaxAge(accessToken.expiresIn())
@@ -125,14 +122,13 @@ class TokenServiceTest extends ServiceTest {
                 .refreshTokenMaxAge(refreshToken.getExpiresIn())
                 .build();
 
-        given(loadRefreshTokenPort.findByValue(authenticatedRefreshToken))
-                .willReturn(Optional.of(refreshToken));
+        given(loadRefreshTokenPort.getByUserId(userId)).willReturn(refreshToken);
         given(tokenManager.generateAccessToken(refreshToken.getUserId(), refreshToken.getRole())).willReturn(accessToken);
         given(tokenManager.generateRefreshToken(refreshToken.getUserId(), refreshToken.getRole())).willReturn(refreshToken);
         willDoNothing().given(saveRefreshTokenPort).save(refreshToken);
 
         // when
-        TokenResponse result = tokenService.reissueToken(httpServletResponse, authenticatedRefreshToken);
+        TokenResponse result = tokenService.reissueToken(userId, authenticatedRefreshToken);
 
         // then
         assertThat(result).isEqualTo(tokenResponse);

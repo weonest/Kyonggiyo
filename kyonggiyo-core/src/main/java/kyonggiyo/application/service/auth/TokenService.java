@@ -1,6 +1,5 @@
 package kyonggiyo.application.service.auth;
 
-import jakarta.servlet.http.HttpServletResponse;
 import kyonggiyo.application.port.in.auth.dto.AuthInfo;
 import kyonggiyo.application.port.in.auth.dto.TokenResponse;
 import kyonggiyo.application.port.out.auth.DeleteRefreshTokenPort;
@@ -12,8 +11,7 @@ import kyonggiyo.domain.auth.TokenManager;
 import kyonggiyo.domain.auth.exception.TokenErrorCode;
 import kyonggiyo.domain.user.Role;
 import kyonggiyo.domain.user.User;
-import kyonggiyo.global.exception.AuthenticationException;
-import kyonggiyo.global.util.CookieUtils;
+import kyonggiyo.common.exception.AuthenticationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -74,17 +72,12 @@ public class TokenService {
 
         saveRefreshTokenPort.save(newRefreshToken);
 
-        TokenResponse tokenResponse = TokenResponse.builder()
+        return TokenResponse.builder()
                 .accessToken(newAccessToken.value())
                 .accessTokenMaxAge(newAccessToken.expiresIn())
                 .refreshToken(newRefreshToken.getValue())
                 .refreshTokenMaxAge(newRefreshToken.getExpiresIn())
                 .build();
-
-        httpServletResponse.addHeader(HttpHeaders.AUTHORIZATION, newAccessToken.value());
-        CookieUtils.setCookie(httpServletResponse, tokenResponse);
-
-        return tokenResponse;
     }
 
 }

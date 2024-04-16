@@ -1,7 +1,7 @@
 package kyonggiyo.domain.image.exception;
 
-import kyonggiyo.global.exception.BusinessException;
-import kyonggiyo.global.exception.ErrorCode;
+import kyonggiyo.common.exception.BusinessException;
+import kyonggiyo.common.exception.ErrorCode;
 
 public class ImageException extends BusinessException {
 

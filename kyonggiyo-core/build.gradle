@@ -21,4 +21,7 @@ dependencies {
 
     // JSON
     implementation 'org.json:json:20230618'
+
+    // Test Fixture
+    api group: 'org.instancio', name: 'instancio-junit', version: '3.0.0'
 }

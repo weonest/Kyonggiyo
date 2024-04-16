@@ -2,8 +2,8 @@ package kyonggiyo.common.config;
 
 import kyonggiyo.domain.auth.util.PlatformConverter;
 import kyonggiyo.domain.candidate.util.StatusConverter;
-import kyonggiyo.auth.AuthorizationInterceptor;
-import kyonggiyo.auth.AuthorizedArgumentResolver;
+import kyonggiyo.auth.interceptor.AuthorizationInterceptor;
+import kyonggiyo.auth.resolver.AuthorizedArgumentResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;

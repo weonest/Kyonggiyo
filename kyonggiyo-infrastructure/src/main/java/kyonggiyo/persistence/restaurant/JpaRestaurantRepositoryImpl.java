@@ -2,8 +2,8 @@ package kyonggiyo.persistence.restaurant;
 
 import kyonggiyo.domain.restaurant.Restaurant;
 import kyonggiyo.domain.restaurant.RestaurantCategory;
-import kyonggiyo.global.exception.GlobalErrorCode;
-import kyonggiyo.global.exception.NotFoundException;
+import kyonggiyo.common.exception.GlobalErrorCode;
+import kyonggiyo.common.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

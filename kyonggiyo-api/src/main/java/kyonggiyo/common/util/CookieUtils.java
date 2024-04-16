@@ -4,8 +4,8 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kyonggiyo.application.port.in.auth.dto.TokenResponse;
-import kyonggiyo.global.exception.AuthenticationException;
-import kyonggiyo.global.exception.GlobalErrorCode;
+import kyonggiyo.common.exception.AuthenticationException;
+import kyonggiyo.common.exception.GlobalErrorCode;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 

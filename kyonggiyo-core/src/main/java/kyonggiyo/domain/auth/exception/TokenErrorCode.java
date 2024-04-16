@@ -1,6 +1,6 @@
 package kyonggiyo.domain.auth.exception;
 
-import kyonggiyo.global.exception.ErrorCode;
+import kyonggiyo.common.exception.ErrorCode;
 
 public enum TokenErrorCode implements ErrorCode {
 

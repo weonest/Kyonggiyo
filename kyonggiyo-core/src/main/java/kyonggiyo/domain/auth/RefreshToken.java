@@ -1,14 +1,14 @@
 package kyonggiyo.domain.auth;
 
 import kyonggiyo.domain.user.Role;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.redis.core.RedisHash;
-import org.springframework.data.redis.core.index.Indexed;
 
 @Getter
-@RedisHash(value = "refreshToken", timeToLive = 259200)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RefreshToken {
 
     @Id
@@ -16,7 +16,6 @@ public class RefreshToken {
 
     private Role role;
 
-    @Indexed
     private String value;
 
     private long expiresIn;

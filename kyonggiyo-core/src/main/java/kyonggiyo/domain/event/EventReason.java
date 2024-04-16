@@ -1,7 +1,7 @@
 package kyonggiyo.domain.event;
 
-import kyonggiyo.global.exception.GlobalErrorCode;
-import kyonggiyo.global.exception.InvalidValueException;
+import kyonggiyo.common.exception.GlobalErrorCode;
+import kyonggiyo.common.exception.InvalidValueException;
 import lombok.Getter;
 
 import java.util.Arrays;

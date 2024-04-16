@@ -2,8 +2,8 @@ package kyonggiyo.persistence.candidate;
 
 import kyonggiyo.domain.candidate.Candidate;
 import kyonggiyo.domain.candidate.Status;
-import kyonggiyo.global.exception.GlobalErrorCode;
-import kyonggiyo.global.exception.NotFoundException;
+import kyonggiyo.common.exception.GlobalErrorCode;
+import kyonggiyo.common.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;

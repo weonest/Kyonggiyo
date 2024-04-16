@@ -1,6 +1,6 @@
 package kyonggiyo.domain.image.exception;
 
-import kyonggiyo.global.exception.ErrorCode;
+import kyonggiyo.common.exception.ErrorCode;
 
 public enum ImageErrorCode implements ErrorCode {
 

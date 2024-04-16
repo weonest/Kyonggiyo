@@ -1,7 +1,7 @@
 package kyonggiyo.application.port.in.candidate;
 
+import kyonggiyo.application.port.in.auth.dto.UserInfo;
 import kyonggiyo.application.port.in.candidate.dto.CandidateCreateCommand;
-import kyonggiyo.global.auth.UserInfo;
 
 public interface CreateCandidateUseCase {
 

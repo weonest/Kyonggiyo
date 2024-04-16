@@ -1,6 +1,7 @@
 package kyonggiyo.application.port.in.candidate;
 
-import kyonggiyo.global.auth.UserInfo;
+
+import kyonggiyo.application.port.in.auth.dto.UserInfo;
 
 public interface DeleteCandidateUseCase {
 

@@ -8,9 +8,7 @@ bootJar{
 
 dependencies {
     implementation project(':kyonggiyo-core')
-
-//    // Spring
-//    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    testImplementation testFixtures(project(':kyonggiyo-core'))
 
     // OPEN FEIGN
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
