@@ -1,19 +1,19 @@
 package kyonggiyo.application.service.restaurant;
 
-import kyonggiyo.adapter.in.web.image.dto.ImageResponse;
-import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantByKeywordRequest;
-import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantMarkerResponse;
-import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantResponse;
-import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantSearchResponse;
-import kyonggiyo.adapter.in.web.restaurant.dto.review.ReviewResponse;
+import kyonggiyo.application.port.in.image.dto.ImageResponse;
 import kyonggiyo.application.port.in.restaurant.LoadRestaurantUseCase;
+import kyonggiyo.application.port.in.restaurant.dto.RestaurantByKeywordQuery;
+import kyonggiyo.application.port.in.restaurant.dto.RestaurantMarkerResponse;
+import kyonggiyo.application.port.in.restaurant.dto.RestaurantResponse;
+import kyonggiyo.application.port.in.restaurant.dto.RestaurantSearchResponse;
+import kyonggiyo.application.port.in.review.dto.ReviewResponse;
 import kyonggiyo.application.port.out.image.LoadImagePort;
 import kyonggiyo.application.port.out.restaurant.LoadRestaurantPort;
-import kyonggiyo.application.service.restaurant.dto.RestaurantCategoryParam;
+import kyonggiyo.application.port.in.restaurant.dto.RestaurantCategoryQuery;
 import kyonggiyo.domain.image.Image;
 import kyonggiyo.domain.image.ImageType;
 import kyonggiyo.domain.restaurant.Restaurant;
-import kyonggiyo.domain.restaurant.Review;
+import kyonggiyo.domain.review.Review;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -67,15 +67,15 @@ public class RestaurantQueryService implements LoadRestaurantUseCase {
     }
 
     @Override
-    public List<RestaurantSearchResponse> searchByKeyword(RestaurantByKeywordRequest request) {
-        List<Restaurant> restaurants = loadRestaurantPort.findByNameOrReviewContent(request.keyword());
+    public List<RestaurantSearchResponse> searchByKeyword(RestaurantByKeywordQuery query) {
+        List<Restaurant> restaurants = loadRestaurantPort.findByNameOrReviewContent(query.keyword());
         return restaurants.stream()
                 .map(RestaurantSearchResponse::from).toList();
     }
 
     @Override
-    public List<RestaurantSearchResponse> filterRestaurants(RestaurantCategoryParam param) {
-        List<Restaurant> restaurants = loadRestaurantPort.filterByCategory(param.categories());
+    public List<RestaurantSearchResponse> filterRestaurants(RestaurantCategoryQuery query) {
+        List<Restaurant> restaurants = loadRestaurantPort.filterByCategory(query.categories());
         return restaurants.stream()
                 .map(RestaurantSearchResponse::from).toList();
     }

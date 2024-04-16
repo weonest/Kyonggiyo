@@ -1,9 +1,9 @@
 package kyonggiyo.application.port.in.image;
 
-import kyonggiyo.adapter.in.web.image.dto.ImageDeleteRequest;
+import kyonggiyo.application.port.in.image.dto.ImageDeleteCommand;
 
 public interface DeleteImageUseCase {
 
-    void deleteById(ImageDeleteRequest request);
+    void deleteById(ImageDeleteCommand command);
 
 }

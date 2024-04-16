@@ -8,12 +8,12 @@ import kyonggiyo.application.port.in.restaurant.LoadRestaurantUseCase;
 import kyonggiyo.application.port.out.image.LoadImagePort;
 import kyonggiyo.application.port.out.restaurant.LoadRestaurantPort;
 import kyonggiyo.application.service.ServiceTest;
-import kyonggiyo.application.service.restaurant.dto.RestaurantCategoryParam;
+import kyonggiyo.application.port.in.restaurant.dto.RestaurantCategoryQuery;
 import kyonggiyo.domain.image.Image;
 import kyonggiyo.domain.image.ImageType;
 import kyonggiyo.domain.restaurant.Restaurant;
 import kyonggiyo.domain.restaurant.RestaurantCategory;
-import kyonggiyo.domain.restaurant.Review;
+import kyonggiyo.domain.review.Review;
 import kyonggiyo.fixture.RestaurantFixtures;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
@@ -111,7 +111,7 @@ class RestaurantQueryServiceTest extends ServiceTest {
         given(loadRestaurantPort.filterByCategory(categories)).willReturn(restaurants);
 
         // when
-        List<RestaurantSearchResponse> result = loadRestaurantUseCase.filterRestaurants(new RestaurantCategoryParam(categories));
+        List<RestaurantSearchResponse> result = loadRestaurantUseCase.filterRestaurants(new RestaurantCategoryQuery(categories));
 
         // then
         assertThat(result.size()).isEqualTo(koreanSize + japaneseSize);

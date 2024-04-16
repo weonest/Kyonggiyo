@@ -1,7 +1,7 @@
 package kyonggiyo.fixture;
 
 import kyonggiyo.domain.restaurant.Restaurant;
-import kyonggiyo.domain.restaurant.Review;
+import kyonggiyo.domain.review.Review;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.time.LocalDateTime;

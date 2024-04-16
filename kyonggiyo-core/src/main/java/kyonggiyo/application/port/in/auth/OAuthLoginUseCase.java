@@ -1,6 +1,6 @@
 package kyonggiyo.application.port.in.auth;
 
-import kyonggiyo.adapter.in.web.auth.dto.LogInResponse;
+import kyonggiyo.application.port.in.auth.dto.LogInResponse;
 import kyonggiyo.domain.auth.Platform;
 
 public interface OAuthLoginUseCase {

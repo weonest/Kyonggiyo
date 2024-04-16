@@ -1,25 +1,25 @@
 package kyonggiyo.application.service.auth;
 
 import jakarta.servlet.http.HttpServletResponse;
-import kyonggiyo.adapter.in.web.auth.dto.TokenResponse;
+import kyonggiyo.application.port.in.auth.dto.AuthInfo;
+import kyonggiyo.application.port.in.auth.dto.TokenResponse;
 import kyonggiyo.application.port.out.auth.DeleteRefreshTokenPort;
 import kyonggiyo.application.port.out.auth.LoadRefreshTokenPort;
 import kyonggiyo.application.port.out.auth.SaveRefreshTokenPort;
 import kyonggiyo.domain.auth.AccessToken;
 import kyonggiyo.domain.auth.RefreshToken;
 import kyonggiyo.domain.auth.TokenManager;
-import kyonggiyo.domain.auth.exception.ExpiredTokenException;
 import kyonggiyo.domain.auth.exception.TokenErrorCode;
 import kyonggiyo.domain.user.Role;
 import kyonggiyo.domain.user.User;
-import kyonggiyo.global.auth.AuthInfo;
-import kyonggiyo.global.auth.UserInfo;
+import kyonggiyo.global.exception.AuthenticationException;
 import kyonggiyo.global.util.CookieUtils;
 import lombok.RequiredArgsConstructor;
-import org.apache.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -46,8 +46,8 @@ public class TokenService {
     }
 
     @Transactional
-    public void deleteRefreshToken(UserInfo userInfo) {
-        deleteRefreshTokenPort.deleteByUserId(userInfo.userId());
+    public void deleteRefreshTokenByUserId(Long userId) {
+        deleteRefreshTokenPort.deleteByUserId(userId);
     }
 
     public void validate(String token) {
@@ -59,9 +59,12 @@ public class TokenService {
     }
 
     @Transactional
-    public TokenResponse reissueToken(HttpServletResponse httpServletResponse, String refreshToken) {
-        RefreshToken retrivedRefreshToken = loadRefreshTokenPort.findByValue(refreshToken)
-                .orElseThrow(() -> new ExpiredTokenException(TokenErrorCode.EXPIRED_TOKEN_EXCEPTION));
+    public TokenResponse reissueToken(Long id, String refreshToken) {
+        RefreshToken retrivedRefreshToken = loadRefreshTokenPort.getByUserId(id);
+
+        if (!Objects.equals(refreshToken, retrivedRefreshToken.getValue())){
+            throw new AuthenticationException(TokenErrorCode.INVALID_TOKEN_EXCEPTION);
+        }
 
         Long userId = retrivedRefreshToken.getUserId();
         Role userRole = retrivedRefreshToken.getRole();

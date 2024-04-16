@@ -1,11 +1,11 @@
 package kyonggiyo.application.port.in.restaurant;
 
 
-import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantByKeywordRequest;
-import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantMarkerResponse;
-import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantResponse;
-import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantSearchResponse;
-import kyonggiyo.application.service.restaurant.dto.RestaurantCategoryParam;
+import kyonggiyo.application.port.in.restaurant.dto.RestaurantByKeywordQuery;
+import kyonggiyo.application.port.in.restaurant.dto.RestaurantCategoryQuery;
+import kyonggiyo.application.port.in.restaurant.dto.RestaurantMarkerResponse;
+import kyonggiyo.application.port.in.restaurant.dto.RestaurantResponse;
+import kyonggiyo.application.port.in.restaurant.dto.RestaurantSearchResponse;
 
 import java.util.List;
 
@@ -15,8 +15,8 @@ public interface LoadRestaurantUseCase {
 
     List<RestaurantMarkerResponse> getAllRestaurantsForMarker();
 
-    List<RestaurantSearchResponse> searchByKeyword(RestaurantByKeywordRequest request);
+    List<RestaurantSearchResponse> searchByKeyword(RestaurantByKeywordQuery query);
 
-    List<RestaurantSearchResponse> filterRestaurants(RestaurantCategoryParam param);
+    List<RestaurantSearchResponse> filterRestaurants(RestaurantCategoryQuery param);
 
 }

@@ -1,9 +1,9 @@
 package kyonggiyo.application.service.auth;
 
-import kyonggiyo.adapter.in.web.auth.dto.LogInResponse;
-import kyonggiyo.adapter.in.web.auth.dto.TokenResponse;
 import kyonggiyo.application.port.in.auth.OAuthLoginUseCase;
 import kyonggiyo.application.port.in.auth.OAuthLogoutUseCase;
+import kyonggiyo.application.port.in.auth.dto.LogInResponse;
+import kyonggiyo.application.port.in.auth.dto.TokenResponse;
 import kyonggiyo.domain.auth.Account;
 import kyonggiyo.domain.auth.Platform;
 import kyonggiyo.global.auth.UserInfo;
@@ -36,8 +36,8 @@ public class OAuthFacadeService implements OAuthLoginUseCase, OAuthLogoutUseCase
 
     @Override
     @Transactional
-    public void logout(UserInfo userInfo) {
-        tokenService.deleteRefreshToken(userInfo);
+    public void logout(Long userId) {
+        tokenService.deleteRefreshTokenByUserId(userId);
     }
 
 }

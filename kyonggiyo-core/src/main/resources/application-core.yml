@@ -1,0 +1,77 @@
+spring:
+  config:
+    pro
+  datasource:
+    url: ${DATASOURCE_URL}
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: 6379
+
+springdoc:
+  swagger-ui:
+    urls:
+      - name: "Kyonggiyo API"
+        url: api.json
+    path: swagger
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics
+
+oauth:
+  kakao:
+    response-type: ${KAKAO_RESPONSE_TYPE}
+    client-id: ${KAKAO_CLIENT_ID}
+    url:
+      auth-url: ${KAKAO_AUTH_URL}
+      api-url: ${KAKAO_API_URL}
+      redirect-url: ${KAKAO_REDIRECT_URL}
+
+  naver:
+    response-type: ${NAVER_RESPONSE_TYPE}
+    client-id: ${NAVER_CLIENT_ID}
+    client-secret: ${NAVER_CLIENT_SECRET}
+    state: ${NAVER_STATE}
+    url:
+      auth-url: ${NAVER_AUTH_URL}
+      api-url: ${NAVER_API_URL}
+      redirect-url: ${NAVER_REDIRECT_URL}
+
+jwt:
+  claim-id: ${CLAIM_ID}
+  claim-role: ${CLAIM_ROLE}
+  secret-key: ${SECRET_KEY}
+  access-token-expire-time: ${ACCESS_TOKEN_EXPIRE_TIME}
+  refresh-token-expire-time: ${REFRESH_TOKEN_EXPIRE_TIME}
+
+cloud:
+  aws:
+    region: ap-northeast-2
+    credentials:
+       access-key: ${AWS_ACCESS_KEY}
+       secret-key: ${AWS_SECRET_KEY}
+    s3:
+      bucket-name: ${S3_BUCKET_NAME}
+
+web-application: true
+
+logging:
+  level:
+    org:
+      springframework:
+        jdbc: debug

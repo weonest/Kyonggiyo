@@ -1,9 +1,9 @@
 package kyonggiyo.application.port.in.candidate;
 
-import kyonggiyo.adapter.in.web.candidate.dto.CandidateUpdateRequest;
+import kyonggiyo.application.port.in.candidate.dto.CandidateUpdateCommand;
 
 public interface UpdateCandidateUseCase {
 
-    void updateCandidate(Long candidateId, CandidateUpdateRequest request);
+    void updateCandidate(Long candidateId, CandidateUpdateCommand command);
 
 }

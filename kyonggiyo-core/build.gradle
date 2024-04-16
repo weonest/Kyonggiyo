@@ -1,23 +1,18 @@
 jar {
-    enabled = false
+    enabled = true
 }
 
 bootJar{
-    enabled = true
+    enabled = false
 }
 
 dependencies {
     // Spring
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'org.springframework.boot:spring-boot-starter-actuator:3.2.2'
+    api 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'com.fasterxml.jackson.module:jackson-module-jakarta-xmlbind-annotations'
 
     // IdGenerator
     implementation 'com.github.f4b6a3:tsid-creator:5.2.4'
-
-    // OPEN FEIGN
-    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 
     // JWT
     implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
@@ -26,16 +21,4 @@ dependencies {
 
     // JSON
     implementation 'org.json:json:20230618'
-
-    // DB
-    runtimeOnly 'com.h2database:h2'
-    runtimeOnly 'com.mysql:mysql-connector-j'
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-
-    // AWS CloudWatch
-    implementation "ca.pjer:logback-awslogs-appender:1.6.0"
-
-    // AWS S3
-    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
-    testImplementation 'io.findify:s3mock_2.13:0.2.6'
 }

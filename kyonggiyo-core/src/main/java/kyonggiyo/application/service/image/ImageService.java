@@ -1,9 +1,9 @@
 package kyonggiyo.application.service.image;
 
-import kyonggiyo.adapter.in.web.image.dto.ImageDeleteRequest;
-import kyonggiyo.adapter.out.client.image.ImageManager;
 import kyonggiyo.application.port.in.image.DeleteImageUseCase;
+import kyonggiyo.application.port.in.image.dto.ImageDeleteCommand;
 import kyonggiyo.application.port.out.image.DeleteImagePort;
+import kyonggiyo.application.port.out.image.ImageManager;
 import kyonggiyo.application.port.out.image.LoadImagePort;
 import kyonggiyo.application.port.out.image.SaveImagePort;
 import kyonggiyo.domain.image.Image;
@@ -36,9 +36,9 @@ public class ImageService implements DeleteImageUseCase {
 
     @Override
     @Transactional
-    public void deleteById(ImageDeleteRequest request) {
-        deleteImagePort.deleteById(request.id());
-        imageManager.deleteImage(request.key());
+    public void deleteById(ImageDeleteCommand command) {
+        deleteImagePort.deleteById(command.id());
+        imageManager.deleteImage(command.key());
     }
 
     @Transactional

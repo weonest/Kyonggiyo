@@ -1,11 +1,11 @@
 package kyonggiyo.application.service.candidate;
 
-import kyonggiyo.adapter.in.web.candidate.dto.CandidateCreateRequest;
-import kyonggiyo.adapter.in.web.candidate.dto.CandidateUpdateRequest;
 import kyonggiyo.application.port.in.candidate.AcceptCandidateUseCase;
 import kyonggiyo.application.port.in.candidate.CreateCandidateUseCase;
 import kyonggiyo.application.port.in.candidate.DeleteCandidateUseCase;
 import kyonggiyo.application.port.in.candidate.UpdateCandidateUseCase;
+import kyonggiyo.application.port.in.candidate.dto.CandidateCreateCommand;
+import kyonggiyo.application.port.in.candidate.dto.CandidateUpdateCommand;
 import kyonggiyo.application.port.out.candidate.DeleteCandidatePort;
 import kyonggiyo.application.port.out.candidate.LoadCandidatePort;
 import kyonggiyo.application.port.out.candidate.SaveCandidatePort;
@@ -31,19 +31,19 @@ public class CandidateCommandService implements CreateCandidateUseCase, AcceptCa
     private final DeleteCandidatePort deleteCandidatePort;
 
     @Override
-    public void createCandidate(UserInfo userInfo, CandidateCreateRequest request) {
-        Candidate candidate = request.toEntity(userInfo.userId());
+    public void createCandidate(UserInfo userInfo, CandidateCreateCommand command) {
+        Candidate candidate = command.toEntity(userInfo.userId());
         saveCandidatePort.save(candidate);
     }
 
     @Override
-    public void updateCandidate(Long candidateId, CandidateUpdateRequest request) {
+    public void updateCandidate(Long candidateId, CandidateUpdateCommand command) {
         Candidate candidate = loadCandidatePort.getById(candidateId);
-        candidate.updateName(request.name());
-        candidate.updateCategory(request.category());
-        candidate.updateContact(request.contact());
-        candidate.updateAddress(request.address(), request.lat(), request.lng());
-        candidate.updateReason(request.reason());
+        candidate.updateName(command.name());
+        candidate.updateCategory(command.category());
+        candidate.updateContact(command.contact());
+        candidate.updateAddress(command.address(), command.lat(), command.lng());
+        candidate.updateReason(command.reason());
     }
 
     @Override

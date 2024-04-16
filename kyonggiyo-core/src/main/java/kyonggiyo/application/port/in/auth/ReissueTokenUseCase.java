@@ -1,6 +1,7 @@
 package kyonggiyo.application.port.in.auth;
 
-import kyonggiyo.adapter.in.web.auth.dto.TokenResponse;
+
+import kyonggiyo.application.port.in.auth.dto.TokenResponse;
 
 public interface ReissueTokenUseCase {
 

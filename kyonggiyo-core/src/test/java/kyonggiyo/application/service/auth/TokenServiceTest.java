@@ -77,7 +77,7 @@ class TokenServiceTest extends ServiceTest {
         willDoNothing().given(deleteRefreshTokenPort).deleteByUserId(userInfo.userId());
 
         // when
-        tokenService.deleteRefreshToken(userInfo);
+        tokenService.deleteRefreshTokenByUserId(userInfo);
 
         // then
         verify(deleteRefreshTokenPort, atMostOnce()).deleteByUserId(userInfo.userId());

@@ -1,7 +1,7 @@
 package kyonggiyo.domain.auth;
 
+import kyonggiyo.application.port.in.auth.dto.AuthInfo;
 import kyonggiyo.domain.user.Role;
-import kyonggiyo.global.auth.AuthInfo;
 
 public interface TokenManager {
 

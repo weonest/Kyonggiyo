@@ -1,9 +1,10 @@
 package kyonggiyo.application.port.in.restaurant;
 
-import kyonggiyo.adapter.in.web.restaurant.dto.RestaurantCreateRequest;
+
+import kyonggiyo.application.port.in.restaurant.dto.RestaurantCreateCommand;
 
 public interface CreateRestaurantUseCase {
 
-    void createRestaurant(RestaurantCreateRequest request);
+    void createRestaurant(RestaurantCreateCommand command);
 
 }
