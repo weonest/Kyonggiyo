@@ -81,7 +81,7 @@ jobs:
             docker stop prod
             docker rm $(docker ps -a -q)
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_PROD_REPO }}
-            sudo docker run -d --env-file .env -p 8081:8080 --name prod ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_DEV_REPO }}
+            sudo docker run -d --env-file .env -p 8081:8080 --name prod ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_PROD_REPO }}
             sudo docker image prune -f
 
       - name: 개발환경 배포
