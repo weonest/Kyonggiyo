@@ -134,7 +134,6 @@ class CandidateControllerTest extends ControllerTest {
         List<CandidateResponse> candidateResponse = Instancio.ofList(CandidateResponse.class).create();
         SliceResponse<CandidateResponse> response = SliceResponse.of(new SliceImpl<>(candidateResponse));
 
-
         given(loadCandidateUseCase.findAllByStatus(any(UserInfo.class), eq(status), eq(page))).willReturn(response);
 
         // when

@@ -1,13 +1,9 @@
 spring:
   profiles:
-    active: local
+    active: default
     include: infra
 
----
-spring:
-  config:
-    activate:
-      on-profile: local
+web-application: true
 
 springdoc:
   swagger-ui:
@@ -22,13 +18,16 @@ management:
       exposure:
         include: health, metrics
 
-web-application: true
-
 logging:
   level:
     org:
       springframework:
         jdbc: debug
+---
+spring:
+  config:
+    activate:
+      on-profile: local
 
 ---
 spring:

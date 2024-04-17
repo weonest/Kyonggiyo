@@ -1,13 +1,16 @@
+plugins {
+    id 'com.epages.restdocs-api-spec' version '0.18.2'
+    id 'org.hidetake.swagger.generator' version '2.18.2'
+}
+
 jar {
     enabled = true
 }
 
 bootJar {
-    dependsOn(':openapi3')
+    enabled = true
+    dependsOn('copyDocs')
 }
-
-apply plugin: 'com.epages.restdocs-api-spec'
-apply plugin: 'org.hidetake.swagger.generator'
 
 ext {
     set('snippetsDir', file("build/generated-snippets"))
@@ -43,14 +46,14 @@ openapi3 {
     outputDirectory = 'build/resources/main/static/'
 }
 
-tasks.withType(GenerateSwaggerUI) {
-    dependsOn(':openapi3')
+tasks.register('copyDocs') {
+    dependsOn('openapi3')
+    delete 'src/main/resources/static/api.json'
     doLast {
-        delete 'src/main/resources/static/api.json'
         copy {
             from "build/resources/main/static/api.json"
             into "src/main/resources/static/"
         }
     }
-}
 
+}
