@@ -19,7 +19,7 @@ jobs:
 
      - name: 환경변수 파일 생성
        run: echo "test" >> .env
-       working-directory: src/main/resources
+       working-directory: kyonggiyo-api/src/main/resources
       
      - name: Gralde 캐싱
        id: gradle-cache
