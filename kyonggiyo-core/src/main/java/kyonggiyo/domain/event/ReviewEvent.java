@@ -13,30 +13,28 @@ import org.springframework.data.domain.Persistable;
 
 @Getter
 @Entity
-@Table(name = "Image_events")
+@Table(name = "review_events")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ImageEvent extends BaseEntity implements Persistable<Long> {
+public class ReviewEvent extends BaseEntity implements Persistable<Long> {
 
     @Id
     private Long id;
 
     @Embedded
-    private ImageEventPayload payload;
+    private ReviewEventPayload payload;
 
     private boolean status = false;
 
     @Builder
-    private ImageEvent(Long id,
-                       EntityType entityType,
-                       Long entityId,
-                       EventCommand reason,
-                       String imageUrls) {
+    private ReviewEvent(Long id,
+                        Long entityId,
+                        EventCommand command,
+                        String attribute) {
         this.id = id;
-        this.payload = ImageEventPayload.builder()
-                .entityType(entityType)
+        this.payload = ReviewEventPayload.builder()
                 .entityId(entityId)
-                .reason(reason)
-                .imageUrls(imageUrls)
+                .command(command)
+                .attribute(attribute)
                 .build();
     }
 

@@ -2,11 +2,9 @@ package kyonggiyo.domain.event;
 
 import jakarta.persistence.Convert;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import kyonggiyo.domain.event.util.EventCommandConverter;
 import kyonggiyo.common.exception.GlobalErrorCode;
 import kyonggiyo.common.exception.InvalidValueException;
+import kyonggiyo.domain.event.util.EventCommandConverter;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,28 +15,23 @@ import java.util.Objects;
 @Getter
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ImageEventPayload {
-
-    @Enumerated(EnumType.STRING)
-    private EntityType entityType;
+public class ReviewEventPayload {
 
     private Long entityId;
 
     @Convert(converter = EventCommandConverter.class, attributeName = "reason")
-    private EventCommand reason;
+    private EventCommand command;
 
-    private String imageUrls;
+    private String attribute;
 
     @Builder
-    private ImageEventPayload(EntityType entityType,
-                              Long entityId,
-                              EventCommand command,
-                              String imageUrls) {
+    private ReviewEventPayload(Long entityId,
+                               EventCommand command,
+                               String attribute) {
         validateEntityId(entityId);
-        this.entityType = entityType;
         this.entityId = entityId;
-        this.reason = command;
-        this.imageUrls = imageUrls;
+        this.command = command;
+        this.attribute = attribute;
     }
 
     private void validateEntityId(Long entityId) {
