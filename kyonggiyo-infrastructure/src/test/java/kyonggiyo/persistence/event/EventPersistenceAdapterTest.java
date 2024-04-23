@@ -3,7 +3,7 @@ package kyonggiyo.persistence.event;
 import kyonggiyo.persistence.AdapterTest;
 import kyonggiyo.domain.event.EntityType;
 import kyonggiyo.domain.event.Event;
-import kyonggiyo.domain.event.EventReason;
+import kyonggiyo.domain.event.EventCommand;
 import kyonggiyo.domain.event.EventType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ class EventPersistenceAdapterTest extends AdapterTest {
                 .entityType(EntityType.REVIEW)
                 .eventType(EventType.IMAGE)
                 .entityId(reviewId)
-                .reason(EventReason.REVIEW_IMAGE_CREATE)
+                .command(EventCommand.REVIEW_IMAGE_CREATE)
                 .build();
 
         // when

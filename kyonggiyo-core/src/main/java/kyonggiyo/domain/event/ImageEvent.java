@@ -29,7 +29,7 @@ public class ImageEvent extends BaseEntity implements Persistable<Long> {
     private ImageEvent(Long id,
                        EntityType entityType,
                        Long entityId,
-                       EventReason reason,
+                       EventCommand reason,
                        String imageUrls) {
         this.id = id;
         this.payload = ImageEventPayload.builder()

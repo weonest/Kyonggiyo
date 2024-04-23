@@ -4,7 +4,7 @@ import jakarta.persistence.Convert;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import kyonggiyo.domain.event.util.EventReasonConverter;
+import kyonggiyo.domain.event.util.EventCommandConverter;
 import kyonggiyo.common.exception.GlobalErrorCode;
 import kyonggiyo.common.exception.InvalidValueException;
 import lombok.AccessLevel;
@@ -27,19 +27,19 @@ public class EventPayload {
 
     private Long entityId;
 
-    @Convert(converter = EventReasonConverter.class, attributeName = "reason")
-    private EventReason reason;
+    @Convert(converter = EventCommandConverter.class, attributeName = "reason")
+    private EventCommand reason;
 
     @Builder
     private EventPayload(EventType eventType,
                          EntityType entityType,
                          Long entityId,
-                         EventReason reason) {
+                         EventCommand command) {
         validateEntityId(entityId);
         this.eventType = eventType;
         this.entityType = entityType;
         this.entityId = entityId;
-        this.reason = reason;
+        this.reason = command;
     }
 
     private void validateEntityId(Long entityId) {

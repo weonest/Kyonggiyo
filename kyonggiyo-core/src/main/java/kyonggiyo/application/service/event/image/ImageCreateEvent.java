@@ -1,7 +1,7 @@
 package kyonggiyo.application.service.event.image;
 
 import kyonggiyo.domain.event.EntityType;
-import kyonggiyo.domain.event.EventReason;
+import kyonggiyo.domain.event.EventCommand;
 import kyonggiyo.domain.event.ImageEvent;
 import kyonggiyo.domain.image.ImageType;
 
@@ -29,7 +29,7 @@ public record ImageCreateEvent(
                 .id(id)
                 .entityType(EntityType.valueOf(imageType.name().toUpperCase()))
                 .entityId(referenceId)
-                .reason(EventReason.REVIEW_IMAGE_CREATE)
+                .reason(EventCommand.REVIEW_IMAGE_CREATE)
                 .imageUrls(imageUrls)
                 .build();
     }

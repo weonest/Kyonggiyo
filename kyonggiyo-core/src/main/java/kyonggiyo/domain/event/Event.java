@@ -30,13 +30,13 @@ public class Event extends BaseEntity implements Persistable<Long> {
                   EventType eventType,
                   EntityType entityType,
                   Long entityId,
-                  EventReason reason) {
+                  EventCommand command) {
         this.id = id;
         this.payload = EventPayload.builder()
                 .eventType(eventType)
                 .entityType(entityType)
                 .entityId(entityId)
-                .reason(reason)
+                .command(command)
                 .build();
     }
 

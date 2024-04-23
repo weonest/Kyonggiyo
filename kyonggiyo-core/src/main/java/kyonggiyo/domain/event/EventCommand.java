@@ -7,20 +7,20 @@ import lombok.Getter;
 import java.util.Arrays;
 
 @Getter
-public enum EventReason {
+public enum EventCommand {
 
     REVIEW_IMAGE_CREATE("/리뷰이미지생성")
     ;
 
-    private final String reason;
+    private final String command;
 
-    EventReason(String reason) {
-        this.reason = reason;
+    EventCommand(String command) {
+        this.command = command;
     }
 
-    public static EventReason from(String reason) {
-        return Arrays.stream(EventReason.values())
-                .filter(v -> v.getReason().equals(reason))
+    public static EventCommand from(String reason) {
+        return Arrays.stream(EventCommand.values())
+                .filter(v -> v.getCommand().equals(reason))
                 .findAny()
                 .orElseThrow(() -> new InvalidValueException(GlobalErrorCode.INVALID_REQUEST_EXCEPTION));
     }
