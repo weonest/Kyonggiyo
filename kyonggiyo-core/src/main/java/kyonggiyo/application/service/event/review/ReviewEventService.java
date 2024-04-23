@@ -1,8 +1,8 @@
-package kyonggiyo.application.service.event.image;
+package kyonggiyo.application.service.event.review;
 
-import kyonggiyo.application.port.out.event.image.LoadImageEventPort;
-import kyonggiyo.application.port.out.event.image.SaveImageEventPort;
-import kyonggiyo.domain.event.ImageEvent;
+import kyonggiyo.application.port.out.event.image.LoadReviewEventPort;
+import kyonggiyo.application.port.out.event.image.SaveReviewEventPort;
+import kyonggiyo.domain.event.ReviewEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -15,19 +15,19 @@ import java.util.List;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class ImageEventService {
+public class ReviewEventService {
 
-    private final SaveImageEventPort saveImageEventPort;
-    private final LoadImageEventPort loadImageEventPort;
+    private final SaveReviewEventPort saveReviewEventPort;
+    private final LoadReviewEventPort loadReviewEventPort;
 
     @Transactional
-    public void createEvent(ImageEvent event) {
-        saveImageEventPort.save(event);
+    public void createEvent(ReviewEvent event) {
+        saveReviewEventPort.save(event);
     }
 
     @Transactional
     public void successEvent(Long id) {
-        ImageEvent event = loadImageEventPort.getById(id);
+        ReviewEvent event = loadReviewEventPort.getById(id);
         event.successEvent();
     }
 

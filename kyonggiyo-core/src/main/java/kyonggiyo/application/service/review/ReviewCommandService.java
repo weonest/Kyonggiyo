@@ -13,7 +13,7 @@ import kyonggiyo.application.port.out.restaurant.review.DeleteReviewPort;
 import kyonggiyo.application.port.out.restaurant.review.LoadReviewPort;
 import kyonggiyo.application.port.out.restaurant.review.SaveReviewPort;
 import kyonggiyo.application.port.out.user.LoadUserPort;
-import kyonggiyo.application.service.event.image.ImageCreateEvent;
+import kyonggiyo.application.service.event.review.ReviewCreateEvent;
 import kyonggiyo.application.service.image.ImageService;
 import kyonggiyo.domain.image.ImageType;
 import kyonggiyo.domain.restaurant.Restaurant;
@@ -63,8 +63,8 @@ public class ReviewCommandService implements CreateReviewUseCase, UpdateReviewUs
             return;
 
         Long eventId = TsidCreator.getTsid().toLong();
-        ImageCreateEvent imageCreateEvent = ImageCreateEvent.of(eventId, command.imageUrls(), ImageType.REVIEW, savedReview.getId());
-        eventPublisher.publishEvent(imageCreateEvent);
+        ReviewCreateEvent reviewCreateEvent = ReviewCreateEvent.of(eventId, command.imageUrls(), ImageType.REVIEW, savedReview.getId());
+        eventPublisher.publishEvent(reviewCreateEvent);
     }
     
     @Override
@@ -82,7 +82,7 @@ public class ReviewCommandService implements CreateReviewUseCase, UpdateReviewUs
             return;
 
         Long eventId = TsidCreator.getTsid().toLong();
-        ImageCreateEvent imageCreateEvent = ImageCreateEvent.of(eventId, command.imageUrls(), ImageType.REVIEW, review.getId());
+        ReviewCreateEvent imageCreateEvent = ReviewCreateEvent.of(eventId, command.imageUrls(), ImageType.REVIEW, review.getId());
         eventPublisher.publishEvent(imageCreateEvent);
     }
 
