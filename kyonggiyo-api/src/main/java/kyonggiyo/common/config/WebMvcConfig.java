@@ -1,6 +1,6 @@
 package kyonggiyo.common.config;
 
-import kyonggiyo.domain.auth.util.PlatformConverter;
+import kyonggiyo.auth.domain.util.PlatformConverter;
 import kyonggiyo.domain.candidate.util.StatusConverter;
 import kyonggiyo.auth.interceptor.AuthorizationInterceptor;
 import kyonggiyo.auth.resolver.AuthorizedArgumentResolver;

@@ -3,7 +3,7 @@ package kyonggiyo.common.util;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import kyonggiyo.application.port.in.auth.dto.TokenResponse;
+import kyonggiyo.auth.dto.TokenResponse;
 import kyonggiyo.common.exception.AuthenticationException;
 import kyonggiyo.common.exception.GlobalErrorCode;
 import org.springframework.http.HttpHeaders;

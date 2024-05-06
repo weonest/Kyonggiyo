@@ -1,6 +1,6 @@
 package kyonggiyo.fixture;
 
-import kyonggiyo.domain.auth.Account;
+import kyonggiyo.auth.domain.entity.Account;
 import org.instancio.Instancio;
 import org.instancio.Select;
 

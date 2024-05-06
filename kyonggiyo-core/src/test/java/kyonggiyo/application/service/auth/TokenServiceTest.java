@@ -1,21 +1,20 @@
 package kyonggiyo.application.service.auth;
 
-import kyonggiyo.application.port.in.auth.dto.AuthInfo;
-import kyonggiyo.application.port.in.auth.dto.TokenResponse;
-import kyonggiyo.domain.auth.TokenManager;
-import kyonggiyo.application.port.out.auth.DeleteRefreshTokenPort;
-import kyonggiyo.application.port.out.auth.LoadRefreshTokenPort;
-import kyonggiyo.application.port.out.auth.SaveRefreshTokenPort;
+import kyonggiyo.auth.domain.vo.AuthInfo;
+import kyonggiyo.auth.dto.TokenResponse;
+import kyonggiyo.auth.service.TokenManager;
+import kyonggiyo.auth.port.outbound.DeleteRefreshTokenPort;
+import kyonggiyo.auth.port.outbound.LoadRefreshTokenPort;
+import kyonggiyo.auth.port.outbound.SaveRefreshTokenPort;
 import kyonggiyo.application.service.ServiceTest;
-import kyonggiyo.domain.auth.AccessToken;
-import kyonggiyo.domain.auth.RefreshToken;
+import kyonggiyo.auth.domain.vo.AccessToken;
+import kyonggiyo.auth.domain.entity.RefreshToken;
 import kyonggiyo.domain.user.User;
 import kyonggiyo.fixture.UserFixtures;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 
 import static org.assertj.core.api.Assertions.assertThat;

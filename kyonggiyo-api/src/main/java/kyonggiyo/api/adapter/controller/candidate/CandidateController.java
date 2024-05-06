@@ -11,7 +11,7 @@ import kyonggiyo.application.port.in.candidate.UpdateCandidateUseCase;
 import kyonggiyo.domain.candidate.Status;
 import kyonggiyo.auth.Admin;
 import kyonggiyo.auth.Auth;
-import kyonggiyo.application.port.in.auth.dto.UserInfo;
+import kyonggiyo.auth.domain.vo.UserInfo;
 import kyonggiyo.common.response.SliceResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

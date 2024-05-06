@@ -1,9 +1,9 @@
 package kyonggiyo.persistence.token;
 
-import kyonggiyo.application.port.out.auth.DeleteRefreshTokenPort;
-import kyonggiyo.application.port.out.auth.LoadRefreshTokenPort;
-import kyonggiyo.application.port.out.auth.SaveRefreshTokenPort;
-import kyonggiyo.domain.auth.RefreshToken;
+import kyonggiyo.auth.port.outbound.DeleteRefreshTokenPort;
+import kyonggiyo.auth.port.outbound.LoadRefreshTokenPort;
+import kyonggiyo.auth.port.outbound.SaveRefreshTokenPort;
+import kyonggiyo.auth.domain.entity.RefreshToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

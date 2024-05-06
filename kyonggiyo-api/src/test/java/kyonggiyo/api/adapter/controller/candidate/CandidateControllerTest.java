@@ -6,7 +6,7 @@ import kyonggiyo.api.adapter.controller.candidate.dto.CandidateCreateRequest;
 import kyonggiyo.api.adapter.controller.candidate.dto.CandidateUpdateRequest;
 import kyonggiyo.application.port.in.candidate.dto.CandidateResponse;
 import kyonggiyo.domain.candidate.Status;
-import kyonggiyo.application.port.in.auth.dto.UserInfo;
+import kyonggiyo.auth.domain.vo.UserInfo;
 import kyonggiyo.common.response.SliceResponse;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;

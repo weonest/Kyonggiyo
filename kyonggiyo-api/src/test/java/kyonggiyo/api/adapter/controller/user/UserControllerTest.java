@@ -5,7 +5,7 @@ import kyonggiyo.api.adapter.controller.ControllerTest;
 import kyonggiyo.api.adapter.controller.user.dto.UserCreateRequest;
 import kyonggiyo.api.adapter.controller.user.dto.ValidateNicknameRequest;
 import kyonggiyo.api.adapter.controller.user.dto.ValidateNicknameResponse;
-import kyonggiyo.domain.auth.Platform;
+import kyonggiyo.auth.domain.vo.Platform;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;

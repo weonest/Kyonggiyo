@@ -1,6 +1,6 @@
 package kyonggiyo.auth.resolver;
 
-import kyonggiyo.application.port.in.auth.dto.UserInfo;
+import kyonggiyo.auth.domain.vo.UserInfo;
 import kyonggiyo.auth.AuthContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;

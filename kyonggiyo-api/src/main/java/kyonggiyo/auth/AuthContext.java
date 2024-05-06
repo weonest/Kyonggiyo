@@ -1,6 +1,6 @@
 package kyonggiyo.auth;
 
-import kyonggiyo.application.port.in.auth.dto.AuthInfo;
+import kyonggiyo.auth.domain.vo.AuthInfo;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;

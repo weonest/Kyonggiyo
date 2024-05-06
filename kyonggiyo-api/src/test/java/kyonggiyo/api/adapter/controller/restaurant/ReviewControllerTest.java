@@ -4,7 +4,7 @@ import com.epages.restdocs.apispec.Schema;
 import kyonggiyo.api.adapter.controller.ControllerTest;
 import kyonggiyo.api.adapter.controller.review.dto.ReviewCreateRequest;
 import kyonggiyo.api.adapter.controller.review.dto.ReviewUpdateRequest;
-import kyonggiyo.application.port.in.auth.dto.UserInfo;
+import kyonggiyo.auth.domain.vo.UserInfo;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;

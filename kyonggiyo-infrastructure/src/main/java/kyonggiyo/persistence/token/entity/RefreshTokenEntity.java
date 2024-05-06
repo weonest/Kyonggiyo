@@ -1,6 +1,6 @@
 package kyonggiyo.persistence.token.entity;
 
-import kyonggiyo.domain.auth.RefreshToken;
+import kyonggiyo.auth.domain.entity.RefreshToken;
 import kyonggiyo.domain.user.Role;
 import lombok.Builder;
 import lombok.Getter;

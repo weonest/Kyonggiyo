@@ -1,6 +1,6 @@
 package kyonggiyo.api.adapter.controller.advice;
 
-import kyonggiyo.domain.auth.exception.ExpiredTokenException;
+import kyonggiyo.auth.domain.exception.ExpiredTokenException;
 import kyonggiyo.domain.image.exception.ImageException;
 import kyonggiyo.common.exception.AuthenticationException;
 import kyonggiyo.common.exception.ForbiddenException;

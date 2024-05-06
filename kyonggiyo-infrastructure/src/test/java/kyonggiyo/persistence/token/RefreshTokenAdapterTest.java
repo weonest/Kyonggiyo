@@ -1,6 +1,6 @@
 package kyonggiyo.persistence.token;
 
-import kyonggiyo.domain.auth.RefreshToken;
+import kyonggiyo.auth.domain.entity.RefreshToken;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

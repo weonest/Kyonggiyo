@@ -2,10 +2,10 @@ package kyonggiyo.application.service.user;
 
 import kyonggiyo.application.port.in.user.CreateUserUseCase;
 import kyonggiyo.application.port.in.user.dto.UserCreateCommand;
-import kyonggiyo.application.port.out.auth.LoadAccountPort;
+import kyonggiyo.auth.port.outbound.LoadAccountPort;
 import kyonggiyo.application.port.out.user.SaveUserPort;
-import kyonggiyo.domain.auth.Account;
-import kyonggiyo.domain.auth.Platform;
+import kyonggiyo.auth.domain.entity.Account;
+import kyonggiyo.auth.domain.vo.Platform;
 import kyonggiyo.domain.user.User;
 import kyonggiyo.common.exception.GlobalErrorCode;
 import kyonggiyo.common.exception.NotFoundException;

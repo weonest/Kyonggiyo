@@ -1,6 +1,6 @@
 package kyonggiyo.auth.provider;
 
-import kyonggiyo.domain.auth.Platform;
+import kyonggiyo.auth.domain.vo.Platform;
 import lombok.Getter;
 
 import java.net.URI;

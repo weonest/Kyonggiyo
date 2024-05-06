@@ -1,7 +1,7 @@
 package kyonggiyo.persistence.account;
 
-import kyonggiyo.domain.auth.Account;
-import kyonggiyo.domain.auth.Platform;
+import kyonggiyo.auth.domain.entity.Account;
+import kyonggiyo.auth.domain.vo.Platform;
 
 import java.util.Optional;
 

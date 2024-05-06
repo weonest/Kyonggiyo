@@ -1,7 +1,7 @@
 package kyonggiyo.auth.provider;
 
 import kyonggiyo.common.property.KakaoOAuthProperties;
-import kyonggiyo.domain.auth.Platform;
+import kyonggiyo.auth.domain.vo.Platform;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 

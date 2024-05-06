@@ -1,8 +1,8 @@
 package kyonggiyo.application.service.auth;
 
-import kyonggiyo.application.port.out.auth.SaveAccountPort;
+import kyonggiyo.auth.port.outbound.SaveAccountPort;
 import kyonggiyo.application.service.ServiceTest;
-import kyonggiyo.domain.auth.Account;
+import kyonggiyo.auth.domain.entity.Account;
 import kyonggiyo.fixture.AccountFixtures;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

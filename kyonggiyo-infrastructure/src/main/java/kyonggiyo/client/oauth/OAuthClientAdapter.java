@@ -1,8 +1,8 @@
 package kyonggiyo.client.oauth;
 
-import kyonggiyo.application.port.out.auth.LoadOAuthTokenPort;
-import kyonggiyo.application.port.out.auth.LoadOAuthUserInfoPort;
-import kyonggiyo.domain.auth.Platform;
+import kyonggiyo.auth.port.outbound.LoadOAuthTokenPort;
+import kyonggiyo.auth.port.outbound.LoadOAuthUserInfoPort;
+import kyonggiyo.auth.domain.vo.Platform;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;

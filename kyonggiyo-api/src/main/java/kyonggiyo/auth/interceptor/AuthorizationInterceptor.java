@@ -2,7 +2,7 @@ package kyonggiyo.auth.interceptor;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import kyonggiyo.application.port.in.auth.dto.UserInfo;
+import kyonggiyo.auth.domain.vo.UserInfo;
 import kyonggiyo.auth.Admin;
 import kyonggiyo.auth.Auth;
 import kyonggiyo.auth.AuthContext;

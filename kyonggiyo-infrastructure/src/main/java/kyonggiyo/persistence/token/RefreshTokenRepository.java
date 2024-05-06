@@ -1,6 +1,6 @@
 package kyonggiyo.persistence.token;
 
-import kyonggiyo.domain.auth.RefreshToken;
+import kyonggiyo.auth.domain.entity.RefreshToken;
 
 public interface RefreshTokenRepository {
 

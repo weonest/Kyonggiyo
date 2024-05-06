@@ -1,7 +1,7 @@
 package kyonggiyo.application.service.restaurant;
 
 import jakarta.persistence.EntityManager;
-import kyonggiyo.application.port.in.auth.dto.UserInfo;
+import kyonggiyo.auth.domain.vo.UserInfo;
 import kyonggiyo.application.port.in.review.dto.ReviewCreateCommand;
 import kyonggiyo.application.port.in.review.dto.ReviewUpdateCommand;
 import kyonggiyo.application.port.out.restaurant.LoadRestaurantPort;

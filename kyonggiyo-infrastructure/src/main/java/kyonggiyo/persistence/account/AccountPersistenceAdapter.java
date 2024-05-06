@@ -1,9 +1,9 @@
 package kyonggiyo.persistence.account;
 
-import kyonggiyo.application.port.out.auth.LoadAccountPort;
-import kyonggiyo.application.port.out.auth.SaveAccountPort;
-import kyonggiyo.domain.auth.Account;
-import kyonggiyo.domain.auth.Platform;
+import kyonggiyo.auth.port.outbound.LoadAccountPort;
+import kyonggiyo.auth.port.outbound.SaveAccountPort;
+import kyonggiyo.auth.domain.entity.Account;
+import kyonggiyo.auth.domain.vo.Platform;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

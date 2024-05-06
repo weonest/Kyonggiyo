@@ -1,6 +1,6 @@
 package kyonggiyo.persistence.review;
 
-import kyonggiyo.application.port.in.auth.dto.UserInfo;
+import kyonggiyo.auth.domain.vo.UserInfo;
 import kyonggiyo.application.port.in.review.dto.ReviewCreateCommand;
 import kyonggiyo.application.service.review.ReviewCommandService;
 import kyonggiyo.domain.restaurant.Restaurant;

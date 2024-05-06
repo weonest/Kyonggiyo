@@ -1,8 +1,8 @@
 package kyonggiyo.application.service.auth;
 
-import kyonggiyo.application.port.out.auth.LoadAccountPort;
-import kyonggiyo.domain.auth.Account;
-import kyonggiyo.domain.auth.Platform;
+import kyonggiyo.auth.port.outbound.LoadAccountPort;
+import kyonggiyo.auth.domain.entity.Account;
+import kyonggiyo.auth.domain.vo.Platform;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

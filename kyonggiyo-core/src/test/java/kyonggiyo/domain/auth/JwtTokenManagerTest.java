@@ -1,6 +1,9 @@
 package kyonggiyo.domain.auth;
 
-import kyonggiyo.application.port.in.auth.dto.AuthInfo;
+import kyonggiyo.auth.domain.vo.AuthInfo;
+import kyonggiyo.auth.domain.vo.AccessToken;
+import kyonggiyo.auth.service.JwtTokenManager;
+import kyonggiyo.auth.domain.entity.RefreshToken;
 import kyonggiyo.common.property.JwtProperties;
 import kyonggiyo.domain.user.Role;
 import org.junit.jupiter.api.DisplayNameGeneration;

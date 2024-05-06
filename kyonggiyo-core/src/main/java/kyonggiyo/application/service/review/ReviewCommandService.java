@@ -2,7 +2,7 @@ package kyonggiyo.application.service.review;
 
 import com.github.f4b6a3.tsid.TsidCreator;
 import jakarta.persistence.EntityManager;
-import kyonggiyo.application.port.in.auth.dto.UserInfo;
+import kyonggiyo.auth.domain.vo.UserInfo;
 import kyonggiyo.application.port.in.review.CreateReviewUseCase;
 import kyonggiyo.application.port.in.review.DeleteReviewUseCase;
 import kyonggiyo.application.port.in.review.UpdateReviewUseCase;

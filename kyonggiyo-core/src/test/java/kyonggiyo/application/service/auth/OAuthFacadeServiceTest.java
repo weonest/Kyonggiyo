@@ -1,11 +1,11 @@
 package kyonggiyo.application.service.auth;
 
 
-import kyonggiyo.application.port.in.auth.dto.LogInResponse;
-import kyonggiyo.application.port.in.auth.dto.TokenResponse;
+import kyonggiyo.auth.dto.LogInResponse;
+import kyonggiyo.auth.dto.TokenResponse;
 import kyonggiyo.application.service.ServiceTest;
-import kyonggiyo.domain.auth.Account;
-import kyonggiyo.domain.auth.Platform;
+import kyonggiyo.auth.domain.entity.Account;
+import kyonggiyo.auth.domain.vo.Platform;
 import kyonggiyo.domain.user.User;
 import kyonggiyo.fixture.UserFixtures;
 import org.instancio.Instancio;

@@ -1,11 +1,11 @@
 package kyonggiyo.application.service.auth;
 
-import kyonggiyo.application.port.in.auth.OAuthLoginUseCase;
-import kyonggiyo.application.port.in.auth.OAuthLogoutUseCase;
-import kyonggiyo.application.port.in.auth.dto.LogInResponse;
-import kyonggiyo.application.port.in.auth.dto.TokenResponse;
-import kyonggiyo.domain.auth.Account;
-import kyonggiyo.domain.auth.Platform;
+import kyonggiyo.auth.port.inbound.OAuthLoginUseCase;
+import kyonggiyo.auth.port.inbound.OAuthLogoutUseCase;
+import kyonggiyo.auth.dto.LogInResponse;
+import kyonggiyo.auth.dto.TokenResponse;
+import kyonggiyo.auth.domain.entity.Account;
+import kyonggiyo.auth.domain.vo.Platform;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

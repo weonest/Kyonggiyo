@@ -1,6 +1,6 @@
 package kyonggiyo.application.port.in.candidate;
 
-import kyonggiyo.application.port.in.auth.dto.UserInfo;
+import kyonggiyo.auth.domain.vo.UserInfo;
 import kyonggiyo.application.port.in.candidate.dto.CandidateResponse;
 import kyonggiyo.domain.candidate.Status;
 import kyonggiyo.common.response.SliceResponse;
