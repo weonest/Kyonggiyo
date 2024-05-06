@@ -1,6 +1,6 @@
 package kyonggiyo.auth.domain.entity;
 
-import kyonggiyo.domain.user.Role;
+import kyonggiyo.user.domain.vo.Role;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

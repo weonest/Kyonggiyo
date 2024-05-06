@@ -1,4 +1,4 @@
-package kyonggiyo.application.service.auth;
+package kyonggiyo.auth.service;
 
 import kyonggiyo.auth.port.outbound.SaveAccountPort;
 import kyonggiyo.auth.domain.entity.Account;

@@ -1,7 +1,7 @@
 package kyonggiyo.fixture;
 
-import kyonggiyo.domain.user.Role;
-import kyonggiyo.domain.user.User;
+import kyonggiyo.user.domain.vo.Role;
+import kyonggiyo.user.domain.entity.User;
 import org.instancio.Instancio;
 
 import static org.instancio.Select.field;

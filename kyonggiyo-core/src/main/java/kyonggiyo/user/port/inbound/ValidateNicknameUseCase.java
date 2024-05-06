@@ -1,4 +1,4 @@
-package kyonggiyo.application.port.in.user;
+package kyonggiyo.user.port.inbound;
 
 public interface ValidateNicknameUseCase {
 

@@ -1,4 +1,4 @@
-package kyonggiyo.application.port.in.user.dto;
+package kyonggiyo.user.dto;
 
 public record UserResponse (
         Long id,

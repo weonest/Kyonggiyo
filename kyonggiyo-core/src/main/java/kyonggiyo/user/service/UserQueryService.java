@@ -1,7 +1,7 @@
-package kyonggiyo.application.service.user;
+package kyonggiyo.user.service;
 
-import kyonggiyo.application.port.in.user.ValidateNicknameUseCase;
-import kyonggiyo.application.port.out.user.ExistUserPort;
+import kyonggiyo.user.port.inbound.ValidateNicknameUseCase;
+import kyonggiyo.user.port.outbound.ExistUserPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

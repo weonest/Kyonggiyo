@@ -1,6 +1,6 @@
 package kyonggiyo.persistence.user;
 
-import kyonggiyo.domain.user.User;
+import kyonggiyo.user.domain.entity.User;
 import kyonggiyo.common.exception.GlobalErrorCode;
 import kyonggiyo.common.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;

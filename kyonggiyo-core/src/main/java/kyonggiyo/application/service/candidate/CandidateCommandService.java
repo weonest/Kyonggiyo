@@ -12,7 +12,7 @@ import kyonggiyo.application.port.out.candidate.LoadCandidatePort;
 import kyonggiyo.application.port.out.candidate.SaveCandidatePort;
 import kyonggiyo.application.port.out.restaurant.SaveRestaurantPort;
 import kyonggiyo.domain.candidate.Candidate;
-import kyonggiyo.domain.user.Role;
+import kyonggiyo.user.domain.vo.Role;
 import kyonggiyo.common.exception.ForbiddenException;
 import kyonggiyo.common.exception.GlobalErrorCode;
 import lombok.RequiredArgsConstructor;

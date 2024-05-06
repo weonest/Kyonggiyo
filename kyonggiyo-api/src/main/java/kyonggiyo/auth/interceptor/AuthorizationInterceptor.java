@@ -6,7 +6,7 @@ import kyonggiyo.auth.domain.vo.UserInfo;
 import kyonggiyo.auth.Admin;
 import kyonggiyo.auth.Auth;
 import kyonggiyo.auth.AuthContext;
-import kyonggiyo.domain.user.Role;
+import kyonggiyo.user.domain.vo.Role;
 import kyonggiyo.common.exception.ForbiddenException;
 import kyonggiyo.common.exception.GlobalErrorCode;
 import lombok.RequiredArgsConstructor;

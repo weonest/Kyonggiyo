@@ -1,4 +1,4 @@
-package kyonggiyo.application.service.auth;
+package kyonggiyo.auth.service;
 
 import kyonggiyo.auth.domain.vo.AuthInfo;
 import kyonggiyo.auth.dto.TokenResponse;
@@ -9,8 +9,8 @@ import kyonggiyo.auth.domain.vo.AccessToken;
 import kyonggiyo.auth.domain.entity.RefreshToken;
 import kyonggiyo.auth.service.TokenManager;
 import kyonggiyo.auth.domain.exception.TokenErrorCode;
-import kyonggiyo.domain.user.Role;
-import kyonggiyo.domain.user.User;
+import kyonggiyo.user.domain.vo.Role;
+import kyonggiyo.user.domain.entity.User;
 import kyonggiyo.common.exception.AuthenticationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

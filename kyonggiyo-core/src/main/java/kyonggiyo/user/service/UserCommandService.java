@@ -1,12 +1,12 @@
-package kyonggiyo.application.service.user;
+package kyonggiyo.user.service;
 
-import kyonggiyo.application.port.in.user.CreateUserUseCase;
-import kyonggiyo.application.port.in.user.dto.UserCreateCommand;
+import kyonggiyo.user.port.inbound.CreateUserUseCase;
+import kyonggiyo.user.dto.UserCreateCommand;
 import kyonggiyo.auth.port.outbound.LoadAccountPort;
-import kyonggiyo.application.port.out.user.SaveUserPort;
+import kyonggiyo.user.port.outbound.SaveUserPort;
 import kyonggiyo.auth.domain.entity.Account;
 import kyonggiyo.auth.domain.vo.Platform;
-import kyonggiyo.domain.user.User;
+import kyonggiyo.user.domain.entity.User;
 import kyonggiyo.common.exception.GlobalErrorCode;
 import kyonggiyo.common.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;

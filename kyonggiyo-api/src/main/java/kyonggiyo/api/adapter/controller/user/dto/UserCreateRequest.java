@@ -1,6 +1,6 @@
 package kyonggiyo.api.adapter.controller.user.dto;
 
-import kyonggiyo.application.port.in.user.dto.UserCreateCommand;
+import kyonggiyo.user.dto.UserCreateCommand;
 
 public record UserCreateRequest(
         Long accountId,

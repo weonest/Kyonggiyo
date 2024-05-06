@@ -1,7 +1,7 @@
 package kyonggiyo.persistence.token.entity;
 
 import kyonggiyo.auth.domain.entity.RefreshToken;
-import kyonggiyo.domain.user.Role;
+import kyonggiyo.user.domain.vo.Role;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;

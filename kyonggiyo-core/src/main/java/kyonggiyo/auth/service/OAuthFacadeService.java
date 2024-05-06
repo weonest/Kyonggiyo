@@ -1,4 +1,4 @@
-package kyonggiyo.application.service.auth;
+package kyonggiyo.auth.service;
 
 import kyonggiyo.auth.port.inbound.OAuthLoginUseCase;
 import kyonggiyo.auth.port.inbound.OAuthLogoutUseCase;

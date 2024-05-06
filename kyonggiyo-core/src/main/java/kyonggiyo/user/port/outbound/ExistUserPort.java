@@ -1,4 +1,4 @@
-package kyonggiyo.application.port.out.user;
+package kyonggiyo.user.port.outbound;
 
 public interface ExistUserPort {
 

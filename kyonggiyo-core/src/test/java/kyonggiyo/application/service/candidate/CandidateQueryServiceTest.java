@@ -8,7 +8,7 @@ import kyonggiyo.application.service.ServiceTest;
 import kyonggiyo.common.response.SliceResponse;
 import kyonggiyo.domain.candidate.Candidate;
 import kyonggiyo.domain.candidate.Status;
-import kyonggiyo.domain.user.Role;
+import kyonggiyo.user.domain.vo.Role;
 import kyonggiyo.fixture.CandidateFixtures;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;

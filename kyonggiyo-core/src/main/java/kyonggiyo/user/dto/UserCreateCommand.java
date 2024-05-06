@@ -1,6 +1,6 @@
-package kyonggiyo.application.port.in.user.dto;
+package kyonggiyo.user.dto;
 
-import kyonggiyo.domain.user.User;
+import kyonggiyo.user.domain.entity.User;
 
 public record UserCreateCommand(
         Long accountId,

@@ -5,7 +5,7 @@ import kyonggiyo.auth.domain.vo.AccessToken;
 import kyonggiyo.auth.service.JwtTokenManager;
 import kyonggiyo.auth.domain.entity.RefreshToken;
 import kyonggiyo.common.property.JwtProperties;
-import kyonggiyo.domain.user.Role;
+import kyonggiyo.user.domain.vo.Role;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;

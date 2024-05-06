@@ -5,7 +5,7 @@ import kyonggiyo.application.port.in.review.dto.ReviewCreateCommand;
 import kyonggiyo.application.service.review.ReviewCommandService;
 import kyonggiyo.domain.restaurant.Restaurant;
 import kyonggiyo.domain.review.Review;
-import kyonggiyo.domain.user.User;
+import kyonggiyo.user.domain.entity.User;
 import kyonggiyo.fixture.RestaurantFixtures;
 import kyonggiyo.persistence.restaurant.RestaurantJpaRepository;
 import kyonggiyo.persistence.restaurant.review.ReviewJpaRepository;

@@ -1,6 +1,6 @@
 package kyonggiyo.auth;
 
-import kyonggiyo.domain.user.Role;
+import kyonggiyo.user.domain.vo.Role;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

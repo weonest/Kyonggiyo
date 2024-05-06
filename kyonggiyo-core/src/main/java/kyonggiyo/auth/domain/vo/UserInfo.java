@@ -1,6 +1,6 @@
 package kyonggiyo.auth.domain.vo;
 
-import kyonggiyo.domain.user.Role;
+import kyonggiyo.user.domain.vo.Role;
 
 public record UserInfo(
         Long userId,

@@ -13,7 +13,7 @@ import kyonggiyo.common.property.JwtProperties;
 import kyonggiyo.auth.domain.exception.ExpiredTokenException;
 import kyonggiyo.auth.domain.exception.InvalidTokenException;
 import kyonggiyo.auth.domain.exception.TokenErrorCode;
-import kyonggiyo.domain.user.Role;
+import kyonggiyo.user.domain.vo.Role;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
