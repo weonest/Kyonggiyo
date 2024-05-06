@@ -1,7 +1,7 @@
-package kyonggiyo.application.port.in.review;
+package kyonggiyo.review.port.inbound;
 
 import kyonggiyo.auth.domain.vo.UserInfo;
-import kyonggiyo.application.port.in.review.dto.ReviewCreateCommand;
+import kyonggiyo.review.dto.ReviewCreateCommand;
 
 public interface CreateReviewUseCase {
 

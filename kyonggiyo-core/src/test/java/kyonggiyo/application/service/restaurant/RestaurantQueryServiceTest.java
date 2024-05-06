@@ -13,7 +13,7 @@ import kyonggiyo.image.domain.entity.Image;
 import kyonggiyo.image.domain.vo.ImageType;
 import kyonggiyo.domain.restaurant.Restaurant;
 import kyonggiyo.domain.restaurant.RestaurantCategory;
-import kyonggiyo.domain.review.Review;
+import kyonggiyo.review.domain.entity.Review;
 import kyonggiyo.fixture.RestaurantFixtures;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;

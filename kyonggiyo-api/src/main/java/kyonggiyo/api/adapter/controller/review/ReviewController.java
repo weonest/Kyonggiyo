@@ -2,9 +2,9 @@ package kyonggiyo.api.adapter.controller.review;
 
 import kyonggiyo.api.adapter.controller.review.dto.ReviewCreateRequest;
 import kyonggiyo.api.adapter.controller.review.dto.ReviewUpdateRequest;
-import kyonggiyo.application.port.in.review.CreateReviewUseCase;
-import kyonggiyo.application.port.in.review.DeleteReviewUseCase;
-import kyonggiyo.application.port.in.review.UpdateReviewUseCase;
+import kyonggiyo.review.port.inbound.CreateReviewUseCase;
+import kyonggiyo.review.port.inbound.DeleteReviewUseCase;
+import kyonggiyo.review.port.inbound.UpdateReviewUseCase;
 import kyonggiyo.auth.Auth;
 import kyonggiyo.auth.domain.vo.UserInfo;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package kyonggiyo.application.port.out.restaurant.review;
+package kyonggiyo.review.port.outbound;
 
 public interface DeleteReviewPort {
 

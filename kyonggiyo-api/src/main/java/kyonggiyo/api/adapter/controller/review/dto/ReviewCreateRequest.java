@@ -4,7 +4,7 @@ import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import kyonggiyo.application.port.in.review.dto.ReviewCreateCommand;
+import kyonggiyo.review.dto.ReviewCreateCommand;
 
 import java.util.List;
 

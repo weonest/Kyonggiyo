@@ -1,6 +1,6 @@
 package kyonggiyo.persistence.restaurant.review;
 
-import kyonggiyo.domain.review.Review;
+import kyonggiyo.review.domain.entity.Review;
 
 public interface ReviewRepository {
 

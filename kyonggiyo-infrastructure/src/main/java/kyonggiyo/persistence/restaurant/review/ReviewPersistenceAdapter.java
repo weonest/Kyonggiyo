@@ -1,9 +1,9 @@
 package kyonggiyo.persistence.restaurant.review;
 
-import kyonggiyo.application.port.out.restaurant.review.DeleteReviewPort;
-import kyonggiyo.application.port.out.restaurant.review.LoadReviewPort;
-import kyonggiyo.application.port.out.restaurant.review.SaveReviewPort;
-import kyonggiyo.domain.review.Review;
+import kyonggiyo.review.port.outbound.DeleteReviewPort;
+import kyonggiyo.review.port.outbound.LoadReviewPort;
+import kyonggiyo.review.port.outbound.SaveReviewPort;
+import kyonggiyo.review.domain.entity.Review;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

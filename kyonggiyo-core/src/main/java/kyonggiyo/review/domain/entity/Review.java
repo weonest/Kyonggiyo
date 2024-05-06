@@ -1,4 +1,4 @@
-package kyonggiyo.domain.review;
+package kyonggiyo.review.domain.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

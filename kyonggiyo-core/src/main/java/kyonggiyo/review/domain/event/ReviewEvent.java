@@ -1,10 +1,11 @@
-package kyonggiyo.domain.event;
+package kyonggiyo.review.domain.event;
 
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import kyonggiyo.domain.BaseEntity;
+import kyonggiyo.domain.event.EventCommand;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

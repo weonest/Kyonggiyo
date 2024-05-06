@@ -1,8 +1,8 @@
-package kyonggiyo.application.service.event.review;
+package kyonggiyo.review.event;
 
-import kyonggiyo.application.port.out.event.image.LoadReviewEventPort;
-import kyonggiyo.application.port.out.event.image.SaveReviewEventPort;
-import kyonggiyo.domain.event.ReviewEvent;
+import kyonggiyo.review.port.inbound.LoadReviewEventPort;
+import kyonggiyo.review.port.inbound.SaveReviewEventPort;
+import kyonggiyo.review.domain.event.ReviewEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
