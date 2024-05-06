@@ -1,4 +1,4 @@
-package kyonggiyo.domain.auth;
+package kyonggiyo.auth.service;
 
 import kyonggiyo.auth.domain.vo.AuthInfo;
 import kyonggiyo.auth.domain.vo.AccessToken;

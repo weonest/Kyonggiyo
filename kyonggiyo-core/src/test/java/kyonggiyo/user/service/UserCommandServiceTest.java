@@ -1,10 +1,10 @@
-package kyonggiyo.application.service.user;
+package kyonggiyo.user.service;
 
 import kyonggiyo.user.port.inbound.CreateUserUseCase;
 import kyonggiyo.user.dto.UserCreateCommand;
 import kyonggiyo.auth.port.outbound.LoadAccountPort;
 import kyonggiyo.user.port.outbound.SaveUserPort;
-import kyonggiyo.application.service.ServiceTest;
+import kyonggiyo.ServiceTest;
 import kyonggiyo.auth.domain.entity.Account;
 import kyonggiyo.auth.domain.vo.Platform;
 import kyonggiyo.user.domain.entity.User;

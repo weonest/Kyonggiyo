@@ -1,4 +1,4 @@
-package kyonggiyo.domain.restaurant;
+package kyonggiyo.restaurant.domain;
 
 import kyonggiyo.restaurant.domain.entity.Restaurant;
 import kyonggiyo.review.domain.entity.Review;

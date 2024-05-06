@@ -1,10 +1,10 @@
-package kyonggiyo.application.service.candidate;
+package kyonggiyo.candidate.service;
 
 import kyonggiyo.auth.domain.vo.UserInfo;
 import kyonggiyo.candidate.port.inbound.LoadCandidateUseCase;
 import kyonggiyo.candidate.dto.CandidateResponse;
 import kyonggiyo.candidate.port.outbound.LoadCandidatePort;
-import kyonggiyo.application.service.ServiceTest;
+import kyonggiyo.ServiceTest;
 import kyonggiyo.candidate.service.CandidateQueryService;
 import kyonggiyo.common.response.SliceResponse;
 import kyonggiyo.candidate.domain.entity.Candidate;

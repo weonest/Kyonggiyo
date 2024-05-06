@@ -1,4 +1,4 @@
-package kyonggiyo.application.service.restaurant;
+package kyonggiyo.restaurant.service;
 
 import jakarta.persistence.EntityManager;
 import kyonggiyo.auth.domain.vo.UserInfo;
@@ -9,7 +9,7 @@ import kyonggiyo.review.port.outbound.DeleteReviewPort;
 import kyonggiyo.review.port.outbound.LoadReviewPort;
 import kyonggiyo.review.port.outbound.SaveReviewPort;
 import kyonggiyo.user.port.outbound.LoadUserPort;
-import kyonggiyo.application.service.ServiceTest;
+import kyonggiyo.ServiceTest;
 import kyonggiyo.image.service.ImageService;
 import kyonggiyo.review.service.ReviewCommandService;
 import kyonggiyo.restaurant.domain.entity.Restaurant;
