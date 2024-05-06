@@ -2,7 +2,7 @@ package kyonggiyo.application.service.event.review;
 
 import kyonggiyo.domain.event.EventCommand;
 import kyonggiyo.domain.event.ReviewEvent;
-import kyonggiyo.domain.image.ImageType;
+import kyonggiyo.image.domain.vo.ImageType;
 
 import java.util.List;
 

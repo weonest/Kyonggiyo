@@ -1,6 +1,6 @@
 package kyonggiyo.application.service.event.review;
 
-import kyonggiyo.application.service.image.ImageService;
+import kyonggiyo.image.service.ImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;

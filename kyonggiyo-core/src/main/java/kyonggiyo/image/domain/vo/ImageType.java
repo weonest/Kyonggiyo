@@ -1,4 +1,4 @@
-package kyonggiyo.domain.image;
+package kyonggiyo.image.domain.vo;
 
 public enum ImageType {
 

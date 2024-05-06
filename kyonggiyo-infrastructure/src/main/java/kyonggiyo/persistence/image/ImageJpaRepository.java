@@ -1,7 +1,7 @@
 package kyonggiyo.persistence.image;
 
-import kyonggiyo.domain.image.Image;
-import kyonggiyo.domain.image.ImageType;
+import kyonggiyo.image.domain.entity.Image;
+import kyonggiyo.image.domain.vo.ImageType;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

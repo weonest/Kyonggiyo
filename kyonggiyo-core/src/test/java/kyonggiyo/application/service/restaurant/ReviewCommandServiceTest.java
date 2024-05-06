@@ -10,7 +10,7 @@ import kyonggiyo.application.port.out.restaurant.review.LoadReviewPort;
 import kyonggiyo.application.port.out.restaurant.review.SaveReviewPort;
 import kyonggiyo.user.port.outbound.LoadUserPort;
 import kyonggiyo.application.service.ServiceTest;
-import kyonggiyo.application.service.image.ImageService;
+import kyonggiyo.image.service.ImageService;
 import kyonggiyo.application.service.review.ReviewCommandService;
 import kyonggiyo.domain.restaurant.Restaurant;
 import kyonggiyo.domain.review.Review;

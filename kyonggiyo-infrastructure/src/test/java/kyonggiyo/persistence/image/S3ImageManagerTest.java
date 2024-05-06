@@ -7,7 +7,7 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import io.findify.s3mock.S3Mock;
-import kyonggiyo.application.port.out.image.ImageManager;
+import kyonggiyo.image.port.outbound.ImageManager;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayNameGeneration;

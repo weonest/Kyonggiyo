@@ -1,6 +1,6 @@
 package kyonggiyo.application.port.in.review.dto;
 
-import kyonggiyo.application.port.in.image.dto.ImageResponse;
+import kyonggiyo.image.dto.ImageResponse;
 import kyonggiyo.user.dto.UserResponse;
 import kyonggiyo.domain.review.Review;
 

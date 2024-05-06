@@ -1,4 +1,4 @@
-package kyonggiyo.domain.image.exception;
+package kyonggiyo.image.domain.exception;
 
 import kyonggiyo.common.exception.BusinessException;
 import kyonggiyo.common.exception.ErrorCode;

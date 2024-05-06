@@ -1,17 +1,17 @@
 package kyonggiyo.application.service.restaurant;
 
-import kyonggiyo.application.port.in.image.dto.ImageResponse;
+import kyonggiyo.image.dto.ImageResponse;
 import kyonggiyo.application.port.in.restaurant.LoadRestaurantUseCase;
 import kyonggiyo.application.port.in.restaurant.dto.RestaurantByKeywordQuery;
 import kyonggiyo.application.port.in.restaurant.dto.RestaurantMarkerResponse;
 import kyonggiyo.application.port.in.restaurant.dto.RestaurantResponse;
 import kyonggiyo.application.port.in.restaurant.dto.RestaurantSearchResponse;
 import kyonggiyo.application.port.in.review.dto.ReviewResponse;
-import kyonggiyo.application.port.out.image.LoadImagePort;
+import kyonggiyo.image.port.outbound.LoadImagePort;
 import kyonggiyo.application.port.out.restaurant.LoadRestaurantPort;
 import kyonggiyo.application.port.in.restaurant.dto.RestaurantCategoryQuery;
-import kyonggiyo.domain.image.Image;
-import kyonggiyo.domain.image.ImageType;
+import kyonggiyo.image.domain.entity.Image;
+import kyonggiyo.image.domain.vo.ImageType;
 import kyonggiyo.domain.restaurant.Restaurant;
 import kyonggiyo.domain.review.Review;
 import lombok.RequiredArgsConstructor;

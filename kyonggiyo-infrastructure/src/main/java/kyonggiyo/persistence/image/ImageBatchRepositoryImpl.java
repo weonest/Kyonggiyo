@@ -1,6 +1,6 @@
 package kyonggiyo.persistence.image;
 
-import kyonggiyo.domain.image.Image;
+import kyonggiyo.image.domain.entity.Image;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;

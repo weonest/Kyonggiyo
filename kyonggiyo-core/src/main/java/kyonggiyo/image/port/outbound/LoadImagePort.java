@@ -1,7 +1,7 @@
-package kyonggiyo.application.port.out.image;
+package kyonggiyo.image.port.outbound;
 
-import kyonggiyo.domain.image.Image;
-import kyonggiyo.domain.image.ImageType;
+import kyonggiyo.image.domain.entity.Image;
+import kyonggiyo.image.domain.vo.ImageType;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package kyonggiyo.domain.image;
+package kyonggiyo.image.domain.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import kyonggiyo.domain.BaseEntity;
+import kyonggiyo.image.domain.vo.ImageType;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

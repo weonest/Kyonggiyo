@@ -1,9 +1,9 @@
 package kyonggiyo.application.service.event.review;
 
-import kyonggiyo.application.service.image.ImageService;
+import kyonggiyo.image.service.ImageService;
 import kyonggiyo.domain.event.EventCommand;
 import kyonggiyo.domain.event.ReviewEvent;
-import kyonggiyo.domain.image.ImageType;
+import kyonggiyo.image.domain.vo.ImageType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

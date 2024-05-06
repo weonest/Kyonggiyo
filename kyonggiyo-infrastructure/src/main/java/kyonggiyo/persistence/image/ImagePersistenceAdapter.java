@@ -1,10 +1,10 @@
 package kyonggiyo.persistence.image;
 
-import kyonggiyo.application.port.out.image.DeleteImagePort;
-import kyonggiyo.application.port.out.image.LoadImagePort;
-import kyonggiyo.application.port.out.image.SaveImagePort;
-import kyonggiyo.domain.image.Image;
-import kyonggiyo.domain.image.ImageType;
+import kyonggiyo.image.port.outbound.DeleteImagePort;
+import kyonggiyo.image.port.outbound.LoadImagePort;
+import kyonggiyo.image.port.outbound.SaveImagePort;
+import kyonggiyo.image.domain.entity.Image;
+import kyonggiyo.image.domain.vo.ImageType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

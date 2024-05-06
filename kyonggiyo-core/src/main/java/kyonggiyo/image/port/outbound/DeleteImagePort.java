@@ -1,4 +1,4 @@
-package kyonggiyo.application.port.out.image;
+package kyonggiyo.image.port.outbound;
 
 import java.util.List;
 
