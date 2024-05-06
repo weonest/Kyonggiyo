@@ -1,4 +1,4 @@
-package kyonggiyo.domain.candidate;
+package kyonggiyo.candidate.domain.vo;
 
 import kyonggiyo.common.exception.GlobalErrorCode;
 import kyonggiyo.common.exception.InvalidValueException;

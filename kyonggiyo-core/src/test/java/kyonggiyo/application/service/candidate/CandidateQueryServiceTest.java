@@ -1,13 +1,14 @@
 package kyonggiyo.application.service.candidate;
 
 import kyonggiyo.auth.domain.vo.UserInfo;
-import kyonggiyo.application.port.in.candidate.LoadCandidateUseCase;
-import kyonggiyo.application.port.in.candidate.dto.CandidateResponse;
-import kyonggiyo.application.port.out.candidate.LoadCandidatePort;
+import kyonggiyo.candidate.port.inbound.LoadCandidateUseCase;
+import kyonggiyo.candidate.dto.CandidateResponse;
+import kyonggiyo.candidate.port.outbound.LoadCandidatePort;
 import kyonggiyo.application.service.ServiceTest;
+import kyonggiyo.candidate.service.CandidateQueryService;
 import kyonggiyo.common.response.SliceResponse;
-import kyonggiyo.domain.candidate.Candidate;
-import kyonggiyo.domain.candidate.Status;
+import kyonggiyo.candidate.domain.entity.Candidate;
+import kyonggiyo.candidate.domain.vo.Status;
 import kyonggiyo.user.domain.vo.Role;
 import kyonggiyo.fixture.CandidateFixtures;
 import org.instancio.Instancio;

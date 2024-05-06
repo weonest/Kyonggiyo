@@ -1,11 +1,11 @@
-package kyonggiyo.application.service.candidate;
+package kyonggiyo.candidate.service;
 
 import kyonggiyo.auth.domain.vo.UserInfo;
-import kyonggiyo.application.port.in.candidate.LoadCandidateUseCase;
-import kyonggiyo.application.port.in.candidate.dto.CandidateResponse;
-import kyonggiyo.application.port.out.candidate.LoadCandidatePort;
-import kyonggiyo.domain.candidate.Candidate;
-import kyonggiyo.domain.candidate.Status;
+import kyonggiyo.candidate.port.inbound.LoadCandidateUseCase;
+import kyonggiyo.candidate.dto.CandidateResponse;
+import kyonggiyo.candidate.port.outbound.LoadCandidatePort;
+import kyonggiyo.candidate.domain.entity.Candidate;
+import kyonggiyo.candidate.domain.vo.Status;
 import kyonggiyo.common.response.SliceResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;

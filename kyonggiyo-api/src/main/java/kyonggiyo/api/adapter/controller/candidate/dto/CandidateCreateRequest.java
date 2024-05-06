@@ -1,6 +1,6 @@
 package kyonggiyo.api.adapter.controller.candidate.dto;
 
-import kyonggiyo.application.port.in.candidate.dto.CandidateCreateCommand;
+import kyonggiyo.candidate.dto.CandidateCreateCommand;
 import kyonggiyo.domain.restaurant.RestaurantCategory;
 
 public record CandidateCreateRequest(

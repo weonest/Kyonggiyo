@@ -1,7 +1,7 @@
 package kyonggiyo.persistence.candidate;
 
-import kyonggiyo.domain.candidate.Candidate;
-import kyonggiyo.domain.candidate.Status;
+import kyonggiyo.candidate.domain.entity.Candidate;
+import kyonggiyo.candidate.domain.vo.Status;
 import kyonggiyo.common.exception.GlobalErrorCode;
 import kyonggiyo.common.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;

@@ -1,14 +1,14 @@
 package kyonggiyo.api.adapter.controller.candidate;
 
 import kyonggiyo.api.adapter.controller.candidate.dto.CandidateCreateRequest;
-import kyonggiyo.application.port.in.candidate.dto.CandidateResponse;
+import kyonggiyo.candidate.dto.CandidateResponse;
 import kyonggiyo.api.adapter.controller.candidate.dto.CandidateUpdateRequest;
-import kyonggiyo.application.port.in.candidate.AcceptCandidateUseCase;
-import kyonggiyo.application.port.in.candidate.CreateCandidateUseCase;
-import kyonggiyo.application.port.in.candidate.DeleteCandidateUseCase;
-import kyonggiyo.application.port.in.candidate.LoadCandidateUseCase;
-import kyonggiyo.application.port.in.candidate.UpdateCandidateUseCase;
-import kyonggiyo.domain.candidate.Status;
+import kyonggiyo.candidate.port.inbound.AcceptCandidateUseCase;
+import kyonggiyo.candidate.port.inbound.CreateCandidateUseCase;
+import kyonggiyo.candidate.port.inbound.DeleteCandidateUseCase;
+import kyonggiyo.candidate.port.inbound.LoadCandidateUseCase;
+import kyonggiyo.candidate.port.inbound.UpdateCandidateUseCase;
+import kyonggiyo.candidate.domain.vo.Status;
 import kyonggiyo.auth.Admin;
 import kyonggiyo.auth.Auth;
 import kyonggiyo.auth.domain.vo.UserInfo;

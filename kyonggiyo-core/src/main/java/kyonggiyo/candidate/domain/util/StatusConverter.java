@@ -1,6 +1,6 @@
-package kyonggiyo.domain.candidate.util;
+package kyonggiyo.candidate.domain.util;
 
-import kyonggiyo.domain.candidate.Status;
+import kyonggiyo.candidate.domain.vo.Status;
 import org.springframework.core.convert.converter.Converter;
 
 public class StatusConverter implements Converter<String, Status> {

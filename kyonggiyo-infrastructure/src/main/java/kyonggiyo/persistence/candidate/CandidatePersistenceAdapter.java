@@ -1,10 +1,10 @@
 package kyonggiyo.persistence.candidate;
 
-import kyonggiyo.application.port.out.candidate.DeleteCandidatePort;
-import kyonggiyo.application.port.out.candidate.LoadCandidatePort;
-import kyonggiyo.application.port.out.candidate.SaveCandidatePort;
-import kyonggiyo.domain.candidate.Candidate;
-import kyonggiyo.domain.candidate.Status;
+import kyonggiyo.candidate.port.outbound.DeleteCandidatePort;
+import kyonggiyo.candidate.port.outbound.LoadCandidatePort;
+import kyonggiyo.candidate.port.outbound.SaveCandidatePort;
+import kyonggiyo.candidate.domain.entity.Candidate;
+import kyonggiyo.candidate.domain.vo.Status;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;

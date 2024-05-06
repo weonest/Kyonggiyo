@@ -1,4 +1,4 @@
-package kyonggiyo.application.port.out.candidate;
+package kyonggiyo.candidate.port.outbound;
 
 public interface DeleteCandidatePort {
 

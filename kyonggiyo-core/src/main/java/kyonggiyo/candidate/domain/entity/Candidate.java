@@ -1,4 +1,4 @@
-package kyonggiyo.domain.candidate;
+package kyonggiyo.candidate.domain.entity;
 
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import kyonggiyo.domain.BaseEntity;
+import kyonggiyo.candidate.domain.vo.Status;
 import kyonggiyo.domain.restaurant.Address;
 import kyonggiyo.domain.restaurant.Restaurant;
 import kyonggiyo.domain.restaurant.RestaurantCategory;

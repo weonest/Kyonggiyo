@@ -1,6 +1,6 @@
-package kyonggiyo.application.port.in.candidate;
+package kyonggiyo.candidate.port.inbound;
 
-import kyonggiyo.application.port.in.candidate.dto.CandidateUpdateCommand;
+import kyonggiyo.candidate.dto.CandidateUpdateCommand;
 
 public interface UpdateCandidateUseCase {
 

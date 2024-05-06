@@ -1,6 +1,6 @@
-package kyonggiyo.application.port.in.candidate.dto;
+package kyonggiyo.candidate.dto;
 
-import kyonggiyo.domain.candidate.Candidate;
+import kyonggiyo.candidate.domain.entity.Candidate;
 import kyonggiyo.domain.restaurant.RestaurantCategory;
 
 import java.time.LocalDateTime;

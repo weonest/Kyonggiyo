@@ -1,8 +1,8 @@
 package kyonggiyo.persistence.candidate;
 
 import kyonggiyo.persistence.AdapterTest;
-import kyonggiyo.domain.candidate.Candidate;
-import kyonggiyo.domain.candidate.Status;
+import kyonggiyo.candidate.domain.entity.Candidate;
+import kyonggiyo.candidate.domain.vo.Status;
 import kyonggiyo.fixture.CandidateFixtures;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

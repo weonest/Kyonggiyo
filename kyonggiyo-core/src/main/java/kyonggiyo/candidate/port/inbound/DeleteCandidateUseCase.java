@@ -1,4 +1,4 @@
-package kyonggiyo.application.port.in.candidate;
+package kyonggiyo.candidate.port.inbound;
 
 
 import kyonggiyo.auth.domain.vo.UserInfo;

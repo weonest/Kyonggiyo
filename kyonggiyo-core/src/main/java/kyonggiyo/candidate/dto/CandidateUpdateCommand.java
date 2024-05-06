@@ -1,4 +1,4 @@
-package kyonggiyo.application.port.in.candidate.dto;
+package kyonggiyo.candidate.dto;
 
 import kyonggiyo.domain.restaurant.RestaurantCategory;
 

@@ -1,8 +1,8 @@
-package kyonggiyo.application.port.out.candidate;
+package kyonggiyo.candidate.port.outbound;
 
 
-import kyonggiyo.domain.candidate.Candidate;
-import kyonggiyo.domain.candidate.Status;
+import kyonggiyo.candidate.domain.entity.Candidate;
+import kyonggiyo.candidate.domain.vo.Status;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 

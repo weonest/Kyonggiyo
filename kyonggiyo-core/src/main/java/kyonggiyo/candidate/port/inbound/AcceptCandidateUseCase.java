@@ -1,4 +1,4 @@
-package kyonggiyo.application.port.in.candidate;
+package kyonggiyo.candidate.port.inbound;
 
 public interface AcceptCandidateUseCase {
 
