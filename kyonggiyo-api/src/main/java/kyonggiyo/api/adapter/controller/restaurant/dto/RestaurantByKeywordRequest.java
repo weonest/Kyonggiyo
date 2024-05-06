@@ -1,6 +1,6 @@
 package kyonggiyo.api.adapter.controller.restaurant.dto;
 
-import kyonggiyo.application.port.in.restaurant.dto.RestaurantByKeywordQuery;
+import kyonggiyo.restaurant.dto.RestaurantByKeywordQuery;
 
 public record RestaurantByKeywordRequest (
         String keyword

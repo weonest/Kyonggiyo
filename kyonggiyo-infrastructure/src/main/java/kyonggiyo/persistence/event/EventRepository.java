@@ -1,7 +1,7 @@
 package kyonggiyo.persistence.event;
 
-import kyonggiyo.domain.event.Event;
-import kyonggiyo.domain.event.EventType;
+import kyonggiyo.common.entity.event.Event;
+import kyonggiyo.common.entity.event.EventType;
 
 import java.util.List;
 

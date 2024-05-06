@@ -1,6 +1,6 @@
 package kyonggiyo.candidate.dto;
 
-import kyonggiyo.domain.restaurant.RestaurantCategory;
+import kyonggiyo.restaurant.domain.vo.RestaurantCategory;
 
 public record CandidateUpdateCommand(
         String name,

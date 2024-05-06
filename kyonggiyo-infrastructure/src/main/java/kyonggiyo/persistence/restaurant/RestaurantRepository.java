@@ -1,7 +1,7 @@
 package kyonggiyo.persistence.restaurant;
 
-import kyonggiyo.domain.restaurant.Restaurant;
-import kyonggiyo.domain.restaurant.RestaurantCategory;
+import kyonggiyo.restaurant.domain.entity.Restaurant;
+import kyonggiyo.restaurant.domain.vo.RestaurantCategory;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package kyonggiyo.review.domain.event;
 
-import kyonggiyo.domain.event.EventCommand;
+import kyonggiyo.common.entity.event.EventCommand;
 import kyonggiyo.image.domain.vo.ImageType;
 
 import java.util.List;

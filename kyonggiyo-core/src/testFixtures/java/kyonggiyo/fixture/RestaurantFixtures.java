@@ -1,8 +1,8 @@
 package kyonggiyo.fixture;
 
 
-import kyonggiyo.domain.restaurant.Restaurant;
-import kyonggiyo.domain.restaurant.RestaurantCategory;
+import kyonggiyo.restaurant.domain.entity.Restaurant;
+import kyonggiyo.restaurant.domain.vo.RestaurantCategory;
 import org.instancio.Instancio;
 
 import java.util.List;

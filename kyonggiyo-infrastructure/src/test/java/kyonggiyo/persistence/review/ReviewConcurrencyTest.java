@@ -3,7 +3,7 @@ package kyonggiyo.persistence.review;
 import kyonggiyo.auth.domain.vo.UserInfo;
 import kyonggiyo.review.dto.ReviewCreateCommand;
 import kyonggiyo.review.service.ReviewCommandService;
-import kyonggiyo.domain.restaurant.Restaurant;
+import kyonggiyo.restaurant.domain.entity.Restaurant;
 import kyonggiyo.review.domain.entity.Review;
 import kyonggiyo.user.domain.entity.User;
 import kyonggiyo.fixture.RestaurantFixtures;

@@ -1,7 +1,7 @@
 package kyonggiyo.api.adapter.controller.restaurant.dto;
 
-import kyonggiyo.application.port.in.restaurant.dto.RestaurantCreateCommand;
-import kyonggiyo.domain.restaurant.RestaurantCategory;
+import kyonggiyo.restaurant.dto.RestaurantCreateCommand;
+import kyonggiyo.restaurant.domain.vo.RestaurantCategory;
 
 public record RestaurantCreateRequest(
         String name,

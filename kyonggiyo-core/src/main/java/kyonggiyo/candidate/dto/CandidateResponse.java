@@ -1,7 +1,7 @@
 package kyonggiyo.candidate.dto;
 
 import kyonggiyo.candidate.domain.entity.Candidate;
-import kyonggiyo.domain.restaurant.RestaurantCategory;
+import kyonggiyo.restaurant.domain.vo.RestaurantCategory;
 
 import java.time.LocalDateTime;
 

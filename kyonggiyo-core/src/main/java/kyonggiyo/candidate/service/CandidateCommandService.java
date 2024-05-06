@@ -10,7 +10,7 @@ import kyonggiyo.candidate.dto.CandidateUpdateCommand;
 import kyonggiyo.candidate.port.outbound.DeleteCandidatePort;
 import kyonggiyo.candidate.port.outbound.LoadCandidatePort;
 import kyonggiyo.candidate.port.outbound.SaveCandidatePort;
-import kyonggiyo.application.port.out.restaurant.SaveRestaurantPort;
+import kyonggiyo.restaurant.port.outbound.SaveRestaurantPort;
 import kyonggiyo.candidate.domain.entity.Candidate;
 import kyonggiyo.user.domain.vo.Role;
 import kyonggiyo.common.exception.ForbiddenException;

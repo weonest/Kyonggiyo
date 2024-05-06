@@ -1,10 +1,10 @@
 package kyonggiyo.persistence.event;
 
-import kyonggiyo.application.port.out.event.LoadEventPort;
-import kyonggiyo.application.port.out.event.SaveEventPort;
-import kyonggiyo.application.port.out.event.UpdateEventPort;
-import kyonggiyo.domain.event.Event;
-import kyonggiyo.domain.event.EventType;
+import kyonggiyo.common.entity.event.LoadEventPort;
+import kyonggiyo.common.entity.event.SaveEventPort;
+import kyonggiyo.common.entity.event.UpdateEventPort;
+import kyonggiyo.common.entity.event.Event;
+import kyonggiyo.common.entity.event.EventType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

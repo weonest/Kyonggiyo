@@ -11,7 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import kyonggiyo.auth.domain.vo.Platform;
-import kyonggiyo.domain.BaseEntity;
+import kyonggiyo.common.entity.BaseEntity;
 import kyonggiyo.auth.domain.exception.AccountErrorCode;
 import kyonggiyo.user.domain.entity.User;
 import kyonggiyo.common.exception.InvalidStateException;

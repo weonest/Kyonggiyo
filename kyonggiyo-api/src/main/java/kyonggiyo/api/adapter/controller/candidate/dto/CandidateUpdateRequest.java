@@ -1,7 +1,7 @@
 package kyonggiyo.api.adapter.controller.candidate.dto;
 
 import kyonggiyo.candidate.dto.CandidateUpdateCommand;
-import kyonggiyo.domain.restaurant.RestaurantCategory;
+import kyonggiyo.restaurant.domain.vo.RestaurantCategory;
 
 public record CandidateUpdateRequest(
         String name,

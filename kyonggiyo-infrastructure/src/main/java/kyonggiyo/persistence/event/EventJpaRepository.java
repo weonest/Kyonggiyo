@@ -1,7 +1,7 @@
 package kyonggiyo.persistence.event;
 
-import kyonggiyo.domain.event.Event;
-import kyonggiyo.domain.event.EventType;
+import kyonggiyo.common.entity.event.Event;
+import kyonggiyo.common.entity.event.EventType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

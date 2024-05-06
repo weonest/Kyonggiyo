@@ -1,10 +1,10 @@
 package kyonggiyo.persistence.event;
 
 import kyonggiyo.persistence.AdapterTest;
-import kyonggiyo.domain.event.EntityType;
-import kyonggiyo.domain.event.Event;
-import kyonggiyo.domain.event.EventCommand;
-import kyonggiyo.domain.event.EventType;
+import kyonggiyo.common.entity.event.EntityType;
+import kyonggiyo.common.entity.event.Event;
+import kyonggiyo.common.entity.event.EventCommand;
+import kyonggiyo.common.entity.event.EventType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

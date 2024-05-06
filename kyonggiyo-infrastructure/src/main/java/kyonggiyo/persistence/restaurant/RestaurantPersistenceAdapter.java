@@ -1,9 +1,9 @@
 package kyonggiyo.persistence.restaurant;
 
-import kyonggiyo.application.port.out.restaurant.LoadRestaurantPort;
-import kyonggiyo.application.port.out.restaurant.SaveRestaurantPort;
-import kyonggiyo.domain.restaurant.Restaurant;
-import kyonggiyo.domain.restaurant.RestaurantCategory;
+import kyonggiyo.restaurant.port.outbound.LoadRestaurantPort;
+import kyonggiyo.restaurant.port.outbound.SaveRestaurantPort;
+import kyonggiyo.restaurant.domain.entity.Restaurant;
+import kyonggiyo.restaurant.domain.vo.RestaurantCategory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

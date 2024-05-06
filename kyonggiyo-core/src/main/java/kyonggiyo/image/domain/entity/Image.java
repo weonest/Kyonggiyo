@@ -8,7 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import kyonggiyo.domain.BaseEntity;
+import kyonggiyo.common.entity.BaseEntity;
 import kyonggiyo.image.domain.vo.ImageType;
 import lombok.AccessLevel;
 import lombok.Getter;

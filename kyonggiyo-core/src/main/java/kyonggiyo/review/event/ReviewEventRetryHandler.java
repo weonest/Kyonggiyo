@@ -1,7 +1,7 @@
 package kyonggiyo.review.event;
 
 import kyonggiyo.image.service.ImageService;
-import kyonggiyo.domain.event.EventCommand;
+import kyonggiyo.common.entity.event.EventCommand;
 import kyonggiyo.review.domain.event.ReviewEvent;
 import kyonggiyo.image.domain.vo.ImageType;
 import lombok.RequiredArgsConstructor;
